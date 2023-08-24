@@ -5,7 +5,19 @@ Author: @1chooo(Hugo ChunHo Lin)
 Version: v0.0.1
 '''
 
-class Rule:
-    @staticmethod
-    def __rule__():
-        print("Our Developing Rule\n1. ...\n2. ...")
+scripts_head = f"""
+Add the header for every script files:
+# -*- coding: utf-8 -*-
+'''
+Create Date: <current_date>
+Author: <author>
+Version: <next_published_version_num>
+'''
+"""
+
+dataset_naming = f"""
+Dataset naming rule:
+Titanic -> titanic
+Diabetes -> diabetes
+House Prices -> house_price
+"""

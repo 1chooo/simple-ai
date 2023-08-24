@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*-
+'''
+Create Date: 2023/08/24
+Author: @1chooo(Hugo ChunHo Lin)
+Version: v0.0.1
+'''
+
 from os.path import join
 from os.path import dirname
 from os.path import abspath
 import pandas as pd
-import time 
 
 def get_dataframe(dataset_name: str) -> pd.DataFrame:
     try:
@@ -26,14 +32,3 @@ def get_dataframe(dataset_name: str) -> pd.DataFrame:
     except Exception as e:
         print(e)
         return None
-
-
-def test_load_dataframe(dataset_name: str):
-    start_time = time.time()
-    df = get_dataframe(dataset_name)
-    print('Time used: ', time.time() - start_time)
-    print(df.head())
-    print('Time used: ', time.time() - start_time)
-    return None
-
-# test_load_dataframe('Titanic')

@@ -54,6 +54,10 @@ $ git clone git@github.com:<your_workspace_name>/ai-for-beginner.git
 $ git remote add upstream git@github.com:1chooo/ai-for-beginner.git
 
 $ git remote -v
+origin  git@github.com:<your_user_name>/ai-for-beginner.git (fetch)
+origin  git@github.com:<your_user_name>/ai-for-beginner.git (push)
+upstream        git@github.com:1chooo/ai-for-beginner.git (fetch)
+upstream        git@github.com:1chooo/ai-for-beginner.git (push)
 ```
 ### Pull Requests:
 If you have any valuable ideas to contribute, please create a pull request and provide details about the outstanding work you've done.
