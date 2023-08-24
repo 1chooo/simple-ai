@@ -12,3 +12,4 @@ def start_gradio() -> None:
     Main function of the app.
     '''
     print('Hi', gr.__name__)
+    

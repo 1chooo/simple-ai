@@ -1,5 +1,9 @@
 # ai-for-beginner
 
+[![project badge](https://img.shields.io/badge/1chooo-ai__for__beginner-informational)](https://github.com/1chooo/ai-for-beginner)
+[![Made with Python](https://img.shields.io/badge/Python=3.10.1-blue?logo=python&logoColor=white)](https://python.org "Go to Python homepage")
+[![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
+
 Enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future.
 
 ## Getting Started
@@ -35,7 +39,6 @@ $ pip install mkdocs-jupyter
 ```
 
 ## Collaboration Guidelines
-
 ### Forking this Repository:
 
 Fork the `ai-for-beginner` repository into your own workspace.
@@ -61,11 +64,10 @@ If you encounter any problems while contributing to this project, please report 
 ### Important Notes:
 > [!IMPORTANT]  
 > Remember to synchronize and update your repository before starting to write code each time.
-
-#### Make sure to synchronize and update your repository before initiating a pull request:
-1. Run `git fetch upstream` to sync the source project with your local copy.
-2. Run `git checkout main` to switch to the main branch.
-3. Run `git merge upstream/main` to merge the updated remote version into your local copy. If there are no conflicts, the update process is complete.
+> #### Make sure to synchronize and update your repository before initiating a pull request:
+> 1. Run `git fetch upstream` to sync the source project with your local copy.
+> 2. Run `git checkout main` to switch to the main branch.
+> 3. Run `git merge upstream/main` to merge the updated remote version into your local copy. If there are no conflicts, the update process is complete.
 
 ## License
 Released under [MIT](./LICENSE) by [Hugo ChunHo Lin](https://github.com/1chooo).
