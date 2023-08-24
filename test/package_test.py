@@ -20,6 +20,8 @@ import datetime
 import asyncio
 import threading
 import pytz
+import boto3
+import botocore
 
 class TestPackages(unittest.TestCase):
     def test_os(self):
@@ -60,6 +62,12 @@ class TestPackages(unittest.TestCase):
 
     def test_pytz(self):
         self.assertIsNotNone(pytz)
+
+    def test_boto3(self):
+        self.assertIsNotNone(boto3)
+
+    def test_botocore(self):
+        self.assertIsNotNone(botocore)
 
 if __name__ == '__main__':
     unittest.main()
