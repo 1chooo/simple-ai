@@ -65,9 +65,12 @@ If you encounter any problems while contributing to this project, please report 
 > [!IMPORTANT]  
 > Remember to synchronize and update your repository before starting to write code each time.
 > #### Make sure to synchronize and update your repository before initiating a pull request:
-> 1. Run `git fetch upstream` to sync the source project with your local copy.
-> 2. Run `git checkout main` to switch to the main branch.
-> 3. Run `git merge upstream/main` to merge the updated remote version into your local copy. If there are no conflicts, the update process is complete.
+> 1. Run `git stash save` to temporarily stash your local changes.
+> 2. Run `git fetch upstream` to sync the source project with your local copy.
+> 3. Run `git checkout main` to switch to the main branch.
+> 4. Run `git merge upstream/main` to merge the updated remote version into your local copy. If there are no conflicts, the update process is complete.
+> 5. Run `git stash pop` to apply your temporarily stashed changes back to your working directory. Resolve any conflicts if necessary.
+
 
 ## License
 Released under [MIT](./LICENSE) by [Hugo ChunHo Lin](https://github.com/1chooo).
