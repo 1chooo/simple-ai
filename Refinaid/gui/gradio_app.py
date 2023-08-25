@@ -1,3 +1,9 @@
+'''
+Create Date: 2023/08/25
+Author: @VincentLi1216
+Email: sunnus.tw@gmail.com
+Version: v0.0.1
+'''
 import gradio as gr
 
 explanatory_text = {
@@ -8,14 +14,18 @@ explanatory_text = {
                     
 }
 
+
 dropdown_options = {
                     "datasets": ["ds1", "ds2", "ds3"],
                     "inputs": ["ip1", "ip2", "ip3"],
-                        "data_scalings": ["Standard", "Min-Max"]
+                    "data_scalings": ["Standard", "Min-Max"],
+                    "models": ["model1", "model2", "model3"],
+                    "plots": ["plot1", "plot2", "plot3"]
 }
 
+
 def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
-    print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
+    # print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
     if dataset == None or dataset == "":
         raise gr.Error("Invalid Dataset")
         return
@@ -58,16 +68,21 @@ with gr.Blocks() as demo:
             with gr.Column():
                 gr.ScatterPlot(label="Data Visualization")
                 with gr.Row():
-                    gr.Dropdown(label="X Axis", choices=dropdown_options["datasets"])
-                    gr.Dropdown(label="Y Axis", choices=dropdown_options["datasets"])
+                    x_axis_dd = gr.Dropdown(label="X Axis", choices=dropdown_options["datasets"])
+                    y_axis_dd = gr.Dropdown(label="Y Axis", choices=dropdown_options["datasets"])
+
     with gr.Tab("Training"):
         gr.Markdown(f"{explanatory_text['training']['title']}\n{explanatory_text['training']['body']}")
         with gr.Row():
-            gr.Textbox("hi")
-            gr.Textbox("hi")
-        with gr.Row():
-            gr.Textbox("hello")
-            gr.Textbox("hello")
+            with gr.Column():
+                gr.Textbox(label="Data Summary")
+                dataset_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"])
+                gr.Textbox(label="Learning Rate")
+                gr.Button(value="Train")
+            with gr.Column():
+                plot_dd = gr.Dropdown(label="Select Plot", choices=dropdown_options["plots"])
+                gr.Plot()
+
     with gr.Tab("Result"):
         gr.Markdown(f"{explanatory_text['result']['title']}\n{explanatory_text['result']['body']}")
         with gr.Row():
@@ -76,6 +91,10 @@ with gr.Blocks() as demo:
         with gr.Row():
             gr.Textbox("hello")
             gr.Textbox("hello")
+    gr.Examples(
+                [["ds3", ["test1", "test2"], True, "hi", 70, 20, 10]],
+                [dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr]
+    )
     submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr])
 
 demo.launch(enable_queue=True, debug=True)
