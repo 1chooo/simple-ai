@@ -64,6 +64,7 @@ def get_training_data(dataset: str, parameters: dict):
     return data_split(X, y, parameters["data_split"])
 
 if __name__ ==  "__main__" :
+    # Example
     ex_parameters = {
         "dataset": "Titanic",
         "select_col": ["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin",
