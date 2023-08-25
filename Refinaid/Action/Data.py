@@ -65,13 +65,14 @@ def get_training_data(dataset: str, parameters: dict):
 
 if __name__ ==  "__main__" :
     ex_parameters = {
+        "dataset": "Titanic",
         "select_col": ["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin",
                        "Embarked"],
         "handling_missing_value": True,
         "scaling": "standard",
         "data_split": [0.7, 0.1, 0.2]
     }
-    X_train, X_test, y_train, y_test = get_training_data("Titanic", ex_parameters)
+    X_train, X_test, y_train, y_test = get_training_data(ex_parameters["dataset"], ex_parameters)
     print("X_train:", X_train.shape)
     print("X_test:", X_test.shape)
     print("y_train:", y_train.shape)
