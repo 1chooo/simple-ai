@@ -35,3 +35,16 @@ jobs:
     - name: Finish tests
       run: |
         echo "All Package has been installed successfully!"
+
+    - name: Run Dev Env tests
+      run: |
+        python "test/dev_env_test.py"
+        
+    - name: Run Refinaid tests
+      run: |
+        python "test/action/load_df.py"
+    
+    - name: Finish tests
+      run: |
+        echo "All Tests are PASS!"
+        
