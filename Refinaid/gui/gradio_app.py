@@ -19,13 +19,39 @@ dropdown_options = {
                     "datasets": ["ds1", "ds2", "ds3"],
                     "inputs": ["ip1", "ip2", "ip3"],
                     "data_scalings": ["Standard", "Min-Max"],
-                    "models": ["model1", "model2", "model3"],
+                    "models": ["Decision Tree Classifier", "model2", "model3"],
                     "plots": ["plot1", "plot2", "plot3"]
+
+}
+
+model_parameters = {
+                    "decision_tree_classifier": {
+                                               "criterion": None,
+                                               "max_depth": None,
+                                               "min_samples_split": None,
+                                               "min_samples_leaf": None,
+                                               "max_features": None,
+                                               "max_leaf_nodes": None
+                    }
 }
 
 
+model_mapping = {
+                "Decision Tree Classifier": "decision_tree_classifier"
+}
+
+current_model = "decision_tree_classifier"
+
+# components = [gr.Text, gr.Text]
+# for i in range(len(components)):
+#     components[i] = components[i].update(visible=True)
+
+# return com for com in components
+
+
+
 def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
-    # print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
+    print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
     if dataset == None or dataset == "":
         raise gr.Error("Invalid Dataset")
         return
@@ -52,14 +78,14 @@ with gr.Blocks() as demo:
         with gr.Row():
             with gr.Column():
                 gr.Markdown("### Dataset")
-                dataset_dd = gr.Dropdown(label="Select Dataset", choices=dropdown_options["datasets"])
+                dataset_dd = gr.Dropdown(label="Select Dataset", choices=dropdown_options["datasets"], interactive=True)
                 gr.Markdown("### Inputs")
                 inputs_dd = gr.Dropdown(label="Select Mutiple Inputs", choices=dropdown_options["inputs"], multiselect=True)
                 # with gr.Accordion("Options"):
                 gr.Markdown(f"### Missing Values Handling")
                 miss_value_chkbox = gr.Checkbox(label="Enable")
                 gr.Markdown(f"### Data Scaling")
-                data_scale_dd = gr.Dropdown(choices=dropdown_options["data_scalings"], label="Please select a method")
+                data_scale_dd = gr.Dropdown(choices=dropdown_options["data_scalings"], label="Please select a method", interactive=True)
                 gr.Markdown(f"### Data Split\nTotal should be 100%")
                 train_sldr = gr.Slider(label="Training Set", minimum=0, maximum=100, step=5)
                 valid_sldr = gr.Slider(label="Validation Set", minimum=0, maximum=100, step=5)
@@ -76,7 +102,7 @@ with gr.Blocks() as demo:
         with gr.Row():
             with gr.Column():
                 gr.Textbox(label="Data Summary")
-                dataset_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"])
+                model_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"])
                 gr.Textbox(label="Learning Rate")
                 gr.Button(value="Train")
             with gr.Column():
@@ -92,7 +118,7 @@ with gr.Blocks() as demo:
             gr.Textbox("hello")
             gr.Textbox("hello")
     gr.Examples(
-                [["ds3", ["test1", "test2"], True, "hi", 70, 20, 10]],
+                [["Titanic", ["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], True, "standard", 70, 10, 20]],
                 [dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr]
     )
     submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr])
