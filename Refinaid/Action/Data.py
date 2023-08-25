@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+'''
+Create Date: 2023/08/25
+Author: @ReeveWu
+Version: v0.0.1
+'''
+
 import pandas as pd
 from Load import get_dataframe
 from sklearn.preprocessing import OneHotEncoder
