@@ -32,3 +32,13 @@ def get_dataframe(dataset_name: str) -> pd.DataFrame:
     except Exception as e:
         print(e)
         return None
+
+# Example
+import time
+
+if __name__ == '__main__':
+    start_time = time.time()
+    df = get_dataframe('Titanic')
+    print('Time used: ', time.time() - start_time)
+    print(df.head())
+    print('Time used: ', time.time() - start_time)

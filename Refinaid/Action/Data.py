@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 Create Date: 2023/08/25
-Author: @ReeveWu
+Author: @ReeveWu, @1chooo
 Version: v0.0.1
 '''
 
@@ -63,8 +63,8 @@ def get_training_data(dataset: str, parameters: dict):
     X = data_scaling(X, parameters["scaling"]) if parameters["scaling"] else X
     return data_split(X, y, parameters["data_split"])
 
+# Example
 if __name__ ==  "__main__" :
-    # Example
     ex_parameters = {
         "dataset": "Titanic",
         "select_col": ["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin",
