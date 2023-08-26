@@ -5,6 +5,7 @@ Author: @ReeveWu, @1chooo
 Version: v0.0.1
 '''
 
+import numpy as np
 import pandas as pd
 from Load import get_dataframe
 from ML_configurations import DatasetConfig
@@ -13,7 +14,20 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-def handling_missing_value(df: pd.DataFrame):
+def handling_missing_value(df: pd.DataFrame, dataset: str):
+    def handle_missing_value_titanic(df: pd.DataFrame) -> pd.DataFrame:
+        df['Embarked'] = df['Embarked'].fillna('S')
+        df['Fare'] = df['Fare'].fillna(df['Fare'].median())
+        age_avg = df['Age'].mean()
+        age_std = df['Age'].std()
+        age_null_count = df['Age'].isnull().sum()
+        age_null_random_list = np.random.randint(age_avg - age_std, age_avg + age_std, size=age_null_count)
+        df.loc[np.isnan(df['Age']), 'Age'] = age_null_random_list
+        df['Age'] = df['Age'].astype(int)
+        return df.dropna()
+
+    if dataset == "Titanic":
+        return handle_missing_value_titanic(df)
     return df.dropna()
 
 def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
@@ -52,7 +66,7 @@ def data_split(X: pd.DataFrame, y: pd.DataFrame, split_ratio: list):
 
 def get_training_data(parameters: DatasetConfig):
     df = get_dataframe(parameters.dataset)[parameters.select_col]
-    df = handling_missing_value(df) if parameters.handling_missing_value else df
+    df = handling_missing_value(df, parameters.dataset) if parameters.handling_missing_value else df
     X, y = data_generating(df, parameters)
     X = data_scaling(X, parameters.scaling) if parameters.scaling else X
     return data_split(X, y, parameters.data_split)
