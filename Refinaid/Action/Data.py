@@ -17,17 +17,22 @@ def handling_missing_value(df: pd.DataFrame):
     return df.dropna()
 
 def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
-    onehot_encoder = OneHotEncoder()
+    origin_df = df.copy()
+
+    onehot_encoder = OneHotEncoder(sparse_output=False, drop='first')
     onehot_encoded = onehot_encoder.fit_transform(df[parameters.col_onehot])
-    onehot_df = pd.DataFrame(onehot_encoded.toarray(), columns=onehot_encoder.get_feature_names_out(parameters.col_onehot))
+    onehot_df = pd.DataFrame(onehot_encoded, columns=onehot_encoder.get_feature_names_out(parameters.col_onehot))
+
+    result_df = pd.concat([onehot_df], axis=1)
 
     label_encoder = LabelEncoder()
     for col in parameters.col_label:
-        df[col] = label_encoder.fit_transform(df[col])
+        encoded_col = label_encoder.fit_transform(df[col])
+        result_df[col] = encoded_col
 
-    df = pd.concat([onehot_df, df[parameters.col_label], df[parameters.col_remaining]], axis=1)
+    df = pd.concat([result_df, origin_df[parameters.col_remaining].reset_index(drop=True)], axis=1)
     X = df.drop(parameters.y_col, axis=1)
-    y = df[parameters.y_col]
+    y = df[parameters.y_col].values.ravel()
 
     return X, y
 
