@@ -28,10 +28,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests
+    - name: Run Dev Env tests
       run: |
-        python "test/package_test.py"
+        python "test/dev_env_test.py"
+        
+    - name: Run Refinaid tests
+      run: |
+        python "test/action/load_df.py"
     
     - name: Finish tests
       run: |
-        echo "All Package has been installed successfully!"
+        echo "All Tests are PASS!"
+        
