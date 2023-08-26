@@ -14,13 +14,31 @@ explanatory_text = {
                     
 }
 
+'''
+DecisionTreeClassifier
+
+第一個選項為default
+
+criterion: {"gini", "entropy", "log_loss"} ->選單
+max_depth: {none, or int} ->輸入框(valueError handling)
+min_samples_split: {2, 3, 4, ......, 20}->滑桿
+min_samples_leaf: {1, 2, ......, 19, 20} ->滑桿
+max_features: {"auto", "sqrt", "log2"} ->選單
+max_leaf_nodes: {none, or int} ->輸入框(valueError handling)
+'''
 
 dropdown_options = {
                     "datasets": ["ds1", "ds2", "ds3"],
                     "inputs": ["ip1", "ip2", "ip3"],
                     "data_scalings": ["Standard", "Min-Max"],
                     "models": ["Decision Tree Classifier", "model2", "model3"],
-                    "plots": ["plot1", "plot2", "plot3"]
+                    "plots": ["plot1", "plot2", "plot3"],
+                    "model_parameters":{
+                                        "decision_tree_classifier": {
+                                              "criterion": ["gini", "entropy", "log_loss"],
+                                              "max_features": ["auto", "sqrt", "log2"]
+                                        }
+                    }
 
 }
 
@@ -69,7 +87,8 @@ def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_sca
         raise gr.Error("Invalid Data Split")
         return
     gr.Info("Setting Updated")
-
+    update_list = [dataset_dd, inputs_dd]
+    return *[component.update(visible=False) for component in update_list],
 
 with gr.Blocks() as demo:
     gr.Markdown(f"{explanatory_text['header']['title']}\n{explanatory_text['header']['body']}")
@@ -103,7 +122,18 @@ with gr.Blocks() as demo:
             with gr.Column():
                 gr.Textbox(label="Data Summary")
                 model_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"])
-                gr.Textbox(label="Learning Rate")
+    
+                dtc_md = gr.Markdown("### Decision Tree Classifier", interactive=True)
+                dtc_criterion_dd = gr.Dropdown(label="criterion", choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], interactive=True)
+                gr.Textbox(label="max_depth", interactive=True)
+                gr.Slider(label="min_samples_split", minimum=2, maximum=20, step=1, interactive=True)
+                gr.Slider(label="min_samples_leaf", minimum=1, maximum=20, step=1, interactive=True)
+                gr.Dropdown(label="max_features", choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], interactive=True)
+                gr.Textbox(label="max_leaf_nodes", interactive=True)
+                
+
+                gr.Slider(label="Learning Rate", minimum=0.0001, maximum=0.1, step=0.0001, interactive=True)
+
                 gr.Button(value="Train")
             with gr.Column():
                 plot_dd = gr.Dropdown(label="Select Plot", choices=dropdown_options["plots"])
@@ -121,7 +151,7 @@ with gr.Blocks() as demo:
                 [["Titanic", ["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], True, "standard", 70, 10, 20]],
                 [dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr]
     )
-    submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr])
+    submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr], outputs=[dataset_dd, inputs_dd])
 
 demo.launch(enable_queue=True, debug=True)
 

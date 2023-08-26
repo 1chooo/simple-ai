@@ -1,11 +1,7 @@
+def return_values():
+    values = [1, 2, 3, 4]
+    return *values,
 
+a, b, c, d = return_values()
+print(a, b, c, d)  # 輸出：1 2 3 4
 
-list = [1, 2, 3]
-
-print(list)
-
-for i in range(len(list)):
-    list[i] += 3
-    # num += 3
-
-print(list)
