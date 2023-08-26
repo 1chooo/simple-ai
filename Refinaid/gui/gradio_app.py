@@ -14,24 +14,12 @@ explanatory_text = {
                     
 }
 
-'''
-DecisionTreeClassifier
-
-第一個選項為default
-
-criterion: {"gini", "entropy", "log_loss"} ->選單
-max_depth: {none, or int} ->輸入框(valueError handling)
-min_samples_split: {2, 3, 4, ......, 20}->滑桿
-min_samples_leaf: {1, 2, ......, 19, 20} ->滑桿
-max_features: {"auto", "sqrt", "log2"} ->選單
-max_leaf_nodes: {none, or int} ->輸入框(valueError handling)
-'''
 
 dropdown_options = {
                     "datasets": ["ds1", "ds2", "ds3"],
                     "inputs": ["ip1", "ip2", "ip3"],
                     "data_scalings": ["Standard", "Min-Max"],
-                    "models": ["Decision Tree Classifier", "model2", "model3"],
+                    "models": ["Decision Tree Classifier", "test", "model3"],
                     "plots": ["plot1", "plot2", "plot3"],
                     "model_parameters":{
                                         "decision_tree_classifier": {
@@ -55,21 +43,43 @@ model_parameters = {
 
 
 model_mapping = {
-                "Decision Tree Classifier": "decision_tree_classifier"
+                "Decision Tree Classifier": "decision_tree_classifier",
+                "test": "test"
 }
+
+model_components = {}
 
 current_model = "decision_tree_classifier"
 
-# components = [gr.Text, gr.Text]
-# for i in range(len(components)):
-#     components[i] = components[i].update(visible=True)
 
-# return com for com in components
+def model_dd_change(model_dd):
 
+    comp_output_list = []
+    selected_model = model_mapping[model_dd]
+    print(model_dd)
+    print(selected_model)
+
+    for key in model_components.keys():
+        if key not in ["all", "model_selector"]:
+            if key == selected_model:
+                for i in range(len(model_components[key])):
+                    print(f"key:{key}\ni:{i}\nitem:{model_components[key][i]}")
+                    comp_output_list.append(model_components[key][i].update(visible=True))
+            else:
+                for i in range(len(model_components[key])):
+                    print(f"key:{key}\ni:{i}\nitem:{model_components[key][i]}")
+                    comp_output_list.append(model_components[key][i].update(visible=False))
+    print(comp_output_list)
+                
+
+    return *comp_output_list,
 
 
 def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
-    print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
+    # print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
+
+    global model_components
+
     if dataset == None or dataset == "":
         raise gr.Error("Invalid Dataset")
         return
@@ -121,18 +131,20 @@ with gr.Blocks() as demo:
         with gr.Row():
             with gr.Column():
                 gr.Textbox(label="Data Summary")
-                model_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"])
+                model_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"], interactive=True)
     
                 dtc_md = gr.Markdown("### Decision Tree Classifier", interactive=True)
-                dtc_criterion_dd = gr.Dropdown(label="criterion", choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], interactive=True)
-                gr.Textbox(label="max_depth", interactive=True)
-                gr.Slider(label="min_samples_split", minimum=2, maximum=20, step=1, interactive=True)
-                gr.Slider(label="min_samples_leaf", minimum=1, maximum=20, step=1, interactive=True)
-                gr.Dropdown(label="max_features", choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], interactive=True)
-                gr.Textbox(label="max_leaf_nodes", interactive=True)
+                dtc_criterion_dd = gr.Dropdown(label="criterion", 
+                                               choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], interactive=True)
+                dtc_max_depth_tb = gr.Textbox(label="max_depth", interactive=True)
+                dtc_min_samples_split_sldr = gr.Slider(label="min_samples_split", minimum=2, maximum=20, step=1, interactive=True)
+                dtc_min_samples_leaf_sldr = gr.Slider(label="min_samples_leaf", minimum=1, maximum=20, step=1, interactive=True)
+                dtc_max_features_dd = gr.Dropdown(label="max_features", 
+                                                  choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], interactive=True)
+                dtc_max_leaf_nodes_tb = gr.Textbox(label="max_leaf_nodes", interactive=True)
                 
 
-                gr.Slider(label="Learning Rate", minimum=0.0001, maximum=0.1, step=0.0001, interactive=True)
+                test_lr_sldr = gr.Slider(label="Learning Rate", minimum=0.0001, maximum=0.1, step=0.0001, interactive=True)
 
                 gr.Button(value="Train")
             with gr.Column():
@@ -151,7 +163,17 @@ with gr.Blocks() as demo:
                 [["Titanic", ["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], True, "standard", 70, 10, 20]],
                 [dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr]
     )
+
     submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr], outputs=[dataset_dd, inputs_dd])
+
+    model_components = {
+                        "all": [dtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, test_lr_sldr],
+                        "model_selector": [model_dd],
+                        "decision_tree_classifier":[dtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb],
+                        "test": [test_lr_sldr]
+    }
+    
+    model_dd.change(fn=model_dd_change, inputs=model_dd, outputs=model_components["all"])
 
 demo.launch(enable_queue=True, debug=True)
 
