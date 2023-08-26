@@ -31,7 +31,8 @@ if __name__ == '__main__':
     )
     model_config = DecisionTreeModelConfig(criterion="gini", min_samples_split=2, min_samples_leaf=1)
 
-    accuracy, recall, precision, f1 = training(dataset_config, model_config)
+    plot, indicator = training(dataset_config, model_config)
+    accuracy, recall, precision, f1 = indicator
     print(f"Accuracy: {accuracy:.2f}")
     print(f"Recall: {recall:.2f}")
     print(f"Precision: {precision:.2f}")
