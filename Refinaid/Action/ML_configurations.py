@@ -6,6 +6,7 @@ Version: v0.0.1
 '''
 
 
+from typing import Optional, Union
 class DatasetConfig:
     object_col = {
         "Titanic": [['Name', 'Ticket', 'Cabin', 'SibSp'], ['Sex', 'Embarked']]
@@ -38,4 +39,11 @@ class DatasetConfig:
     def _get_y_col(self):
         return self.y_col[self.dataset]
 
-
+class DecisionTreeModelConfig:
+    def __init__(self, criterion: str, min_samples_split: int, min_samples_leaf: int, max_features: Union[int, float, str, None] = None, max_depth: Optional[int] = None, max_leaf_nodes: Optional[int] = None):
+        self.criterion = criterion
+        self.min_samples_split = min_samples_split
+        self.min_samples_leaf = min_samples_leaf
+        self.max_features = max_features
+        self.max_depth = max_depth
+        self.max_leaf_nodes = max_leaf_nodes
