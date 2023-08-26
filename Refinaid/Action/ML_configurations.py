@@ -9,11 +9,13 @@ Version: v0.0.1
 from typing import Optional, Union
 class DatasetConfig:
     object_col = {
-        "Titanic": [['Name', 'Ticket', 'Cabin', 'SibSp'], ['Sex', 'Embarked']]
+        "Titanic": [['Name', 'Ticket', 'Cabin', 'SibSp'], ['Sex', 'Embarked']],
+        "Diabetes": [[], []]
     }
 
     y_col = {
-        "Titanic": ["Survived"]
+        "Titanic": ["Survived"],
+        "Diabetes": ["Outcome"]
     }
 
     def __init__(self, dataset: str, select_col: list[str], handling_missing_value: bool, scaling: str, data_split: list[float]):

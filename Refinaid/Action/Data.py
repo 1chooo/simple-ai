@@ -56,5 +56,3 @@ def get_training_data(parameters: DatasetConfig):
     X, y = data_generating(df, parameters)
     X = data_scaling(X, parameters.scaling) if parameters.scaling else X
     return data_split(X, y, parameters.data_split)
-
-
