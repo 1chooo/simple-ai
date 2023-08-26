@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+'''
+Create Date: 2023/08/26
+Author: @ReeveWu
+Version: v0.0.1
+'''
+
 from Data import get_training_data
 from ML_configurations import DatasetConfig, DecisionTreeModelConfig
 from Base import DecisionTreeWrapper

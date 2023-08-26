@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+'''
+Create Date: 2023/08/26
+Author: @ReeveWu
+Version: v0.0.1
+'''
+
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
