@@ -51,3 +51,10 @@ class DecisionTreeModelConfig:
         self.max_features = max_features
         self.max_depth = max_depth
         self.max_leaf_nodes = max_leaf_nodes
+
+class KNNModelConfig:
+    def __init__(self, n_neighbors: int, weights: str, algorithm: str):
+        self.n_neighbors = n_neighbors
+        self.weights = weights
+        self.algorithm = algorithm
+
