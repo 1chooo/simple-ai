@@ -5,6 +5,7 @@ Author: @ReeveWu, @1chooo
 Version: v0.0.1
 '''
 
+import numpy as np
 import pandas as pd
 from Load import get_dataframe
 from ML_configurations import DatasetConfig
@@ -13,7 +14,45 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-def handling_missing_value(df: pd.DataFrame):
+def handling_missing_value(df: pd.DataFrame, dataset: str):
+    def handle_missing_value_titanic(df: pd.DataFrame) -> pd.DataFrame:
+        df['Embarked'] = df['Embarked'].fillna('S')
+        df['Fare'] = df['Fare'].fillna(df['Fare'].median())
+        age_avg = df['Age'].mean()
+        age_std = df['Age'].std()
+        age_null_count = df['Age'].isnull().sum()
+        age_null_random_list = np.random.randint(age_avg - age_std, age_avg + age_std, size=age_null_count)
+        df.loc[np.isnan(df['Age']), 'Age'] = age_null_random_list
+        df['Age'] = df['Age'].astype(int)
+        return df.dropna()
+
+    def handle_missing_value_house_prices(df: pd.DataFrame):
+        df['Alley'] = df['Alley'].fillna('No alley access')
+        df['BsmtQual'] = df['BsmtQual'].fillna('No Basement')
+        df['BsmtCond'] = df['BsmtCond'].fillna('No Basement')
+        df['BsmtExposure'] = df['BsmtExposure'].fillna('No Basement')
+        df['BsmtFinType1'] = df['BsmtFinType1'].fillna('No Basement')
+        df['BsmtFinType2'] = df['BsmtFinType2'].fillna('No Basement')
+        df['FireplaceQu'] = df['FireplaceQu'].fillna('FireplaceQu')
+        df['GarageType'] = df['GarageType'].fillna('No Garbage')
+        df['GarageFinish'] = df['GarageFinish'].fillna('No Garbage')
+        df['GarageQual'] = df['GarageQual'].fillna('No Garbage')
+        df['GarageCond'] = df['GarageCond'].fillna('No Garbage')
+        df['PoolQC'] = df['PoolQC'].fillna('No Pool')
+        df['Fence'] = df['Fence'].fillna('No Fence')
+        for x in df:
+            if any(df[x].isnull()):
+                if df[x].dtype == 'object' or df[x].dtype == 'bool':
+                    df[x] = df[x].fillna(df[x].mode()[0])
+                else:
+                    df[x] = df[x].fillna(df[x].mean())
+        return df.dropna()
+
+
+    if dataset == "Titanic":
+        return handle_missing_value_titanic(df)
+    elif dataset == "House Prices":
+        return handle_missing_value_house_prices(df)
     return df.dropna()
 
 def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
@@ -52,24 +91,7 @@ def data_split(X: pd.DataFrame, y: pd.DataFrame, split_ratio: list):
 
 def get_training_data(parameters: DatasetConfig):
     df = get_dataframe(parameters.dataset)[parameters.select_col]
-    df = handling_missing_value(df) if parameters.handling_missing_value else df
+    df = handling_missing_value(df, parameters.dataset) if parameters.handling_missing_value else df
     X, y = data_generating(df, parameters)
     X = data_scaling(X, parameters.scaling) if parameters.scaling else X
     return data_split(X, y, parameters.data_split)
-
-# Example
-if __name__ ==  "__main__" :
-    ex_parameters = DatasetConfig(
-                                  dataset="Titanic",
-                                  select_col=["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"],
-                                  handling_missing_value=True,
-                                  scaling="standard",
-                                  data_split=[0.7, 0.1, 0.2]
-                                 )
-    X_train, X_test, y_train, y_test = get_training_data(ex_parameters)
-    print("X_train:", X_train.shape)
-    print("X_test:", X_test.shape)
-    print("y_train:", y_train.shape)
-    print("y_test:", y_test.shape)
-
-
