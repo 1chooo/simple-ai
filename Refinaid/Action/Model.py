@@ -6,15 +6,21 @@ Version: v0.0.1
 '''
 
 from Data import get_training_data
-from ML_configurations import DatasetConfig, DecisionTreeModelConfig
-from Base import DecisionTreeWrapper
+from ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
+from Base import DecisionTreeWrapper, KNNWrapper
+from typing import Union
 
 
-def training(dataset_config: DatasetConfig, model_config):
+def training(dataset_config: DatasetConfig, model_config: Union[DecisionTreeModelConfig, KNNModelConfig]):
     X_train, X_test, y_train, y_test = get_training_data(dataset_config)
 
     if isinstance(model_config, DecisionTreeModelConfig):
         clf = DecisionTreeWrapper(**model_config.__dict__)
+        clf.fit(X_train, y_train)
+        return clf.analyze(X_test, y_test)
+
+    elif isinstance(model_config, KNNModelConfig):
+        clf = KNNWrapper(**model_config.__dict__)
         clf.fit(X_train, y_train)
         return clf.analyze(X_test, y_test)
 
@@ -31,7 +37,16 @@ if __name__ == '__main__':
     )
     model_config = DecisionTreeModelConfig(criterion="gini", min_samples_split=2, min_samples_leaf=1)
 
-    plot, indicator = training(dataset_config, model_config)
+    _, indicator = training(dataset_config, model_config)
+    accuracy, recall, precision, f1 = indicator
+    print(f"Accuracy: {accuracy:.2f}")
+    print(f"Recall: {recall:.2f}")
+    print(f"Precision: {precision:.2f}")
+    print(f"F1 Score: {f1:.2f}")
+
+    model_config = KNNModelConfig(n_neighbors=5, weights="uniform", algorithm="auto")
+
+    _, indicator = training(dataset_config, model_config)
     accuracy, recall, precision, f1 = indicator
     print(f"Accuracy: {accuracy:.2f}")
     print(f"Recall: {recall:.2f}")
