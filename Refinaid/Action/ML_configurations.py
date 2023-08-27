@@ -10,15 +10,17 @@ from typing import Optional, Union
 class DatasetConfig:
     object_col = {
         "Titanic": [['Name', 'Ticket', 'Cabin', 'SibSp'], ['Sex', 'Embarked']],
-        "Diabetes": [[], []]
+        "Diabetes": [[], []],
+        "House Prices": [[], ['MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities', 'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2', 'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual', 'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual', 'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature', 'SaleType', 'SaleCondition']]
     }
 
     y_col = {
         "Titanic": ["Survived"],
-        "Diabetes": ["Outcome"]
+        "Diabetes": ["Outcome"],
+        "House Prices": ['SalePrice']
     }
 
-    def __init__(self, dataset: str, select_col: list[str], handling_missing_value: bool, scaling: str, data_split: list[float]):
+    def __init__(self, dataset: str, select_col: list[str], handling_missing_value: bool, scaling: Union[str, None], data_split: list[float]):
         self.dataset = dataset
         self.select_col = select_col
         self.handling_missing_value = handling_missing_value

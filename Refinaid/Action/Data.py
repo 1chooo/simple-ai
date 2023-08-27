@@ -26,8 +26,33 @@ def handling_missing_value(df: pd.DataFrame, dataset: str):
         df['Age'] = df['Age'].astype(int)
         return df.dropna()
 
+    def handle_missing_value_house_prices(df: pd.DataFrame):
+        df['Alley'] = df['Alley'].fillna('No alley access')
+        df['BsmtQual'] = df['BsmtQual'].fillna('No Basement')
+        df['BsmtCond'] = df['BsmtCond'].fillna('No Basement')
+        df['BsmtExposure'] = df['BsmtExposure'].fillna('No Basement')
+        df['BsmtFinType1'] = df['BsmtFinType1'].fillna('No Basement')
+        df['BsmtFinType2'] = df['BsmtFinType2'].fillna('No Basement')
+        df['FireplaceQu'] = df['FireplaceQu'].fillna('FireplaceQu')
+        df['GarageType'] = df['GarageType'].fillna('No Garbage')
+        df['GarageFinish'] = df['GarageFinish'].fillna('No Garbage')
+        df['GarageQual'] = df['GarageQual'].fillna('No Garbage')
+        df['GarageCond'] = df['GarageCond'].fillna('No Garbage')
+        df['PoolQC'] = df['PoolQC'].fillna('No Pool')
+        df['Fence'] = df['Fence'].fillna('No Fence')
+        for x in df:
+            if any(df[x].isnull()):
+                if df[x].dtype == 'object' or df[x].dtype == 'bool':
+                    df[x] = df[x].fillna(df[x].mode()[0])
+                else:
+                    df[x] = df[x].fillna(df[x].mean())
+        return df.dropna()
+
+
     if dataset == "Titanic":
         return handle_missing_value_titanic(df)
+    elif dataset == "House Prices":
+        return handle_missing_value_house_prices(df)
     return df.dropna()
 
 def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
