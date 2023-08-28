@@ -4,29 +4,29 @@ We want to make contributing to this project as easy and transparent as possible
 
 ## Forking this Repository:
 
-Fork the `ai-for-beginner` repository into your own workspace.
+Fork the `simple-ai` repository into your own workspace.
 
 ## Cloning the Repository to Your Workspace:
 
 ```shell
-$ git clone git@github.com:<your_workspace_name>/ai-for-beginner.git
+$ git clone git@github.com:<your_workspace_name>/simple-ai.git
 ```
 
 ## Setting Upstream Remote:
 ```shell=
-$ git remote add upstream git@github.com:1chooo/ai-for-beginner.git
+$ git remote add upstream git@github.com:1chooo/simple-ai.git
 
 $ git remote -v
-origin  git@github.com:<your_user_name>/ai-for-beginner.git (fetch)
-origin  git@github.com:<your_user_name>/ai-for-beginner.git (push)
-upstream        git@github.com:1chooo/ai-for-beginner.git (fetch)
-upstream        git@github.com:1chooo/ai-for-beginner.git (push)
+origin  git@github.com:<your_user_name>/simple-ai.git (fetch)
+origin  git@github.com:<your_user_name>/simple-ai.git (push)
+upstream        git@github.com:1chooo/simple-ai.git (fetch)
+upstream        git@github.com:1chooo/simple-ai.git (push)
 ```
 ## Pull Requests:
 If you have any valuable ideas to contribute, please create a pull request and provide details about the outstanding work you've done.
 
 ## Issue Reporting:
-If you encounter any problems while contributing to this project, please report the issues in the [ai-for-beginner/issues](https://github.com/1chooo/ai-for-beginner/issues) section.
+If you encounter any problems while contributing to this project, please report the issues in the [simple-ai/issues](https://github.com/1chooo/simple-ai/issues) section.
 
 ### Important Notes:
 > [!IMPORTANT]  
