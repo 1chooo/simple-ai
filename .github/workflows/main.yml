@@ -35,8 +35,8 @@ jobs:
       run: |
         echo "All Tests are PASS!"
     
-        - name: Build MkDocs
-        run: mkdocs build
+    - name: Build MkDocs
+      run: mkdocs build
   
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
