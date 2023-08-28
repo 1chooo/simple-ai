@@ -14,7 +14,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-def handling_missing_value(df: pd.DataFrame, dataset: str):
+def handling_missing_value(df: pd.DataFrame, dataset: str, handle: str):
     def handle_missing_value_titanic(df: pd.DataFrame) -> pd.DataFrame:
         df['Embarked'] = df['Embarked'].fillna('S')
         df['Fare'] = df['Fare'].fillna(df['Fare'].median())
@@ -48,12 +48,14 @@ def handling_missing_value(df: pd.DataFrame, dataset: str):
                     df[x] = df[x].fillna(df[x].mean())
         return df.dropna()
 
-
-    if dataset == "Titanic":
-        return handle_missing_value_titanic(df)
-    elif dataset == "House Prices":
-        return handle_missing_value_house_prices(df)
-    return df.dropna()
+    if handle == "by columns":
+        if dataset == "Titanic":
+            return handle_missing_value_titanic(df)
+        elif dataset == "House Prices":
+            return handle_missing_value_house_prices(df)
+        return df.dropna()
+    else:
+        return df.dropna()
 
 def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
     origin_df = df.copy()
@@ -91,7 +93,7 @@ def data_split(X: pd.DataFrame, y: pd.DataFrame, split_ratio: list):
 
 def get_training_data(parameters: DatasetConfig):
     df = get_dataframe(parameters.dataset)[parameters.select_col]
-    df = handling_missing_value(df, parameters.dataset) if parameters.handling_missing_value else df
+    df = handling_missing_value(df, parameters.dataset, parameters.handling_missing_value)
     X, y = data_generating(df, parameters)
     X = data_scaling(X, parameters.scaling) if parameters.scaling else X
     return data_split(X, y, parameters.data_split)

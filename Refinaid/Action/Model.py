@@ -31,7 +31,7 @@ if __name__ == '__main__':
         dataset="Titanic",
         select_col=["PassengerId", "Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin",
                     "Embarked"],
-        handling_missing_value=True,
+        handling_missing_value="by column",
         scaling="standard",
         data_split=[0.7, 0.1, 0.2]
     )
