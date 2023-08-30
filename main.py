@@ -54,7 +54,8 @@ model_mapping = {
                 "Standard": "standard",
                 "Min-Max": "min-max",
                 "By Columns": "by_columns",
-                "None": None
+                "None": None,
+                "Drop Nan": None
                 
 }
 
@@ -122,13 +123,14 @@ def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_sca
         else:
             data_summary_text += f"{parameter}: {variable_value}\n"
 
-    print(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
+    # print(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
     dataset_config=DatasetConfig(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
     
     gr.Info("Setting Updated")
     return data_summary.update(value=data_summary_text)
 
 def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, knc_md, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd):
+    output_list = []
 
     if select_model == "Decision Tree Classifier":
         ddtc_max_features_dd = tc_max_features_dd if dtc_max_features_dd != "None" else None
@@ -136,8 +138,32 @@ def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dt
     elif select_model == "K Neighbor Classifier":
         model_config = KNNModelConfig(knc_n_nbr_sldr, knc_weights_dd, knc_althm_dd)
     
-    output = training(dataset_config, model_config)
-    print(output)
+    figures, evaluations = training(dataset_config, model_config)
+
+    img_components = [train_img1, train_img2, train_img3]
+
+    for i, component in enumerate(img_components):
+        if figures[i] != None:
+            output_list.append(component.update(value=figures[i], visible=True))
+        else:
+            output_list.append(component.update(visible=False))
+
+    
+    # if figures[0] != None:
+    #     output_list.append(train_img1.update(value=figures[0], visible=True))
+    # else:
+    #     output_list.append(train_img1.update(visible=False))
+
+    # if figures[1] != None:
+    #     output_list.append(train_img2.update(value=figures[1], visible=True))
+    # else:
+    #     output_list.append(train_img2.update(visible=False))
+
+    # if figures[2] != None:
+    #     output_list.append(train_img3.update(value=figures[2], visible=True))
+    # else:
+    #     output_list.append(train_img3.update(visible=False))
+    return *output_list,
     
 
     
@@ -196,8 +222,9 @@ with gr.Blocks() as demo:
 
                 train_btn = gr.Button(value="Train")
             with gr.Column():
-                plot_dd = gr.Dropdown(label="Select Plot", choices=dropdown_options["plots"])
-                gr.Plot()
+                train_img1 = gr.Plot(interactive=True)
+                train_img2 = gr.Plot(interactive=True)
+                train_img3 = gr.Plot(interactive=True)
 
     with gr.Tab("Result"):
         gr.Markdown(f"{explanatory_text['result']['title']}\n{explanatory_text['result']['body']}")
@@ -209,7 +236,7 @@ with gr.Blocks() as demo:
             gr.Textbox("hello")
 
     gr.Examples(
-                [["Titanic", ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], True, "standard", 70, 10, 20]],
+                [["Titanic", ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], "Drop Nan", "None", 70, 10, 20]],
                 [dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr]
     )
 
@@ -222,7 +249,7 @@ with gr.Blocks() as demo:
     }
 
     submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr], outputs=[data_summary])
-    train_btn.click(fn=train_btn_click, inputs=[model_dd, *model_components["all"]], outputs=[])
+    train_btn.click(fn=train_btn_click, inputs=[model_dd, *model_components["all"]], outputs=[train_img1, train_img2, train_img3])
     
     model_dd.change(fn=model_dd_change, inputs=model_dd, outputs=model_components["all"])
 
