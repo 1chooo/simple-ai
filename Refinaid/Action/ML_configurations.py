@@ -26,11 +26,8 @@ class DatasetConfig:
         self.scaling = scaling
         self.data_split = data_split
         self.y_col = self._get_y_col()
-        print("sc", select_col)
-        print("syc", self.y_col)
         select_col.append(self.y_col[0])
-        self.select_col = select_col 
-        print("ssc", self.select_col)
+        self.select_col = select_col
         self.col_onehot = self._get_col_onehot()
         self.col_label = self._get_col_label()
         self.col_remaining = self._get_col_remaining()
