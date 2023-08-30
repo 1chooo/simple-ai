@@ -27,7 +27,7 @@ dropdown_options = {
                     "model_parameters":{
                                         "decision_tree_classifier": {
                                               "criterion": ["gini", "entropy", "log_loss"],
-                                              "max_features": ["sqrt", "log2"]},
+                                              "max_features": ["None", "sqrt", "log2"]},
                                         "k_neighbors_classifier": {
                                             "weights": ["uniform", "distance"],
                                             "algorithm": ["auto", "ball_tree", "kd_tree", "brute"]}
@@ -133,8 +133,8 @@ def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dt
     output_list = []
 
     if select_model == "Decision Tree Classifier":
-        ddtc_max_features_dd = tc_max_features_dd if dtc_max_features_dd != "None" else None
-        model_config = DecisionTreeModelConfig(dtc_criterion_dd, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, ddtc_max_features_dd, eval(dtc_max_depth_tb), eval(dtc_max_leaf_nodes_tb))
+        dtc_max_features_dd = dtc_max_features_dd if dtc_max_features_dd != "None" else None
+        model_config = DecisionTreeModelConfig(dtc_criterion_dd, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, eval(dtc_max_depth_tb), eval(dtc_max_leaf_nodes_tb))
     elif select_model == "K Neighbor Classifier":
         model_config = KNNModelConfig(knc_n_nbr_sldr, knc_weights_dd, knc_althm_dd)
     
@@ -190,7 +190,7 @@ with gr.Blocks() as demo:
             with gr.Column():
                 data_summary = gr.Textbox(label="Data Summary", lines=7, interactive=True)
                 model_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"], interactive=True)
-                
+            with gr.Column():
                 # decision_tree_classifier
                 dtc_md = gr.Markdown("### Decision Tree Classifier", interactive=True, visible=False)
                 dtc_criterion_dd = gr.Dropdown(label="Criterion", 
@@ -209,13 +209,15 @@ with gr.Blocks() as demo:
                 knc_althm_dd = gr.Dropdown(label="Algorithm", choices=dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], value="auto", interactive=True, visible=False)
 
 
-                train_btn = gr.Button(value="Train")
-            with gr.Column():
-                train_df = gr.DataFrame(headers=["Accuracy", "Recall", "Precision", "F1"], interactive=True, row_count=(1, "fixed"), col_count=(4, "fixed"))
-                train_img1 = gr.Plot(interactive=True)
-                train_img2 = gr.Plot(interactive=True)
-                train_img3 = gr.Plot(interactive=True)
+        train_btn = gr.Button(value="Train")
+        gr.Markdown("## Training Result")
+        train_df = gr.DataFrame(headers=["Accuracy", "Recall", "Precision", "F1"], interactive=True, row_count=(1, "fixed"), col_count=(4, "fixed"))
 
+        with gr.Row():
+            train_img1 = gr.Plot(interactive=True)
+            train_img2 = gr.Plot(interactive=True)
+            train_img3 = gr.Plot(interactive=True)
+            
     with gr.Tab("Result"):
         gr.Markdown(f"{explanatory_text['result']['title']}\n{explanatory_text['result']['body']}")
         with gr.Row():
