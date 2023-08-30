@@ -18,13 +18,14 @@ explanatory_text = {
 dropdown_options = {
                     "datasets": ["ds1", "ds2", "ds3"],
                     "inputs": ["ip1", "ip2", "ip3"],
+                    "miss_value": ["Drop Nan", "By Column"],
                     "data_scalings": ["Standard", "Min-Max"],
                     "models": ["Decision Tree Classifier", "K Neighbor Classifier"],
                     "plots": ["plot1", "plot2", "plot3"],
                     "model_parameters":{
                                         "decision_tree_classifier": {
                                               "criterion": ["gini", "entropy", "log_loss"],
-                                              "max_features": ["auto", "sqrt", "log2"]},
+                                              "max_features": ["sqrt", "log2"]},
                                         "k_neighbors_classifier": {
                                             "weights": ["uniform", "distance"],
                                             "algorithm": ["auto", "ball_tree", "kd_tree", "brute"]}
@@ -124,7 +125,7 @@ with gr.Blocks() as demo:
                 inputs_dd = gr.Dropdown(label="Select Mutiple Inputs", choices=dropdown_options["inputs"], multiselect=True)
                 # with gr.Accordion("Options"):
                 gr.Markdown(f"### Missing Values Handling")
-                miss_value_chkbox = gr.Checkbox(label="Enable")
+                miss_value_chkbox = gr.Radio(label="Select a Method", choices=dropdown_options["miss_value"], interactive=True)
                 gr.Markdown(f"### Data Scaling")
                 data_scale_dd = gr.Dropdown(choices=dropdown_options["data_scalings"], label="Please select a method", interactive=True)
                 gr.Markdown(f"### Data Split\nTotal should be 100%")

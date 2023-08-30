@@ -20,7 +20,7 @@ class DatasetConfig:
         "House Prices": ['SalePrice']
     }
 
-    def __init__(self, dataset: str, select_col: list[str], handling_missing_value: bool, scaling: Union[str, None], data_split: list[float]):
+    def __init__(self, dataset: str, select_col: list[str], handling_missing_value: str, scaling: Union[str, None], data_split: list[float]):
         self.dataset = dataset
         self.select_col = select_col
         self.handling_missing_value = handling_missing_value
