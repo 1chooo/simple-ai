@@ -36,6 +36,9 @@ class DecisionTreeWrapper(ModelWrapper):
     def fit(self, X, y):
         super().fit(X, y)
     def _plot_analyze(self, X_test, y_test, y_pred):
+        tree.plot_tree(self.model)
+        figure_tree = plt.gcf()
+
         cm = confusion_matrix(y_test, y_pred, labels=self.model.classes_)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=self.model.classes_)
         disp.plot()
@@ -44,10 +47,7 @@ class DecisionTreeWrapper(ModelWrapper):
         svc_disp = RocCurveDisplay.from_estimator(self.model, X_test, y_test)
         svc_disp.plot()
         figure_roc = plt.gcf()
-
-        tree.plot_tree(self.model)
-        figure_tree = plt.gcf()
-
+        # print([id(figure_tree), id(figure_cm), id(figure_roc)])
         return [figure_tree, figure_cm, figure_roc]
 
     def analyze(self, X_test, y_test):
