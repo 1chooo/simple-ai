@@ -140,7 +140,11 @@ def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dt
     
     figures, evaluations = training(dataset_config, model_config)
 
+    evaluations = list(map(str,evaluations))
+
     img_components = [train_img1, train_img2, train_img3]
+
+    output_list.append(train_df.update(value=[evaluations]))
 
     for i, component in enumerate(img_components):
         if figures[i] != None:
@@ -148,21 +152,6 @@ def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dt
         else:
             output_list.append(component.update(visible=False))
 
-    
-    # if figures[0] != None:
-    #     output_list.append(train_img1.update(value=figures[0], visible=True))
-    # else:
-    #     output_list.append(train_img1.update(visible=False))
-
-    # if figures[1] != None:
-    #     output_list.append(train_img2.update(value=figures[1], visible=True))
-    # else:
-    #     output_list.append(train_img2.update(visible=False))
-
-    # if figures[2] != None:
-    #     output_list.append(train_img3.update(value=figures[2], visible=True))
-    # else:
-    #     output_list.append(train_img3.update(visible=False))
     return *output_list,
     
 
@@ -222,6 +211,7 @@ with gr.Blocks() as demo:
 
                 train_btn = gr.Button(value="Train")
             with gr.Column():
+                train_df = gr.DataFrame(headers=["Accuracy", "Recall", "Precision", "F1"], interactive=True, row_count=(1, "fixed"), col_count=(4, "fixed"))
                 train_img1 = gr.Plot(interactive=True)
                 train_img2 = gr.Plot(interactive=True)
                 train_img3 = gr.Plot(interactive=True)
@@ -249,7 +239,7 @@ with gr.Blocks() as demo:
     }
 
     submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr], outputs=[data_summary])
-    train_btn.click(fn=train_btn_click, inputs=[model_dd, *model_components["all"]], outputs=[train_img1, train_img2, train_img3])
+    train_btn.click(fn=train_btn_click, inputs=[model_dd, *model_components["all"]], outputs=[train_df, train_img1, train_img2, train_img3])
     
     model_dd.change(fn=model_dd_change, inputs=model_dd, outputs=model_components["all"])
 
