@@ -70,6 +70,9 @@ extra:
 
 nav:
     - Overview: index.md
+    - Release Notes: 
+        - Refinaid - v0.0.1: wiki/news/v0_0_1.md
     - Contributing: CONTRIBUTING.md
+    - About: about.md
     - Reference: REFERENCE.md
     - Report Issues: https://github.com/1chooo/ai-for-beginner/issues
