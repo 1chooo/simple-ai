@@ -16,30 +16,47 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 def handling_missing_value(df: pd.DataFrame, dataset: str, handle: str):
     def handle_missing_value_titanic(df: pd.DataFrame) -> pd.DataFrame:
-        df['Embarked'] = df['Embarked'].fillna('S')
-        df['Fare'] = df['Fare'].fillna(df['Fare'].median())
-        age_avg = df['Age'].mean()
-        age_std = df['Age'].std()
-        age_null_count = df['Age'].isnull().sum()
-        age_null_random_list = np.random.randint(age_avg - age_std, age_avg + age_std, size=age_null_count)
-        df.loc[np.isnan(df['Age']), 'Age'] = age_null_random_list
-        df['Age'] = df['Age'].astype(int)
+        try:
+            df['Embarked'] = df['Embarked'].fillna('S')
+        except KeyError:
+            pass
+        try:
+            df['Fare'] = df['Fare'].fillna(df['Fare'].median())
+        except KeyError:
+            pass
+        try:
+            age_avg = df['Age'].mean()
+            age_std = df['Age'].std()
+            age_null_count = df['Age'].isnull().sum()
+            age_null_random_list = np.random.randint(age_avg - age_std, age_avg + age_std, size=age_null_count)
+            df.loc[np.isnan(df['Age']), 'Age'] = age_null_random_list
+            df['Age'] = df['Age'].astype(int)
+        except KeyError:
+            pass
         return df.dropna()
 
     def handle_missing_value_house_prices(df: pd.DataFrame):
-        df['Alley'] = df['Alley'].fillna('No alley access')
-        df['BsmtQual'] = df['BsmtQual'].fillna('No Basement')
-        df['BsmtCond'] = df['BsmtCond'].fillna('No Basement')
-        df['BsmtExposure'] = df['BsmtExposure'].fillna('No Basement')
-        df['BsmtFinType1'] = df['BsmtFinType1'].fillna('No Basement')
-        df['BsmtFinType2'] = df['BsmtFinType2'].fillna('No Basement')
-        df['FireplaceQu'] = df['FireplaceQu'].fillna('FireplaceQu')
-        df['GarageType'] = df['GarageType'].fillna('No Garbage')
-        df['GarageFinish'] = df['GarageFinish'].fillna('No Garbage')
-        df['GarageQual'] = df['GarageQual'].fillna('No Garbage')
-        df['GarageCond'] = df['GarageCond'].fillna('No Garbage')
-        df['PoolQC'] = df['PoolQC'].fillna('No Pool')
-        df['Fence'] = df['Fence'].fillna('No Fence')
+        column_fill_mapping = {
+            'Alley': 'No alley access',
+            'BsmtQual': 'No Basement',
+            'BsmtCond': 'No Basement',
+            'BsmtExposure': 'No Basement',
+            'BsmtFinType1': 'No Basement',
+            'BsmtFinType2': 'No Basement',
+            'FireplaceQu': 'FireplaceQu',
+            'GarageType': 'No Garage',
+            'GarageFinish': 'No Garage',
+            'GarageQual': 'No Garage',
+            'GarageCond': 'No Garage',
+            'PoolQC': 'No Pool',
+            'Fence': 'No Fence'
+        }
+
+        for col, fill_value in column_fill_mapping.items():
+            try:
+                df[col] = df[col].fillna(fill_value)
+            except KeyError:
+                pass
         for x in df:
             if any(df[x].isnull()):
                 if df[x].dtype == 'object' or df[x].dtype == 'bool':
