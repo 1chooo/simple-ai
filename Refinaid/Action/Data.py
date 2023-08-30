@@ -7,8 +7,8 @@ Version: v0.0.1
 
 import numpy as np
 import pandas as pd
-from Load import get_dataframe
-from ML_configurations import DatasetConfig
+from Refinaid.Action.Load import get_dataframe
+from Refinaid.Action.ML_configurations import DatasetConfig
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -48,7 +48,7 @@ def handling_missing_value(df: pd.DataFrame, dataset: str, handle: str):
                     df[x] = df[x].fillna(df[x].mean())
         return df.dropna()
 
-    if handle == "by columns":
+    if handle == "by_columns":
         if dataset == "Titanic":
             return handle_missing_value_titanic(df)
         elif dataset == "House Prices":

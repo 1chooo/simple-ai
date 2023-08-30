@@ -5,9 +5,9 @@ Author: @ReeveWu
 Version: v0.0.1
 '''
 
-from Data import get_training_data
-from ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
-from Base import DecisionTreeWrapper, KNNWrapper
+from Refinaid.Action.Data import get_training_data
+from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
+from Refinaid.Action.Base import DecisionTreeWrapper, KNNWrapper
 from typing import Union
 
 
