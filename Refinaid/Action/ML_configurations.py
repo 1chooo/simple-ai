@@ -29,7 +29,7 @@ class DatasetConfig:
         self.col_label = self._get_col_label()
         self.col_remaining = self._get_col_remaining()
         self.y_col = self._get_y_col()
-        self.select_col = select_col.append(self.y_col)
+        self.select_col = select_col.append(self.y_col[0])
 
     def _get_col_onehot(self):
         return list(set(self.object_col[self.dataset][0]) & set(self.select_col))
