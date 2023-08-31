@@ -5,11 +5,11 @@ Author: @1chooo(Hugo ChunHo Lin)
 Version: v0.0.1
 '''
 
-import gradio as gr
+from Refinaid.gui.Launch import build_ui
 
-def start_gradio() -> None:
+def start_simple_ai() -> None:
     '''
     Main function of the app.
     '''
-    print('Hi', gr.__name__)
+    build_ui()
     
