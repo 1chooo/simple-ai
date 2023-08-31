@@ -7,6 +7,7 @@ Version: v0.0.1
 
 import gradio as gr
 from Refinaid.gui.Information import PageContent
+from Refinaid.gui.Example import get_preprocessing_example
 from typing import Any
 
 class PreprocessingComponent:
@@ -48,25 +49,5 @@ class PreprocessingComponent:
                     gr.Dropdown(label="X Axis", choices=page_content.dropdown_options["datasets"])
                     gr.Dropdown(label="Y Axis", choices=page_content.dropdown_options["datasets"])
         with gr.Row():
-            gr.Examples(
-                [
-                    [
-                        "Titanic", 
-                        ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], 
-                        "Drop Nan", 
-                        "None", 
-                        70, 
-                        10, 
-                        20
-                    ]
-                ],
-                [
-                    self.dataset_dd, 
-                    self.inputs_dd, 
-                    self.miss_value_chkbox, 
-                    self.data_scale_dd, 
-                    self.train_sldr, 
-                    self.valid_sldr, 
-                    self.test_sldr
-                ]
-            )
+            get_preprocessing_example(self,)
+            

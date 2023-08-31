@@ -56,15 +56,15 @@ def build_ui():
 
         global dataset_config
 
-        data_summary_text = get_data_setting(dataset, inputs, miss_value, data_scaling, training, validation, testing)
+        data_summary_dict = get_data_setting(dataset, inputs, miss_value, data_scaling, training, validation, testing)
 
         # print(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
         dataset_config=DatasetConfig(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
         
         gr.Info("Setting Updated")
-        return training_component.data_summary.update(value=data_summary_text)
+        return training_component.data_summary.update(value=data_summary_dict)
 
-    def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, knc_md, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd):
+    def train_btn_click(select_model, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd):
         
         global dataset_config
         output_list = []
@@ -120,14 +120,12 @@ def build_ui():
         
         model_components = {
             "all": [
-                training_component.dtc_md, 
                 training_component.dtc_criterion_dd, 
                 training_component.dtc_max_depth_tb, 
                 training_component.dtc_min_samples_split_sldr, 
                 training_component.dtc_min_samples_leaf_sldr, 
                 training_component.dtc_max_features_dd, 
                 training_component.dtc_max_leaf_nodes_tb, 
-                training_component.knc_md, 
                 training_component.knc_althm_dd, 
                 training_component.knc_n_nbr_sldr, 
                 training_component.knc_weights_dd
@@ -136,7 +134,6 @@ def build_ui():
                 training_component.model_dd
             ],
             "decision_tree_classifier":[
-                training_component.dtc_md, 
                 training_component.dtc_criterion_dd, 
                 training_component.dtc_max_depth_tb, 
                 training_component.dtc_min_samples_split_sldr, 
@@ -145,7 +142,6 @@ def build_ui():
                 training_component.dtc_max_leaf_nodes_tb
             ],
             "k_neighbors_classifier": [
-                training_component.knc_md, 
                 training_component.knc_althm_dd, 
                 training_component.knc_n_nbr_sldr, 
                 training_component.knc_weights_dd
