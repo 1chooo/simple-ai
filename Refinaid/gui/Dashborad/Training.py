@@ -28,14 +28,14 @@ class TrainingComponent:
     train_img2 = None
     train_img3 = None
 
-    def __init__(self, ) -> None:
-        pass
+    def __init__(self, page_content: PageContent) -> None:
+        self.page_content = page_content
 
     def get_training(self, ):
-        page_content = PageContent()
-        gr.Markdown(f"{page_content.explanatory_text['training']['title']}\n{page_content.explanatory_text['training']['body']}")
+        gr.Markdown(f"{self.page_content.explanatory_text['training']['title']}\n{self.page_content.explanatory_text['training']['body']}")
         with gr.Row():
             with gr.Column():
+                gr.Markdown("### Data You have picked!!!")
                 self.data_summary = gr.DataFrame(
                     headers=[
                         "Parameters",
@@ -46,24 +46,51 @@ class TrainingComponent:
                     interactive=False,
                 )
             with gr.Column():
-                self.model_dd = gr.Dropdown(label="Select Model", choices=page_content.dropdown_options["models"], interactive=True)
+                self.model_dd = gr.Dropdown(label="Select Model", choices=self.page_content.dropdown_options["models"], interactive=True)
                 # decision_tree_classifier
                 self.dtc_criterion_dd = gr.Dropdown(label="Criterion", 
-                                            choices=page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)
+                                            choices=self.page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)
                 self.dtc_max_depth_tb = gr.Textbox(label="Max Depth", value="None", interactive=True, visible=False)
                 self.dtc_min_samples_split_sldr = gr.Slider(label="Minimum Samples Split", minimum=2, maximum=20, step=1, value=2, interactive=True, visible=False)
                 self.dtc_min_samples_leaf_sldr = gr.Slider(label="Minimum Samples Leaf", minimum=1, maximum=20, step=1, value=1, interactive=True, visible=False)
                 self.dtc_max_features_dd = gr.Dropdown(label="Max Features", 
-                                                choices=page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], value="None", interactive=True, visible=False)
-                self.dtc_max_leaf_nodes_tb = gr.Textbox(label="Max Leaf Nodes", value="None", interactive=True, visible=False)
+                                                choices=self.page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], value="None", interactive=True, visible=False)
+                self.dtc_max_leaf_nodes_tb = gr.Textbox(
+                    label="Max Leaf Nodes", 
+                    value="None", 
+                    interactive=True, 
+                    visible=False
+                )
                 
                 # k_neighbors_classifier
-                self.knc_n_nbr_sldr = gr.Slider(label="N Neighbors", value=5, interactive=True, minimum=1, maximum=20, step=1, visible=False)
-                self.knc_weights_dd = gr.Dropdown(label="Weights", choices=page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["weights"], value="uniform", interactive=True, visible=False)
-                self.knc_althm_dd = gr.Dropdown(label="Algorithm", choices=page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], value="auto", interactive=True, visible=False)
+                self.knc_n_nbr_sldr = gr.Slider(
+                    label="N Neighbors", 
+                    value=5, 
+                    interactive=True, 
+                    minimum=1, 
+                    maximum=20, 
+                    step=1, 
+                    visible=False
+                )
+                self.knc_weights_dd = gr.Dropdown(
+                    label="Weights", 
+                    choices=self.page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["weights"], 
+                    value="uniform", 
+                    interactive=True, 
+                    visible=False
+                )
+                self.knc_althm_dd = gr.Dropdown(
+                    label="Algorithm", 
+                    choices=self.page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], 
+                    value="auto", 
+                    interactive=True, 
+                    visible=False
+                )
 
         with gr.Row():
-            self.train_btn = gr.Button(value="Train")
+            self.train_btn = gr.Button(
+                value="Train"
+            )
         with gr.Row():
             gr.Markdown("## Training Result")
         with gr.Row():
