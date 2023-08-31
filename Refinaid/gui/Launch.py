@@ -34,31 +34,24 @@ def build_ui():
 
         comp_output_list = []
         selected_model = model_mapping[model_dd]
-        # print(model_dd)
-        # print(selected_model)
 
         for key in model_components.keys():
             if key not in ["all", "model_selector"]:
                 if key == selected_model:
                     for i in range(len(model_components[key])):
-                        # print(f"key:{key}\ni:{i}\nitem:{model_components[key][i]}")
                         comp_output_list.append(model_components[key][i].update(visible=True))
                 else:
                     for i in range(len(model_components[key])):
-                        # print(f"key:{key}\ni:{i}\nitem:{model_components[key][i]}")
                         comp_output_list.append(model_components[key][i].update(visible=False))
-        # print(comp_output_list)
 
         return *comp_output_list,
 
     def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
-        # print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
 
         global dataset_config
 
         data_summary_dict = get_data_setting(dataset, inputs, miss_value, data_scaling, training, validation, testing)
 
-        # print(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
         dataset_config=DatasetConfig(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
         
         gr.Info("Setting Updated")
@@ -93,20 +86,24 @@ def build_ui():
 
         for i, component in enumerate(img_components):
             if figures[i] != None:
-                output_list.append(component.update(value=figures[i], visible=True))
+                output_list.append(
+                    component.update(value=figures[i], visible=True)
+                )
             else:
-                output_list.append(component.update(visible=False))
+                output_list.append(
+                    component.update(visible=False)
+                )
 
         return *output_list,
 
     with gr.Blocks() as demo:
         get_header()
         with gr.Tab("Preprocess"):
-            preprocessing_component = PreprocessingComponent()
+            preprocessing_component = PreprocessingComponent(page_content)
             preprocessing_component.get_preprocessing()
             
         with gr.Tab("Training"):
-            training_component = TrainingComponent()
+            training_component = TrainingComponent(page_content)
             training_component.get_training()
                 
         with gr.Tab("Result"):

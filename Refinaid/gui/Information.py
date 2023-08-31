@@ -53,14 +53,3 @@ class PageContent:
             }
 
         }
-
-        # self.model_parameters = {
-        #                     "decision_tree_classifier": {
-        #                                             "criterion": None,
-        #                                             "max_depth": None,
-        #                                             "min_samples_split": None,
-        #                                             "min_samples_leaf": None,
-        #                                             "max_features": None,
-        #                                             "max_leaf_nodes": None
-        #                     }
-        # }
