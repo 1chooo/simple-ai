@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 Create Date: 2023/08/28
-Author: @1chooo(Hugo ChunHo Lin)
+Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
 Version: v0.0.1
 '''
 
@@ -12,6 +12,7 @@ from Refinaid.gui.Information import PageContent
 from Refinaid.gui.Utils import get_data_setting
 from Refinaid.gui.Header import get_header
 from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
+from Refinaid.gui.Dashborad.Training import TrainingComponent
 
 def build_ui():
 
@@ -28,10 +29,6 @@ def build_ui():
     }
 
     model_components = {}
-
-    current_model = "decision_tree_classifier"
-
-    dataset_config = None
 
     def model_dd_change(model_dd):
 
@@ -51,10 +48,8 @@ def build_ui():
                         # print(f"key:{key}\ni:{i}\nitem:{model_components[key][i]}")
                         comp_output_list.append(model_components[key][i].update(visible=False))
         # print(comp_output_list)
-                    
 
         return *comp_output_list,
-
 
     def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
         # print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
@@ -67,7 +62,7 @@ def build_ui():
         dataset_config=DatasetConfig(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
         
         gr.Info("Setting Updated")
-        return data_summary.update(value=data_summary_text)
+        return training_component.data_summary.update(value=data_summary_text)
 
     def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, knc_md, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd):
         
@@ -80,14 +75,21 @@ def build_ui():
         elif select_model == "K Neighbor Classifier":
             model_config = KNNModelConfig(knc_n_nbr_sldr, knc_weights_dd, knc_althm_dd)
         
-        print(dataset_config)
         figures, evaluations = training(dataset_config, model_config)
 
         evaluations = list(map(str,evaluations))
 
-        img_components = [train_img1, train_img2, train_img3]
+        img_components = [
+            training_component.train_img1, 
+            training_component.train_img2, 
+            training_component.train_img3
+        ]
 
-        output_list.append(train_df.update(value=[evaluations]))
+        output_list.append(
+            training_component.train_df.update(
+                value=[evaluations]
+            )
+        )
 
         for i, component in enumerate(img_components):
             if figures[i] != None:
@@ -104,38 +106,8 @@ def build_ui():
             preprocessing_component.get_preprocessing()
             
         with gr.Tab("Training"):
-            gr.Markdown(f"{page_content.explanatory_text['training']['title']}\n{page_content.explanatory_text['training']['body']}")
-            with gr.Row():
-                with gr.Column():
-                    data_summary = gr.Textbox(label="Data Summary", lines=7, interactive=True)
-                    model_dd = gr.Dropdown(label="Select Model", choices=page_content.dropdown_options["models"], interactive=True)
-                with gr.Column():
-                    # decision_tree_classifier
-                    dtc_md = gr.Markdown("### Decision Tree Classifier", interactive=True, visible=False)
-                    dtc_criterion_dd = gr.Dropdown(label="Criterion", 
-                                                choices=page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)
-                    dtc_max_depth_tb = gr.Textbox(label="Max Depth", value="None", interactive=True, visible=False)
-                    dtc_min_samples_split_sldr = gr.Slider(label="Minimum Samples Split", minimum=2, maximum=20, step=1, value=2, interactive=True, visible=False)
-                    dtc_min_samples_leaf_sldr = gr.Slider(label="Minimum Samples Leaf", minimum=1, maximum=20, step=1, value=1, interactive=True, visible=False)
-                    dtc_max_features_dd = gr.Dropdown(label="Max Features", 
-                                                    choices=page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], value="None", interactive=True, visible=False)
-                    dtc_max_leaf_nodes_tb = gr.Textbox(label="Max Leaf Nodes", value="None", interactive=True, visible=False)
-                    
-                    # k_neighbors_classifier
-                    knc_md = gr.Markdown("### K Neighbors Classifier", interactive=True, visible=False)
-                    knc_n_nbr_sldr = gr.Slider(label="N Neighbors", value=5, interactive=True, minimum=1, maximum=20, step=1, visible=False)
-                    knc_weights_dd = gr.Dropdown(label="Weights", choices=page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["weights"], value="uniform", interactive=True, visible=False)
-                    knc_althm_dd = gr.Dropdown(label="Algorithm", choices=page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], value="auto", interactive=True, visible=False)
-
-
-            train_btn = gr.Button(value="Train")
-            gr.Markdown("## Training Result")
-            train_df = gr.DataFrame(headers=["Accuracy", "Recall", "Precision", "F1"], interactive=True, row_count=(1, "fixed"), col_count=(4, "fixed"))
-
-            with gr.Row():
-                train_img1 = gr.Plot(interactive=True)
-                train_img2 = gr.Plot(interactive=True)
-                train_img3 = gr.Plot(interactive=True)
+            training_component = TrainingComponent()
+            training_component.get_training()
                 
         with gr.Tab("Result"):
             gr.Markdown(f"{page_content.explanatory_text['result']['title']}\n{page_content.explanatory_text['result']['body']}")
@@ -145,15 +117,39 @@ def build_ui():
             with gr.Row():
                 gr.Textbox("hello")
                 gr.Textbox("hello")
-
         
-
-
         model_components = {
-                            "all": [dtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, knc_md, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd],
-                            "model_selector": [model_dd],
-                            "decision_tree_classifier":[dtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb],
-                            "k_neighbors_classifier": [knc_md, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd]
+            "all": [
+                training_component.dtc_md, 
+                training_component.dtc_criterion_dd, 
+                training_component.dtc_max_depth_tb, 
+                training_component.dtc_min_samples_split_sldr, 
+                training_component.dtc_min_samples_leaf_sldr, 
+                training_component.dtc_max_features_dd, 
+                training_component.dtc_max_leaf_nodes_tb, 
+                training_component.knc_md, 
+                training_component.knc_althm_dd, 
+                training_component.knc_n_nbr_sldr, 
+                training_component.knc_weights_dd
+            ],
+            "model_selector": [
+                training_component.model_dd
+            ],
+            "decision_tree_classifier":[
+                training_component.dtc_md, 
+                training_component.dtc_criterion_dd, 
+                training_component.dtc_max_depth_tb, 
+                training_component.dtc_min_samples_split_sldr, 
+                training_component.dtc_min_samples_leaf_sldr, 
+                training_component.dtc_max_features_dd, 
+                training_component.dtc_max_leaf_nodes_tb
+            ],
+            "k_neighbors_classifier": [
+                training_component.knc_md, 
+                training_component.knc_althm_dd, 
+                training_component.knc_n_nbr_sldr, 
+                training_component.knc_weights_dd
+            ],
         }
 
         preprocessing_component.submit_set_btn.click(
@@ -167,11 +163,26 @@ def build_ui():
                 preprocessing_component.valid_sldr, 
                 preprocessing_component.test_sldr
             ], 
-            outputs=[data_summary]
+            outputs=[training_component.data_summary]
         )
-        train_btn.click(fn=train_btn_click, inputs=[model_dd, *model_components["all"]], outputs=[train_df, train_img1, train_img2, train_img3])
+        training_component.train_btn.click(
+            fn=train_btn_click, 
+            inputs=[
+                training_component.model_dd, 
+                *model_components["all"]], 
+            outputs=[
+                training_component.train_df, 
+                training_component.train_img1, 
+                training_component.train_img2, 
+                training_component.train_img3
+            ]
+        )
         
-        model_dd.change(fn=model_dd_change, inputs=model_dd, outputs=model_components["all"])
+        training_component.model_dd.change(
+            fn=model_dd_change, 
+            inputs=training_component.model_dd, 
+            outputs=model_components["all"]
+        )
 
     demo.launch(
         # enable_queue=True, 
