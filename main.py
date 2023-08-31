@@ -4,49 +4,13 @@ Author: @VincentLi1216, @1chooo
 Email: sunnus.tw@gmail.com
 Version: v0.0.1
 '''
+
 import gradio as gr
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
+from Refinaid.gui.Information import PageContent
 
-explanatory_text = {
-                    "header":{"title":"# AI for Beginner", "body":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. "}, 
-                    "preprocess":{"title":"## What is preprocessing?", "body":"Lorem ipsum dolor sit amet consectetur. Adipiscing commodo odio neque ut est scelerisque amet. Neque feugiat platea amet arcu et. Mi eget nisl magna diam et at elit ut vulputate. Vitae est integer a adipiscing sagittis integer ut facilisi interdum."},
-                    "training":{"title":"## What is model training?", "body":"Lorem ipsum dolor sit amet consectetur. Adipiscing commodo odio neque ut est scelerisque amet. Neque feugiat platea amet arcu et. Mi eget nisl magna diam et at elit ut vulputate. Vitae est integer a adipiscing sagittis integer ut facilisi interdum."},
-                    "result":{"title":"## What is the result?", "body":"Lorem ipsum dolor sit amet consectetur. Adipiscing commodo odio neque ut est scelerisque amet. Neque feugiat platea amet arcu et. Mi eget nisl magna diam et at elit ut vulputate. Vitae est integer a adipiscing sagittis integer ut facilisi interdum."}
-                    
-}
-
-
-dropdown_options = {
-                    "datasets": ["ds1", "ds2", "ds3"],
-                    "inputs": ["ip1", "ip2", "ip3"],
-                    "miss_value": ["Drop Nan", "By Columns"],
-                    "data_scalings": ["None", "Standard", "Min-Max"],
-                    "models": ["Decision Tree Classifier", "K Neighbor Classifier"],
-                    "plots": ["plot1", "plot2", "plot3"],
-                    "model_parameters":{
-                                        "decision_tree_classifier": {
-                                              "criterion": ["gini", "entropy", "log_loss"],
-                                              "max_features": ["None", "sqrt", "log2"]},
-                                        "k_neighbors_classifier": {
-                                            "weights": ["uniform", "distance"],
-                                            "algorithm": ["auto", "ball_tree", "kd_tree", "brute"]}
-                                        
-                    }
-
-}
-
-model_parameters = {
-                    "decision_tree_classifier": {
-                                               "criterion": None,
-                                               "max_depth": None,
-                                               "min_samples_split": None,
-                                               "min_samples_leaf": None,
-                                               "max_features": None,
-                                               "max_leaf_nodes": None
-                    }
-}
-
+page_content = PageContent()
 
 model_mapping = {
                 "Decision Tree Classifier": "decision_tree_classifier",
@@ -159,20 +123,20 @@ def train_btn_click(select_model,tdtc_md, dtc_criterion_dd, dtc_max_depth_tb, dt
 
 
 with gr.Blocks() as demo:
-    gr.Markdown(f"{explanatory_text['header']['title']}\n{explanatory_text['header']['body']}")
+    gr.Markdown(f"{page_content.explanatory_text['header']['title']}\n{page_content.explanatory_text['header']['body']}")
     with gr.Tab("Preprocess"):
-        gr.Markdown(f"{explanatory_text['preprocess']['title']}\n{explanatory_text['preprocess']['body']}")
+        gr.Markdown(f"{page_content.explanatory_text['preprocess']['title']}\n{page_content.explanatory_text['preprocess']['body']}")
         with gr.Row():
             with gr.Column():
                 gr.Markdown("### Dataset")
-                dataset_dd = gr.Dropdown(label="Select Dataset", choices=dropdown_options["datasets"], interactive=True)
+                dataset_dd = gr.Dropdown(label="Select Dataset", choices=page_content.dropdown_options["datasets"], interactive=True)
                 gr.Markdown("### Inputs")
-                inputs_dd = gr.Dropdown(label="Select Mutiple Inputs", choices=dropdown_options["inputs"], multiselect=True)
+                inputs_dd = gr.Dropdown(label="Select Mutiple Inputs", choices=page_content.dropdown_options["inputs"], multiselect=True)
                 # with gr.Accordion("Options"):
                 gr.Markdown(f"### Missing Values Handling")
-                miss_value_chkbox = gr.Radio(label="Select a Method", choices=dropdown_options["miss_value"], interactive=True)
+                miss_value_chkbox = gr.Radio(label="Select a Method", choices=page_content.dropdown_options["miss_value"], interactive=True)
                 gr.Markdown(f"### Data Scaling")
-                data_scale_dd = gr.Radio(choices=dropdown_options["data_scalings"], label="Please select a method", interactive=True)
+                data_scale_dd = gr.Radio(choices=page_content.dropdown_options["data_scalings"], label="Please select a method", interactive=True)
                 gr.Markdown(f"### Data Split\nTotal value should be 100%")
                 train_sldr = gr.Slider(label="Training Set", minimum=0, maximum=100, step=5)
                 valid_sldr = gr.Slider(label="Validation Set", minimum=0, maximum=100, step=5)
@@ -181,32 +145,32 @@ with gr.Blocks() as demo:
             with gr.Column():
                 gr.ScatterPlot(label="Data Visualization")
                 with gr.Row():
-                    x_axis_dd = gr.Dropdown(label="X Axis", choices=dropdown_options["datasets"])
-                    y_axis_dd = gr.Dropdown(label="Y Axis", choices=dropdown_options["datasets"])
+                    x_axis_dd = gr.Dropdown(label="X Axis", choices=page_content.dropdown_options["datasets"])
+                    y_axis_dd = gr.Dropdown(label="Y Axis", choices=page_content.dropdown_options["datasets"])
 
     with gr.Tab("Training"):
-        gr.Markdown(f"{explanatory_text['training']['title']}\n{explanatory_text['training']['body']}")
+        gr.Markdown(f"{page_content.explanatory_text['training']['title']}\n{page_content.explanatory_text['training']['body']}")
         with gr.Row():
             with gr.Column():
                 data_summary = gr.Textbox(label="Data Summary", lines=7, interactive=True)
-                model_dd = gr.Dropdown(label="Select Model", choices=dropdown_options["models"], interactive=True)
+                model_dd = gr.Dropdown(label="Select Model", choices=page_content.dropdown_options["models"], interactive=True)
             with gr.Column():
                 # decision_tree_classifier
                 dtc_md = gr.Markdown("### Decision Tree Classifier", interactive=True, visible=False)
                 dtc_criterion_dd = gr.Dropdown(label="Criterion", 
-                                               choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)
+                                               choices=page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)
                 dtc_max_depth_tb = gr.Textbox(label="Max Depth", value="None", interactive=True, visible=False)
                 dtc_min_samples_split_sldr = gr.Slider(label="Minimum Samples Split", minimum=2, maximum=20, step=1, value=2, interactive=True, visible=False)
                 dtc_min_samples_leaf_sldr = gr.Slider(label="Minimum Samples Leaf", minimum=1, maximum=20, step=1, value=1, interactive=True, visible=False)
                 dtc_max_features_dd = gr.Dropdown(label="Max Features", 
-                                                  choices=dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], value="None", interactive=True, visible=False)
+                                                  choices=page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], value="None", interactive=True, visible=False)
                 dtc_max_leaf_nodes_tb = gr.Textbox(label="Max Leaf Nodes", value="None", interactive=True, visible=False)
                 
                 # k_neighbors_classifier
                 knc_md = gr.Markdown("### K Neighbors Classifier", interactive=True, visible=False)
                 knc_n_nbr_sldr = gr.Slider(label="N Neighbors", value=5, interactive=True, minimum=1, maximum=20, step=1, visible=False)
-                knc_weights_dd = gr.Dropdown(label="Weights", choices=dropdown_options["model_parameters"]["k_neighbors_classifier"]["weights"], value="uniform", interactive=True, visible=False)
-                knc_althm_dd = gr.Dropdown(label="Algorithm", choices=dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], value="auto", interactive=True, visible=False)
+                knc_weights_dd = gr.Dropdown(label="Weights", choices=page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["weights"], value="uniform", interactive=True, visible=False)
+                knc_althm_dd = gr.Dropdown(label="Algorithm", choices=page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], value="auto", interactive=True, visible=False)
 
 
         train_btn = gr.Button(value="Train")
@@ -219,7 +183,7 @@ with gr.Blocks() as demo:
             train_img3 = gr.Plot(interactive=True)
             
     with gr.Tab("Result"):
-        gr.Markdown(f"{explanatory_text['result']['title']}\n{explanatory_text['result']['body']}")
+        gr.Markdown(f"{page_content.explanatory_text['result']['title']}\n{page_content.explanatory_text['result']['body']}")
         with gr.Row():
             gr.Textbox("hi")
             gr.Textbox("hi")
@@ -246,7 +210,7 @@ with gr.Blocks() as demo:
     model_dd.change(fn=model_dd_change, inputs=model_dd, outputs=model_components["all"])
 
 demo.launch(
-    enable_queue=True, 
+    # enable_queue=True, 
     debug=True,
     # share=True,
 )
