@@ -9,21 +9,21 @@ class PageContent:
 
     def __init__(self) -> None:
         self.explanatory_text = {
-            "header":{
-                "title":"# Simple AI", 
-                "body":"Enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future."
+            "header": {
+                "title": "# Simple AI - Bridging the Gap with AI For Everyone", 
+                "body": """Enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future."""
             }, 
-            "preprocess":{
-                "title":"## What is preprocessing?", 
-                "body":"Lorem ipsum dolor sit amet consectetur. Adipiscing commodo odio neque ut est scelerisque amet. Neque feugiat platea amet arcu et. Mi eget nisl magna diam et at elit ut vulputate. Vitae est integer a adipiscing sagittis integer ut facilisi interdum."
+            "preprocess": {
+                "title": "## Try observing the data!", 
+                "body": ""
             },
-            "training":{
-                "title":"## What is model training?", 
-                "body":"Lorem ipsum dolor sit amet consectetur. Adipiscing commodo odio neque ut est scelerisque amet. Neque feugiat platea amet arcu et. Mi eget nisl magna diam et at elit ut vulputate. Vitae est integer a adipiscing sagittis integer ut facilisi interdum."
+            "training": {
+                "title": "## Model Training Demystified", 
+                "body": ""
             },
-            "result":{
-                "title":"## What is the result?", 
-                "body":"Lorem ipsum dolor sit amet consectetur. Adipiscing commodo odio neque ut est scelerisque amet. Neque feugiat platea amet arcu et. Mi eget nisl magna diam et at elit ut vulputate. Vitae est integer a adipiscing sagittis integer ut facilisi interdum."
+            "result": {
+                "title": "## What You Have Done?", 
+                "body": ""
             },
         }
 
@@ -38,17 +38,49 @@ class PageContent:
                 "ip2", 
                 "ip3"
             ],
-            "miss_value": ["Drop Nan", "By Columns"],
-            "data_scalings": ["None", "Standard", "Min-Max"],
-            "models": ["Decision Tree Classifier", "K Neighbor Classifier"],
-            "plots": ["plot1", "plot2", "plot3"],
+            "miss_value": [
+                "Drop Nan", 
+                "By Columns"
+            ],
+            "data_scalings": [
+                "None", 
+                "Standard", 
+                "Min-Max"
+            ],
+            "models": [
+                "Decision Tree Classifier", 
+                "K Neighbor Classifier",
+            ],
+            "plots": [
+                "plot1", 
+                "plot2", 
+                "plot3"
+            ],
             "model_parameters":{
-                                "decision_tree_classifier": {
-                                    "criterion": ["gini", "entropy", "log_loss"],
-                                    "max_features": ["None", "sqrt", "log2"]},
-                                "k_neighbors_classifier": {
-                                    "weights": ["uniform", "distance"],
-                                    "algorithm": ["auto", "ball_tree", "kd_tree", "brute"]}
+                "decision_tree_classifier": {
+                    "criterion": [
+                        "gini", 
+                        "entropy", 
+                        "log_loss"
+                    ],
+                    "max_features": [
+                        "None", 
+                        "sqrt", 
+                        "log2"
+                    ]
+                },
+                "k_neighbors_classifier": {
+                    "weights": [
+                        "uniform", 
+                        "distance"
+                    ],
+                    "algorithm": [
+                        "auto", 
+                        "ball_tree", 
+                        "kd_tree", 
+                        "brute"
+                    ]
+                }
                                 
             }
 
