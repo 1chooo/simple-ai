@@ -5,8 +5,10 @@ Email: sunnus.tw@gmail.com
 Version: v0.0.1
 '''
 import gradio as gr
+
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
+from Refinaid.Action.Load import get_dataset_x_columns
 
 explanatory_text = {
                     "header":{"title":"# AI for Beginner", "body":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. "}, 
@@ -18,8 +20,8 @@ explanatory_text = {
 
 
 dropdown_options = {
-                    "datasets": ["ds1", "ds2", "ds3"],
-                    "inputs": ["ip1", "ip2", "ip3"],
+                    "datasets": ["Titanic"],
+                    "inputs": ["Select Dataset First"],
                     "miss_value": ["Drop Nan", "By Columns"],
                     "data_scalings": ["None", "Standard", "Min-Max"],
                     "models": ["Decision Tree Classifier", "K Neighbor Classifier"],
@@ -65,6 +67,10 @@ current_model = "decision_tree_classifier"
 
 dataset_config = None
 
+
+def dataset_dd_change(select_dataset):
+    inputs_list = get_dataset_x_columns(select_dataset)
+    return inputs_dd.update(choices=inputs_list), x_axis_dd.update(choices=inputs_list), y_axis_dd.update(choices=inputs_list)
 
 def model_dd_change(model_dd):
 
@@ -181,8 +187,8 @@ with gr.Blocks() as demo:
             with gr.Column():
                 gr.ScatterPlot(label="Data Visualization")
                 with gr.Row():
-                    x_axis_dd = gr.Dropdown(label="X Axis", choices=dropdown_options["datasets"])
-                    y_axis_dd = gr.Dropdown(label="Y Axis", choices=dropdown_options["datasets"])
+                    x_axis_dd = gr.Dropdown(label="X Axis", choices=dropdown_options["datasets"], interactive=True)
+                    y_axis_dd = gr.Dropdown(label="Y Axis", choices=dropdown_options["datasets"], interactive=True)
 
     with gr.Tab("Training"):
         gr.Markdown(f"{explanatory_text['training']['title']}\n{explanatory_text['training']['body']}")
@@ -239,7 +245,8 @@ with gr.Blocks() as demo:
                         "decision_tree_classifier":[dtc_md, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb],
                         "k_neighbors_classifier": [knc_md, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd]
     }
-
+    
+    dataset_dd.change(fn=dataset_dd_change, inputs=[dataset_dd], outputs=[inputs_dd, x_axis_dd, y_axis_dd])
     submit_set_btn.click(fn=submit_setting_btn_click, inputs=[dataset_dd, inputs_dd, miss_value_chkbox, data_scale_dd, train_sldr, valid_sldr, test_sldr], outputs=[data_summary])
     train_btn.click(fn=train_btn_click, inputs=[model_dd, *model_components["all"]], outputs=[train_df, train_img1, train_img2, train_img3])
     
