@@ -9,7 +9,7 @@ import gradio as gr
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
 from Refinaid.gui.Information import PageContent
-from Refinaid.gui.Utils import get_data_setting
+from Refinaid.gui.Utils.Get import get_data_setting
 from Refinaid.gui.Header import get_header
 from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
 from Refinaid.gui.Dashborad.Training import TrainingComponent

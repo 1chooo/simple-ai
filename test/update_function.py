@@ -10,17 +10,6 @@ demo = gr.Blocks(
     title='Refinaid',
 )
 
-def update_parameters(dataset):
-    if dataset == "Titanic":
-        parameters = ["Param1", "Param2", "Param3"]
-    elif dataset == "Diabetes":
-        parameters = ["ParamA", "ParamB", "ParamC"]
-    elif dataset == "House Prices":
-        parameters = ["ParamX", "ParamY", "ParamZ"]
-    else:
-        parameters = []
-    return parameters
-
 dataset_choices = [
     "Titanic", 
     "Diabetes", 
@@ -48,6 +37,23 @@ with demo:
                     interactive=True,
                     multiselect=True,
                 )
+
+    def update_parameters(dataset):
+        if dataset == "Titanic":
+            parameters = ["Param1", "Param2", "Param3"]
+        elif dataset == "Diabetes":
+            parameters = ["ParamA", "ParamB", "ParamC"]
+        elif dataset == "House Prices":
+            parameters = ["ParamX", "ParamY", "ParamZ"]
+        else:
+            parameters = []
+
+        return gr.Dropdown.update(
+                choices=parameters,
+                value=[],
+                label="Select Mutiple Parameters",
+                interactive=True,
+            )
 
     dataset_dropdown.change(
         fn=update_parameters,
