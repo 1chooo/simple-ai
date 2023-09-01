@@ -67,7 +67,7 @@ class PageContent:
                         "None", 
                         "sqrt", 
                         "log2"
-                    ]
+                    ],
                 },
                 "k_neighbors_classifier": {
                     "weights": [
@@ -79,7 +79,7 @@ class PageContent:
                         "ball_tree", 
                         "kd_tree", 
                         "brute"
-                    ]
+                    ],
                 }
                                 
             }
