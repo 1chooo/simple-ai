@@ -12,7 +12,7 @@ from typing import Any
 class TrainingComponent:
 
     data_summary = None
-    model_dd = None
+    model_dropdown = None
     dtc_criterion_dd = None
     dtc_max_depth_tb = None
     dtc_min_samples_split_sldr = None
@@ -46,7 +46,7 @@ class TrainingComponent:
                     interactive=False,
                 )
             with gr.Column():
-                self.model_dd = gr.Dropdown(label="Select Model", choices=self.page_content.dropdown_options["models"], interactive=True)
+                self.model_dropdown = gr.Dropdown(label="Select Model", choices=self.page_content.dropdown_options["models"], interactive=True)
                 # decision_tree_classifier
                 self.dtc_criterion_dd = gr.Dropdown(label="Criterion", 
                                             choices=self.page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)

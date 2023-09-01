@@ -30,34 +30,42 @@ def build_ui():
 
     model_components = {}
 
-    def model_dd_change(model_dd):
+    def model_dropdown_change(model_dropdown):
 
-        comp_output_list = []
-        selected_model = model_mapping[model_dd]
+        component_outputs = []
+        selected_model = model_mapping[model_dropdown]
 
         for key in model_components.keys():
             if key not in ["all", "model_selector"]:
                 if key == selected_model:
                     for i in range(len(model_components[key])):
-                        comp_output_list.append(model_components[key][i].update(visible=True))
+                        component_outputs.append(model_components[key][i].update(visible=True))
                 else:
                     for i in range(len(model_components[key])):
-                        comp_output_list.append(model_components[key][i].update(visible=False))
+                        component_outputs.append(model_components[key][i].update(visible=False))
 
-        return *comp_output_list,
+        return *component_outputs,
 
-    def submit_setting_btn_click(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
+    def submit_setting_btn_click(
+            dataset:str, inputs:list, miss_value:bool, 
+            data_scaling:str, training:int, validation:int, 
+            testing:int):
 
         global dataset_config
 
         data_summary_dict = get_data_setting(dataset, inputs, miss_value, data_scaling, training, validation, testing)
 
-        dataset_config=DatasetConfig(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
+        dataset_config = DatasetConfig(dataset, inputs, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
         
         gr.Info("Setting Updated")
+
         return training_component.data_summary.update(value=data_summary_dict)
 
-    def train_btn_click(select_model, dtc_criterion_dd, dtc_max_depth_tb, dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, dtc_max_features_dd, dtc_max_leaf_nodes_tb, knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd):
+    def train_btn_click(
+            select_model, dtc_criterion_dd, dtc_max_depth_tb, 
+            dtc_min_samples_split_sldr, dtc_min_samples_leaf_sldr, 
+            dtc_max_features_dd, dtc_max_leaf_nodes_tb, 
+            knc_althm_dd, knc_n_nbr_sldr, knc_weights_dd):
         
         global dataset_config
         output_list = []
@@ -128,7 +136,7 @@ def build_ui():
                 training_component.knc_weights_dd
             ],
             "model_selector": [
-                training_component.model_dd
+                training_component.model_dropdown
             ],
             "decision_tree_classifier":[
                 training_component.dtc_criterion_dd, 
@@ -161,7 +169,7 @@ def build_ui():
         training_component.train_btn.click(
             fn=train_btn_click, 
             inputs=[
-                training_component.model_dd, 
+                training_component.model_dropdown, 
                 *model_components["all"]], 
             outputs=[
                 training_component.train_df, 
@@ -171,9 +179,9 @@ def build_ui():
             ]
         )
         
-        training_component.model_dd.change(
-            fn=model_dd_change, 
-            inputs=training_component.model_dd, 
+        training_component.model_dropdown.change(
+            fn=model_dropdown_change, 
+            inputs=training_component.model_dropdown, 
             outputs=model_components["all"]
         )
 
