@@ -133,7 +133,7 @@ def update_model_parameters(model_name):
             interactive=True, 
             visible=False,
         )
-    else:
+    elif model_name == "K Neighbor Classifier":
         output_components = []
         decision_tree_classifer_title = gr.Markdown.update(
             "### Decision Tree Classifier", 
@@ -193,7 +193,7 @@ def update_model_parameters(model_name):
         )
 
         k_neighbors_classifier_title = gr.Markdown.update(
-            "### K Neighbors Classifier", 
+            "### K Neighbor Classifier", 
             visible=True,
         )
         k_neighbors_classifier_slider = gr.Slider.update(

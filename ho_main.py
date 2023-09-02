@@ -11,6 +11,7 @@ from Refinaid.gui.Utils.Update import update_plot_x_parameters
 from Refinaid.gui.Utils.Update import update_plot_y_parameters
 from Refinaid.gui.Utils.Update import update_model_parameters
 from Refinaid.gui.Utils.Update import update_preprocessing_data
+from Refinaid.Action.Model import training
 
 demo = gr.Blocks(
     title='Refinaid',
@@ -67,6 +68,121 @@ def _background_listener() -> None:
             training_slider, validation_slider, testing_slider], 
         outputs=[preprocessing_data_result]
     )
+
+    train_btn.click(
+        fn=update_training_results,
+        inputs=[
+            preprocessing_data_result,
+            model_dropdown,
+            decision_tree_classifer_criterion_dropdown,
+            decision_tree_classifer_max_depth_textbox,
+            decision_tree_classifer_min_samples_split_slider,
+            decision_tree_classifer_min_samples_leaf_slider,
+            decision_tree_classifer_max_features_dropdown,
+            decision_tree_classifer_max_leaf_nodes_textbox,
+            k_neighbors_classifier_slider,
+            k_neighbors_classifier_weights_dropdown,
+            k_neighbors_classifier_algorithm_dropdown,
+        ],
+        outputs=[
+            training_results,
+            train_img1,
+            train_img2,
+            train_img3,
+        ],
+    )
+
+def update_training_results(
+        preprocessing_data_result,
+        model_dropdown,
+        decision_tree_classifer_criterion_dropdown,
+        decision_tree_classifer_max_depth_textbox,
+        decision_tree_classifer_min_samples_split_slider,
+        decision_tree_classifer_min_samples_leaf_slider,
+        decision_tree_classifer_max_features_dropdown,
+        decision_tree_classifer_max_leaf_nodes_textbox, 
+        k_neighbors_classifier_slider,
+        k_neighbors_classifier_weights_dropdown,
+        k_neighbors_classifier_algorithm_dropdown,
+        ):
+    
+    model_config = None
+    
+    if model_dropdown == "Decision Tree Classifier":
+        decision_tree_classifer_max_features_dropdown = decision_tree_classifer_max_features_dropdown if decision_tree_classifer_max_features_dropdown != "None" else None
+        model_config = DecisionTreeModelConfig(
+            decision_tree_classifer_criterion_dropdown, 
+            decision_tree_classifer_min_samples_split_slider, 
+            decision_tree_classifer_min_samples_leaf_slider, 
+            decision_tree_classifer_max_features_dropdown, 
+            eval(decision_tree_classifer_max_depth_textbox), 
+            eval(decision_tree_classifer_max_leaf_nodes_textbox),
+        )
+    elif model_dropdown == "K Neighbor Classifier":
+        model_config = KNNModelConfig(
+            k_neighbors_classifier_slider, 
+            k_neighbors_classifier_weights_dropdown, 
+            k_neighbors_classifier_algorithm_dropdown,
+        )
+
+    preprocessing_data_value = preprocessing_data_result
+    dataset_config=DatasetConfig(
+        preprocessing_data_value.loc[0, "Value"],
+        preprocessing_data_value.loc[1, "Value"],
+        preprocessing_data_value.loc[2, "Value"],
+        preprocessing_data_value.loc[3, "Value"],
+        [
+            preprocessing_data_value.loc[4, "Value"] / 100,
+            preprocessing_data_value.loc[5, "Value"] / 100,
+            preprocessing_data_value.loc[6, "Value"] / 100,
+        ],
+    )
+
+    # TODOs:
+    # 這邊已經確定拿得到 model_config, dataset_config
+    # 但是後面的 call Refinaid.Action 會出問題
+    # 主要需要處理傳入模型，結果顯示 update 我處理好了
+    # 但保險起見可能還需再檢查一次
+    # 再麻煩 Reeve 了！
+
+
+    training_outputs = []
+    figures, evaluations = training(dataset_config, model_config)
+    evaluations = list(map(str,evaluations))
+
+    training_results = gr.DataFrame.update(
+        headers=["Accuracy", "Recall", "Precision", "F1"], 
+        value=[evaluations],
+        interactive=True, 
+        row_count=(1, "fixed"), 
+        col_count=(4, "fixed")
+    )
+
+    training_outputs.append(training_results)
+
+    train_img1 = gr.Plot(
+        interactive=True
+    )
+    train_img2 = gr.Plot(
+        interactive=True
+    )
+    train_img3 = gr.Plot(
+        interactive=True
+    )
+
+    img_components = [
+        train_img1, 
+        train_img2, 
+        train_img3
+    ]
+
+    for i, component in enumerate(img_components):
+        if figures[i] != None:
+            training_outputs.append(component.update(value=figures[i], visible=True))
+        else:
+            training_outputs.append(component.update(visible=False))
+
+    return *training_outputs,
 
 
 with demo:
@@ -318,7 +434,7 @@ with demo:
         with gr.Row():
             gr.Markdown("## Training Result")
         with gr.Row():
-            train_df = gr.DataFrame(
+            training_results = gr.DataFrame(
                 headers=["Accuracy", "Recall", "Precision", "F1"], 
                 interactive=True, 
                 row_count=(1, "fixed"), 
