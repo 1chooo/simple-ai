@@ -2,12 +2,19 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.2
+Version: v0.0.4
 '''
 
 import gradio as gr
 
-def get_preprocessing_example(preprocessing_component) -> None:
+def get_preprocessing_example(
+        dataset_dropdown,
+        parameters_dropdown,
+        miss_value_checkbox, 
+        data_scale_dropdown, 
+        training_slider, 
+        validation_slider, 
+        testing_slider,) -> None:
     gr.Examples(
         [
             [
@@ -39,12 +46,13 @@ def get_preprocessing_example(preprocessing_component) -> None:
             ],
         ],
         [
-            preprocessing_component.dataset_dd, 
-            preprocessing_component.inputs_dd, 
-            preprocessing_component.miss_value_chkbox, 
-            preprocessing_component.data_scale_dd, 
-            preprocessing_component.train_sldr, 
-            preprocessing_component.valid_sldr, 
-            preprocessing_component.test_sldr
+            dataset_dropdown,
+            parameters_dropdown,
+            miss_value_checkbox, 
+            data_scale_dropdown, 
+            training_slider, 
+            validation_slider, 
+            testing_slider,
         ]
     )
+    
