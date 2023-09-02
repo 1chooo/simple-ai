@@ -6,6 +6,7 @@ Version: v0.0.3
 
 import gradio as gr
 from Refinaid.Action.Load import get_dataset_x_columns
+from Refinaid.gui.Utils.Get import get_data_setting
 
 def update_parameters(dataset_name) -> gr.Dropdown:
     parameters = get_dataset_x_columns(dataset_name)
@@ -241,3 +242,29 @@ def update_model_parameters(model_name):
     output_components.append(k_neighbors_classifier_algorithm_dropdown)
 
     return *output_components,
+
+def update_preprocessing_data(
+        dataset:str, parameters:list, 
+        miss_value:bool, data_scaling:str, 
+        training:int, validation:int, testing:int):
+
+    if dataset == None or dataset == "":
+        raise gr.Error("Invalid Dataset")
+    if parameters == None or parameters == []:
+        raise gr.Error("Invalid Multiple Inputs")
+    if data_scaling == None or data_scaling == "":
+        raise gr.Error("Invalid Data Scaling")
+    try:
+        if training + validation + testing != 100:
+            raise gr.Error("Invalid Data Split")
+    except:
+        raise gr.Error("Invalid Data Split")
+
+    data_summary_dict = get_data_setting(
+        dataset, parameters, miss_value, 
+        data_scaling, training, validation, testing
+    )
+
+    return gr.DataFrame.update(
+        value=data_summary_dict
+        )
