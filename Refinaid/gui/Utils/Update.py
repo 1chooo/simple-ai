@@ -309,7 +309,7 @@ def update_training_results(
         preprocessing_data_value.loc[0, "Value"],
         preprocessing_data_value.loc[1, "Value"],
         preprocessing_data_value.loc[2, "Value"],
-        eval(preprocessing_data_value.loc[3, "Value"]),
+        None if preprocessing_data_value.loc[3, "Value"] == "None" else preprocessing_data_value.loc[3, "Value"],
         [
             preprocessing_data_value.loc[4, "Value"] / 100,
             preprocessing_data_value.loc[5, "Value"] / 100,
