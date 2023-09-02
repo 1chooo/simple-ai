@@ -214,16 +214,19 @@ with demo:
                     interactive=True,
                 )
 
-                gr.Markdown(f"### Data Split\nTotal value should be 100%")
+                gr.Markdown(f"### Data Scaling")
                 data_scale_dropdown = gr.Radio(
                     choices=[
-                        "None", 
-                        "Standard", 
+                        "None",
+                        "Standard",
                         "Min-Max"
-                    ], 
-                    label="Please select a method", 
+                    ],
+                    label="Please select a method",
                     interactive=True,
                 )
+
+                gr.Markdown(f"### Data Split\nTotal value should be 100%")
+
                 training_slider = gr.Slider(
                     label="Training Set", 
                     minimum=0, 
