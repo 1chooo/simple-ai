@@ -7,102 +7,237 @@ Version: v0.0.1
 
 import gradio as gr
 from Refinaid.gui.Information import PageContent
-from typing import Any
+from typing import Any, Tuple
 
 class TrainingComponent:
-
-    data_summary = None
-    model_dropdown = None
-    dtc_criterion_dd = None
-    dtc_max_depth_tb = None
-    dtc_min_samples_split_sldr = None
-    dtc_min_samples_leaf_sldr = None
-    dtc_max_features_dd = None
-    dtc_max_leaf_nodes_tb = None
-    knc_n_nbr_sldr = None
-    knc_weights_dd = None
-    knc_althm_dd = None
-    train_btn = None
-    train_df = None
-    train_img1 = None
-    train_img2 = None
-    train_img3 = None
 
     def __init__(self, page_content: PageContent) -> None:
         self.page_content = page_content
 
-    def get_training(self, ):
-        gr.Markdown(f"{self.page_content.explanatory_text['training']['title']}\n{self.page_content.explanatory_text['training']['body']}")
-        with gr.Row():
-            with gr.Column():
-                gr.Markdown("### Data You have picked!!!")
-                self.data_summary = gr.DataFrame(
-                    headers=[
-                        "Parameters",
-                        "Value"
-                    ],
-                    row_count=(7, "fixed"),
-                    col_count=(2, "fixed"),
-                    interactive=False,
-                )
-            with gr.Column():
-                self.model_dropdown = gr.Dropdown(label="Select Model", choices=self.page_content.dropdown_options["models"], interactive=True)
-                # decision_tree_classifier
-                self.dtc_criterion_dd = gr.Dropdown(label="Criterion", 
-                                            choices=self.page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["criterion"], value="gini", interactive=True, visible=False)
-                self.dtc_max_depth_tb = gr.Textbox(label="Max Depth", value="None", interactive=True, visible=False)
-                self.dtc_min_samples_split_sldr = gr.Slider(label="Minimum Samples Split", minimum=2, maximum=20, step=1, value=2, interactive=True, visible=False)
-                self.dtc_min_samples_leaf_sldr = gr.Slider(label="Minimum Samples Leaf", minimum=1, maximum=20, step=1, value=1, interactive=True, visible=False)
-                self.dtc_max_features_dd = gr.Dropdown(label="Max Features", 
-                                                choices=self.page_content.dropdown_options["model_parameters"]["decision_tree_classifier"]["max_features"], value="None", interactive=True, visible=False)
-                self.dtc_max_leaf_nodes_tb = gr.Textbox(
-                    label="Max Leaf Nodes", 
-                    value="None", 
-                    interactive=True, 
-                    visible=False
-                )
-                
-                # k_neighbors_classifier
-                self.knc_n_nbr_sldr = gr.Slider(
-                    label="N Neighbors", 
-                    value=5, 
-                    interactive=True, 
-                    minimum=1, 
-                    maximum=20, 
-                    step=1, 
-                    visible=False
-                )
-                self.knc_weights_dd = gr.Dropdown(
-                    label="Weights", 
-                    choices=self.page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["weights"], 
-                    value="uniform", 
-                    interactive=True, 
-                    visible=False
-                )
-                self.knc_althm_dd = gr.Dropdown(
-                    label="Algorithm", 
-                    choices=self.page_content.dropdown_options["model_parameters"]["k_neighbors_classifier"]["algorithm"], 
-                    value="auto", 
-                    interactive=True, 
-                    visible=False
-                )
+    def get_training_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown
+            ]:
+        training_heading = gr.Markdown("## Training")
 
-        with gr.Row():
-            self.train_btn = gr.Button(
-                value="Train"
-            )
-        with gr.Row():
-            gr.Markdown("## Training Result")
-        with gr.Row():
-            self.train_df = gr.DataFrame(
-                headers=["Accuracy", "Recall", "Precision", "F1"], 
-                interactive=True, 
-                row_count=(1, "fixed"), 
-                col_count=(4, "fixed")
-            )
+        return (
+            training_heading
+        )
+    
+    def get_picked_dataset_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, 
+                gr.Dataframe,
+            ]:
+        picked_dataset_header = gr.Markdown(
+            "### Data You have picked!!!"
+        )
+        preprocessing_data_result = gr.Dataframe(
+            headers=[
+                "Parameters",
+                "Value"
+            ],
+            row_count=(7, "fixed"),
+            col_count=(2, "fixed"),
+            interactive=False,
+        )
+        
+        return (
+            picked_dataset_header, 
+            preprocessing_data_result
+        )
+    
+    def get_model_dropdown_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Dropdown
+            ]:
+        choices =[
+            "Decision Tree Classifier", 
+            "K Neighbor Classifier",
+        ]
+        model_dropdown = gr.Dropdown(
+            label="Select Model", 
+            value="Please select the model",
+            choices=choices, 
+            interactive=True,
+        )
 
-        with gr.Row():
-            self.train_img1 = gr.Plot(interactive=True)
-            self.train_img2 = gr.Plot(interactive=True)
-            self.train_img3 = gr.Plot(interactive=True)
-            
+        return (
+            model_dropdown
+        )
+    
+    def get_decision_tree_classifer_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown,
+                gr.Dropdown,
+                gr.Textbox,
+                gr.Slider,
+                gr.Slider,
+                gr.Dropdown,
+                gr.Textbox,
+            ]:
+        decision_tree_classifer_title = gr.Markdown(
+            "### Decision Tree Classifier", 
+            visible=False,
+        )
+        decision_tree_classifer_criterion_dropdown = gr.Dropdown(
+            label="Criterion", 
+            choices=[
+                "gini", 
+                "entropy", 
+                "log_loss"
+            ], 
+            value="gini", 
+            interactive=True, 
+            visible=False,
+        )
+        decision_tree_classifer_max_depth_textbox = gr.Textbox(
+            label="Max Depth", 
+            value="None", 
+            interactive=True, 
+            visible=False,
+        )
+        decision_tree_classifer_min_samples_split_slider = gr.Slider(
+            label="Minimum Samples Split", 
+            minimum=2, 
+            maximum=20, 
+            step=1, 
+            value=2, 
+            interactive=True, 
+            visible=False,
+        )
+        decision_tree_classifer_min_samples_leaf_slider = gr.Slider(
+            label="Minimum Samples Leaf", 
+            minimum=1, 
+            maximum=20, 
+            step=1, 
+            value=1, 
+            interactive=True, 
+            visible=False,
+        )
+        decision_tree_classifer_max_features_dropdown = gr.Dropdown(
+            label="Max Features", 
+            choices=[
+                "None", 
+                "sqrt", 
+                "log2"
+            ], 
+            value="None", 
+            interactive=True, 
+            visible=False,
+        )
+        decision_tree_classifer_max_leaf_nodes_textbox = gr.Textbox(
+            label="Max Leaf Nodes", 
+            value="None", 
+            interactive=True, 
+            visible=False,
+        )
+
+        return (
+            decision_tree_classifer_title, 
+            decision_tree_classifer_criterion_dropdown,
+            decision_tree_classifer_max_depth_textbox,
+            decision_tree_classifer_min_samples_split_slider,
+            decision_tree_classifer_min_samples_leaf_slider,
+            decision_tree_classifer_max_features_dropdown,
+            decision_tree_classifer_max_leaf_nodes_textbox,
+        )
+
+    def get_k_neighbors_classifier_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, gr.Slider, gr.Dropdown, gr.Dropdown
+            ]:
+        k_neighbors_classifier_title = gr.Markdown(
+            "### K Neighbors Classifier", 
+            visible=False,
+        )
+        k_neighbors_classifier_slider = gr.Slider(
+            label="N Neighbors", 
+            value=5, 
+            interactive=True, 
+            minimum=1, 
+            maximum=20, 
+            step=1, 
+            visible=False,
+        )
+        k_neighbors_classifier_weights_dropdown = gr.Dropdown(
+            label="Weights", 
+            choices=[
+                "uniform", 
+                "distance"
+            ], 
+            value="uniform", 
+            interactive=True, 
+            visible=False,
+        )
+        k_neighbors_classifier_algorithm_dropdown = gr.Dropdown(
+            label="Algorithm", 
+            choices=[
+                "auto", 
+                "ball_tree", 
+                "kd_tree", 
+                "brute"
+            ], 
+            value="auto", 
+            interactive=True, 
+            visible=False,
+        )
+
+        return (
+            k_neighbors_classifier_title, 
+            k_neighbors_classifier_slider,
+            k_neighbors_classifier_weights_dropdown,
+            k_neighbors_classifier_algorithm_dropdown,
+        )
+    
+    def get_training_btn_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Button,
+            ]:
+        train_btn = gr.Button(
+            value="Train"
+        )
+
+        return (
+            train_btn
+        )
+    
+    def get_training_results_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, 
+                gr.Dataframe,
+            ]:
+        training_results_header = gr.Markdown("## Training Result")
+        training_results = gr.Dataframe(
+            headers=["Accuracy", "Recall", "Precision", "F1"], 
+            interactive=True, 
+            row_count=(1, "fixed"), 
+            col_count=(4, "fixed")
+        )
+
+        return (
+            training_results_header,
+            training_results
+        )
+    
+    def get_training_results_plot_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Plot, 
+                gr.Plot,
+                gr.Plot,
+            ]:
+        train_img1 = gr.Plot(
+            interactive=True
+        )
+        train_img2 = gr.Plot(
+            interactive=True
+        )
+        train_img3 = gr.Plot(
+            interactive=True
+        )
+
+        return (
+            train_img1,
+            train_img2,
+            train_img3,
+        )

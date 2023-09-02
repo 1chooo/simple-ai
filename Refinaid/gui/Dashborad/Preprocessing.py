@@ -15,7 +15,10 @@ class PreprocessingComponent:
         self.page_content = page_content
 
     def get_dataset_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Dropdown]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, 
+                gr.Dropdown
+            ]:
 
         dataset_header = gr.Markdown("### Dataset")
 
@@ -32,10 +35,16 @@ class PreprocessingComponent:
             interactive=True,
         )
 
-        return dataset_header, dataset_dropdown
+        return (
+            dataset_header, 
+            dataset_dropdown
+        )
     
     def get_select_mutiple_parameters_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Dropdown]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, 
+                gr.Dropdown
+            ]:
         select_mutiple_parameters_header = gr.Markdown(
             "### Select Mutiple Parameters"
         )
@@ -51,10 +60,16 @@ class PreprocessingComponent:
             multiselect=True,
         )
 
-        return select_mutiple_parameters_header, select_mutiple_parameters_dropdown
+        return (
+            select_mutiple_parameters_header, 
+            select_mutiple_parameters_dropdown
+        )
     
     def get_missing_values_handling_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Radio]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, 
+                gr.Radio
+            ]:
 
         missing_values_handling_header = gr.Markdown(
             "### Missing Values Handling"
@@ -68,10 +83,16 @@ class PreprocessingComponent:
             ], 
             interactive=True,
         )
-        return missing_values_handling_header, missing_value_checkbox
+        return (
+            missing_values_handling_header, 
+            missing_value_checkbox
+        )
 
     def get_data_scale_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Radio]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, 
+                gr.Radio
+            ]:
         
         data_scale_header = gr.Markdown(
             "### Data Scaling"
@@ -87,11 +108,18 @@ class PreprocessingComponent:
             interactive=True,
         )
 
-        return data_scale_header, data_scale_dropdown
+        return (
+            data_scale_header, 
+            data_scale_dropdown
+        )
     
     def get_data_split_info(
             self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, gr.Slider, gr.Slider, gr.Slider]:
+                gr.Markdown, 
+                gr.Slider, 
+                gr.Slider, 
+                gr.Slider
+            ]:
         data_split_header = gr.Markdown(
             "### Data Split\nTotal value should be 100%"
         )
@@ -121,19 +149,30 @@ class PreprocessingComponent:
             interactive=True,
         )
 
-        return data_split_header, training_slider, validation_slider, testing_slider
+        return (
+            data_split_header, 
+            training_slider, 
+            validation_slider, 
+            testing_slider
+        )
 
     def get_submit_dataset_setting_btn(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Button]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Button
+            ]:
 
         submit_dataset_setting_btn = gr.Button(
             value="Submit Setting",
         )
 
-        return submit_dataset_setting_btn
+        return (
+            submit_dataset_setting_btn
+        )
     
     def get_preprocessing_visulize_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.ScatterPlot]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, gr.ScatterPlot
+            ]:
         
         preprocessing_visulize_header = gr.Markdown(
             "### Data Visualization in Preprocessing"
@@ -143,10 +182,15 @@ class PreprocessingComponent:
             label="Data Visualization",
         )
 
-        return preprocessing_visulize_header, preprocessing_visulize_scatter_plot
+        return (
+            preprocessing_visulize_header, 
+            preprocessing_visulize_scatter_plot
+        )
     
     def get_preprocessing_visualize_axis_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[gr.Dropdown, gr.Dropdown]:
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Dropdown, gr.Dropdown
+            ]:
         x_axis_dropdown = gr.Dropdown(
             label="X Axis", 
             choices=[], 
@@ -158,4 +202,8 @@ class PreprocessingComponent:
             interactive=True,
         )
 
-        return x_axis_dropdown, y_axis_dropdown
+        return (
+            x_axis_dropdown, 
+            y_axis_dropdown
+        )
+    
