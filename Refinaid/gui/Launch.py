@@ -8,88 +8,47 @@ Version: v0.0.4
 import gradio as gr
 from Refinaid.gui.Utils.Listener import background_listener
 from Refinaid.gui.Example import get_preprocessing_example
+from Refinaid.gui.Information import PageContent
+from Refinaid.gui.Dashborad.Header import PageHeader
+from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
+from typing import Any
 
-def build_ui():
+def build_ui(*args: Any, **kwargs: Any):
+
+    page_content = PageContent()
+    page_header = PageHeader(page_content)
+    preprocessing_component = PreprocessingComponent(page_content)
     
     demo = gr.Blocks(
         title='Refinaid',
     )
 
-    dataset_choices = [
-        "Titanic", 
-        "Diabetes", 
-        "House Prices",
-    ]
-
     with demo:
-        our_heading = gr.Markdown("# Simple AI - Bridging the Gap with AI For Everyone")
+        our_heading = page_header.get_home_header()
 
         with gr.Tab("Preprocessing"):
-            preprocessing_heading = gr.Markdown("## Preprocessing")
+            preprocessing_heading = page_header.get_preprocessing_header()
             with gr.Row():
                 with gr.Column():
-                    gr.Markdown("### Dataset")
-                    dataset_dropdown = gr.Dropdown(
-                        label="Select Dataset", 
-                        choices=dataset_choices,
-                        interactive=True,
+                    dataset_header, dataset_dropdown = (
+                        preprocessing_component.get_dataset_info()
+                    )
+                    select_mutiple_parameters_header, select_mutiple_parameters_dropdown = (
+                        preprocessing_component.get_select_mutiple_parameters_info()
+                    )
+                    missing_values_handling_header, missing_value_checkbox = (
+                        preprocessing_component.get_missing_values_handling_info()
                     )
 
-                    gr.Markdown("### Select Mutiple Parameters")
-                    parameters_dropdown = gr.Dropdown(
-                        label="Select Mutiple Parameters", 
-                        choices=[], 
-                        interactive=True,
-                        multiselect=True,
+                    data_scale_header, data_scale_dropdown = (
+                        preprocessing_component.get_data_scale_info()
                     )
 
-                    gr.Markdown("### Missing Values Handling")
-                    miss_value_checkbox = gr.Radio(
-                        label="Select a Method", 
-                        choices=[
-                            "Drop Nan", 
-                            "By Columns"
-                        ], 
-                        interactive=True,
+                    data_split_header, training_slider, validation_slider, testing_slider = (
+                        preprocessing_component.get_data_split_info()
                     )
 
-                    gr.Markdown(f"### Data Scaling")
-                    data_scale_dropdown = gr.Radio(
-                        choices=[
-                            "None",
-                            "Standard",
-                            "Min-Max"
-                        ],
-                        label="Please select a method",
-                        interactive=True,
-                    )
-
-                    gr.Markdown(f"### Data Split\nTotal value should be 100%")
-
-                    training_slider = gr.Slider(
-                        label="Training Set", 
-                        minimum=0, 
-                        maximum=100, 
-                        step=5,
-                        interactive=True,
-                    )
-                    validation_slider = gr.Slider(
-                        label="Validation Set", 
-                        minimum=0, 
-                        maximum=100, 
-                        step=5,
-                        interactive=True,
-                    )
-                    testing_slider = gr.Slider(
-                        label="Testing Set", 
-                        minimum=0, 
-                        maximum=100, 
-                        step=5,
-                        interactive=True,
-                    )
-                    submit_dataset_setting_btn = gr.Button(
-                        value="Submit Setting",
-                    )
+                    submit_dataset_setting_btn = preprocessing_component.get_submit_dataset_setting_btn()
                     
                 with gr.Column():
                     with gr.Row():
@@ -109,8 +68,8 @@ def build_ui():
             with gr.Row():
                 get_preprocessing_example(
                     dataset_dropdown,
-                    parameters_dropdown,
-                    miss_value_checkbox, 
+                    select_mutiple_parameters_dropdown,
+                    missing_value_checkbox, 
                     data_scale_dropdown, 
                     training_slider, 
                     validation_slider, 
@@ -271,7 +230,7 @@ def build_ui():
 
         background_listener(
             dataset_dropdown,
-            parameters_dropdown,
+            select_mutiple_parameters_dropdown,
             x_axis_dropdown,
             y_axis_dropdown,
             model_dropdown,
@@ -287,7 +246,7 @@ def build_ui():
             k_neighbors_classifier_weights_dropdown,
             k_neighbors_classifier_algorithm_dropdown,
             submit_dataset_setting_btn,
-            miss_value_checkbox,
+            missing_value_checkbox,
             data_scale_dropdown,
             training_slider,
             validation_slider,

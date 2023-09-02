@@ -8,6 +8,19 @@ Version: v0.0.1
 class PageContent:
 
     def __init__(self) -> None:
+
+        self.home_header = """\
+        # Simple AI - Bridging the Gap with AI For Everyone
+
+        Enabling everyone unfamiliar with programming languages \
+        to easily engage with AI and open the doors to the world \
+        of the future.
+        """
+
+        self.preprocessing_header = """\
+        ## Preprocessing
+        """
+
         self.explanatory_text = {
             "header": {
                 "title": "# Simple AI - Bridging the Gap with AI For Everyone", 

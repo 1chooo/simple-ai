@@ -6,8 +6,9 @@ Version: v0.0.1
 '''
 
 from Refinaid.app.app import start_simple_ai
+from typing import Any
 
-def main() -> None:
+def main(*args: Any, **kwargs: Any) -> None:
     start_simple_ai()
 
 if __name__ == '__main__':
