@@ -95,6 +95,7 @@ def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
     return X, y
 
 def data_scaling(df: pd.DataFrame, method: str):
+    method = method.lower()
     if method == "standard":
         standard_scaler = StandardScaler()
         standard_scaled = standard_scaler.fit_transform(df)

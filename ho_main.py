@@ -130,7 +130,7 @@ def update_training_results(
         preprocessing_data_value.loc[0, "Value"],
         preprocessing_data_value.loc[1, "Value"],
         preprocessing_data_value.loc[2, "Value"],
-        preprocessing_data_value.loc[3, "Value"],
+        eval(preprocessing_data_value.loc[3, "Value"]),
         [
             preprocessing_data_value.loc[4, "Value"] / 100,
             preprocessing_data_value.loc[5, "Value"] / 100,
@@ -151,11 +151,8 @@ def update_training_results(
     evaluations = list(map(str,evaluations))
 
     training_results = gr.DataFrame.update(
-        headers=["Accuracy", "Recall", "Precision", "F1"], 
         value=[evaluations],
-        interactive=True, 
-        row_count=(1, "fixed"), 
-        col_count=(4, "fixed")
+        interactive=True,
     )
 
     training_outputs.append(training_results)
