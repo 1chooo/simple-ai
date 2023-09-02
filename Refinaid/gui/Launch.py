@@ -33,9 +33,11 @@ def build_ui(*args: Any, **kwargs: Any):
                     dataset_header, dataset_dropdown = (
                         preprocessing_component.get_dataset_info()
                     )
+
                     select_mutiple_parameters_header, select_mutiple_parameters_dropdown = (
                         preprocessing_component.get_select_mutiple_parameters_info()
                     )
+
                     missing_values_handling_header, missing_value_checkbox = (
                         preprocessing_component.get_missing_values_handling_info()
                     )
@@ -51,19 +53,12 @@ def build_ui(*args: Any, **kwargs: Any):
                     submit_dataset_setting_btn = preprocessing_component.get_submit_dataset_setting_btn()
                     
                 with gr.Column():
-                    with gr.Row():
-                        gr.ScatterPlot(
-                            label="Data Visualization")
-                    with gr.Row():
-                        x_axis_dropdown = gr.Dropdown(
-                            label="X Axis", 
-                            choices=[], 
-                            interactive=True,
+                    preprocessing_visulize_header, preprocessing_visulize_scatter_plot = (
+                            preprocessing_component.get_preprocessing_visulize_info()
                         )
-                        y_axis_dropdown = gr.Dropdown(
-                            label="Y Axis", 
-                            choices=[], 
-                            interactive=True,
+                    with gr.Row():
+                        x_axis_dropdown, y_axis_dropdown = (
+                            preprocessing_component.get_preprocessing_visualize_axis_info()    
                         )
             with gr.Row():
                 get_preprocessing_example(
@@ -104,23 +99,24 @@ def build_ui(*args: Any, **kwargs: Any):
                         "### Decision Tree Classifier", 
                         visible=False,
                     )
-                    decision_tree_classifer_criterion_dropdown = gr.Dropdown(
-                        label="Criterion", 
-                        choices=[
-                            "gini", 
-                            "entropy", 
-                            "log_loss"
-                        ], 
-                        value="gini", 
-                        interactive=True, 
-                        visible=False,
-                    )
-                    decision_tree_classifer_max_depth_textbox = gr.Textbox(
-                        label="Max Depth", 
-                        value="None", 
-                        interactive=True, 
-                        visible=False,
-                    )
+                    with gr.Row():
+                        decision_tree_classifer_criterion_dropdown = gr.Dropdown(
+                            label="Criterion", 
+                            choices=[
+                                "gini", 
+                                "entropy", 
+                                "log_loss"
+                            ], 
+                            value="gini", 
+                            interactive=True, 
+                            visible=False,
+                        )
+                        decision_tree_classifer_max_depth_textbox = gr.Textbox(
+                            label="Max Depth", 
+                            value="None", 
+                            interactive=True, 
+                            visible=False,
+                        )
                     decision_tree_classifer_min_samples_split_slider = gr.Slider(
                         label="Minimum Samples Split", 
                         minimum=2, 
@@ -139,23 +135,24 @@ def build_ui(*args: Any, **kwargs: Any):
                         interactive=True, 
                         visible=False,
                     )
-                    decision_tree_classifer_max_features_dropdown = gr.Dropdown(
-                        label="Max Features", 
-                        choices=[
-                            "None", 
-                            "sqrt", 
-                            "log2"
-                        ], 
-                        value="None", 
-                        interactive=True, 
-                        visible=False,
-                    )
-                    decision_tree_classifer_max_leaf_nodes_textbox = gr.Textbox(
-                        label="Max Leaf Nodes", 
-                        value="None", 
-                        interactive=True, 
-                        visible=False,
-                    )
+                    with gr.Row():
+                        decision_tree_classifer_max_features_dropdown = gr.Dropdown(
+                            label="Max Features", 
+                            choices=[
+                                "None", 
+                                "sqrt", 
+                                "log2"
+                            ], 
+                            value="None", 
+                            interactive=True, 
+                            visible=False,
+                        )
+                        decision_tree_classifer_max_leaf_nodes_textbox = gr.Textbox(
+                            label="Max Leaf Nodes", 
+                            value="None", 
+                            interactive=True, 
+                            visible=False,
+                        )
 
                     # k_neighbors_classifier
                     k_neighbors_classifier_title = gr.Markdown(

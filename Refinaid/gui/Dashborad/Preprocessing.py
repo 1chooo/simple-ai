@@ -92,7 +92,9 @@ class PreprocessingComponent:
     def get_data_split_info(
             self, *args: Any, **kwargs: Any) -> Tuple[
                 gr.Markdown, gr.Slider, gr.Slider, gr.Slider]:
-        data_split_header = gr.Markdown(f"### Data Split\nTotal value should be 100%")
+        data_split_header = gr.Markdown(
+            "### Data Split\nTotal value should be 100%"
+        )
 
         training_slider = gr.Slider(
             label="Training Set", 
@@ -130,3 +132,30 @@ class PreprocessingComponent:
 
         return submit_dataset_setting_btn
     
+    def get_preprocessing_visulize_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.ScatterPlot]:
+        
+        preprocessing_visulize_header = gr.Markdown(
+            "### Data Visualization in Preprocessing"
+        )
+
+        preprocessing_visulize_scatter_plot = gr.ScatterPlot(
+            label="Data Visualization",
+        )
+
+        return preprocessing_visulize_header, preprocessing_visulize_scatter_plot
+    
+    def get_preprocessing_visualize_axis_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Dropdown, gr.Dropdown]:
+        x_axis_dropdown = gr.Dropdown(
+            label="X Axis", 
+            choices=[], 
+            interactive=True,
+        )
+        y_axis_dropdown = gr.Dropdown(
+            label="Y Axis", 
+            choices=[], 
+            interactive=True,
+        )
+
+        return x_axis_dropdown, y_axis_dropdown
