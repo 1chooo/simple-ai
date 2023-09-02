@@ -2,19 +2,15 @@
 '''
 Create Date: 2023/08/28
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.1
+Version: v0.0.4
 '''
 
 import gradio as gr
-from Refinaid.gui.Utils.Update import update_parameters
-from Refinaid.gui.Utils.Update import update_plot_x_parameters
-from Refinaid.gui.Utils.Update import update_plot_y_parameters
-from Refinaid.gui.Utils.Update import update_model_parameters
-from Refinaid.gui.Utils.Update import update_preprocessing_data
-from Refinaid.gui.Utils.Update import update_training_results
+from Refinaid.gui.Utils.Listener import background_listener
+from Refinaid.gui.Example import get_preprocessing_example
 
 def build_ui():
-
+    
     demo = gr.Blocks(
         title='Refinaid',
     )
@@ -25,80 +21,11 @@ def build_ui():
         "House Prices",
     ]
 
-    def _background_listener() -> None:
-        dataset_dropdown.change(
-            fn=update_parameters,
-            inputs=dataset_dropdown,
-            outputs=parameters_dropdown,
-        )
-
-        dataset_dropdown.change(
-            fn=update_plot_x_parameters,
-            inputs=dataset_dropdown,
-            outputs=x_axis_dropdown,
-        )
-
-        dataset_dropdown.change(
-            fn=update_plot_y_parameters,
-            inputs=dataset_dropdown,
-            outputs=y_axis_dropdown,
-        )
-
-        model_dropdown.change(
-            fn=update_model_parameters,
-            inputs=model_dropdown,
-            outputs=[
-                decision_tree_classifer_title,
-                decision_tree_classifer_criterion_dropdown,
-                decision_tree_classifer_max_depth_textbox,
-                decision_tree_classifer_min_samples_split_slider,
-                decision_tree_classifer_min_samples_leaf_slider,
-                decision_tree_classifer_max_features_dropdown,
-                decision_tree_classifer_max_leaf_nodes_textbox, 
-                k_neighbors_classifier_title,
-                k_neighbors_classifier_slider,
-                k_neighbors_classifier_weights_dropdown,
-                k_neighbors_classifier_algorithm_dropdown,
-            ]
-        )
-
-        submit_dataset_setting_btn.click(
-            fn=update_preprocessing_data, 
-            inputs=[
-                dataset_dropdown, parameters_dropdown, 
-                miss_value_checkbox, data_scale_dropdown, 
-                training_slider, validation_slider, testing_slider], 
-            outputs=[preprocessing_data_result]
-        )
-
-        train_btn.click(
-            fn=update_training_results,
-            inputs=[
-                preprocessing_data_result,
-                model_dropdown,
-                decision_tree_classifer_criterion_dropdown,
-                decision_tree_classifer_max_depth_textbox,
-                decision_tree_classifer_min_samples_split_slider,
-                decision_tree_classifer_min_samples_leaf_slider,
-                decision_tree_classifer_max_features_dropdown,
-                decision_tree_classifer_max_leaf_nodes_textbox,
-                k_neighbors_classifier_slider,
-                k_neighbors_classifier_weights_dropdown,
-                k_neighbors_classifier_algorithm_dropdown,
-            ],
-            outputs=[
-                training_results,
-                train_img1,
-                train_img2,
-                train_img3,
-            ],
-        )
-
     with demo:
         our_heading = gr.Markdown("# Simple AI - Bridging the Gap with AI For Everyone")
 
         with gr.Tab("Preprocessing"):
-            our_heading = gr.Markdown("## Preprocessing")
+            preprocessing_heading = gr.Markdown("## Preprocessing")
             with gr.Row():
                 with gr.Column():
                     gr.Markdown("### Dataset")
@@ -180,45 +107,14 @@ def build_ui():
                             interactive=True,
                         )
             with gr.Row():
-                gr.Examples(
-                    [
-                        [
-                            "Titanic", 
-                            ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare", "Cabin", "Embarked"], 
-                            "Drop Nan", 
-                            "None", 
-                            70, 
-                            10, 
-                            20
-                        ],
-                        [
-                            "Titanic", 
-                            ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare"], 
-                            "By Columns", 
-                            "Standard", 
-                            70, 
-                            10, 
-                            20
-                        ],
-                        [
-                            "Titanic", 
-                            ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare"], 
-                            "By Columns", 
-                            "Min-Max", 
-                            70, 
-                            10, 
-                            20
-                        ],
-                    ],
-                    [
-                        dataset_dropdown,
-                        parameters_dropdown,
-                        miss_value_checkbox, 
-                        data_scale_dropdown, 
-                        training_slider, 
-                        validation_slider, 
-                        testing_slider,
-                    ]
+                get_preprocessing_example(
+                    dataset_dropdown,
+                    parameters_dropdown,
+                    miss_value_checkbox, 
+                    data_scale_dropdown, 
+                    training_slider, 
+                    validation_slider, 
+                    testing_slider,
                 )
 
         with gr.Tab("Training"):
@@ -373,7 +269,36 @@ def build_ui():
                 gr.Textbox("hello")
                 gr.Textbox("hello")
 
-        _background_listener()
+        background_listener(
+            dataset_dropdown,
+            parameters_dropdown,
+            x_axis_dropdown,
+            y_axis_dropdown,
+            model_dropdown,
+            decision_tree_classifer_title,
+            decision_tree_classifer_criterion_dropdown,
+            decision_tree_classifer_max_depth_textbox,
+            decision_tree_classifer_min_samples_split_slider,
+            decision_tree_classifer_min_samples_leaf_slider,
+            decision_tree_classifer_max_features_dropdown,
+            decision_tree_classifer_max_leaf_nodes_textbox,
+            k_neighbors_classifier_title,
+            k_neighbors_classifier_slider,
+            k_neighbors_classifier_weights_dropdown,
+            k_neighbors_classifier_algorithm_dropdown,
+            submit_dataset_setting_btn,
+            miss_value_checkbox,
+            data_scale_dropdown,
+            training_slider,
+            validation_slider,
+            testing_slider,
+            preprocessing_data_result,
+            train_btn,
+            training_results,
+            train_img1,
+            train_img2,
+            train_img3,
+        )
 
     demo.launch(
         # enable_queue=True,
@@ -382,4 +307,3 @@ def build_ui():
         server_port=6006,
         debug=True,
     ) 
-
