@@ -5,248 +5,16 @@ Version: v0.0.3
 '''
 
 import gradio as gr
-from Refinaid.Action.Load import get_dataset_x_columns
-from Refinaid.gui.Utils.Get import get_data_setting
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
+from Refinaid.gui.Utils.Update import update_parameters
+from Refinaid.gui.Utils.Update import update_plot_x_parameters
+from Refinaid.gui.Utils.Update import update_plot_y_parameters
+from Refinaid.gui.Utils.Update import update_model_parameters
+from Refinaid.gui.Utils.Update import update_preprocessing_data
 
 demo = gr.Blocks(
     title='Refinaid',
 )
-
-def update_parameters(dataset_name) -> gr.Dropdown:
-    parameters = get_dataset_x_columns(dataset_name)
-
-    return gr.Dropdown.update(
-            choices=parameters,
-            value=[],
-            label="Select Mutiple Parameters",
-            interactive=True,
-        )
-
-def update_plot_x_parameters(dataset_name) -> gr.Dropdown:
-    parameters = get_dataset_x_columns(dataset_name)
-
-    return gr.Dropdown.update(
-            choices=parameters,
-            value=[],
-            label="X Axis",
-            interactive=True,
-        )
-
-def update_plot_y_parameters(dataset_name) -> gr.Dropdown:
-    parameters = get_dataset_x_columns(dataset_name)
-
-    return gr.Dropdown.update(
-            choices=parameters,
-            value=[],
-            label="Y Axis",
-            interactive=True,
-        )
-
-def update_model_parameters(model_name):
-    output_components = []
-    if model_name == 'Decision Tree Classifier':
-        decision_tree_classifer_title = gr.Markdown.update(
-            "### Decision Tree Classifier", 
-            visible=True,
-        )
-        decision_tree_classifer_criterion_dropdown = gr.Dropdown.update(
-            label="Criterion", 
-            choices=[
-                "gini", 
-                "entropy", 
-                "log_loss"
-            ], 
-            value="gini", 
-            interactive=True, 
-            visible=True,
-        )
-        decision_tree_classifer_max_depth_textbox = gr.Textbox.update(
-            label="Max Depth", 
-            value="None", 
-            interactive=True, 
-            visible=True,
-        )
-        decision_tree_classifer_min_samples_split_slider = gr.Slider.update(
-            label="Minimum Samples Split", 
-            minimum=2, 
-            maximum=20, 
-            step=1, 
-            value=2, 
-            interactive=True, 
-            visible=True,
-        )
-        decision_tree_classifer_min_samples_leaf_slider = gr.Slider.update(
-            label="Minimum Samples Leaf", 
-            minimum=1, 
-            maximum=20, 
-            step=1, 
-            value=1, 
-            interactive=True, 
-            visible=True,
-        )
-        decision_tree_classifer_max_features_dropdown = gr.Dropdown.update(
-            label="Max Features", 
-            choices=[
-                "None", 
-                "sqrt", 
-                "log2"
-            ], 
-            value="None", 
-            interactive=True, 
-            visible=True,
-        )
-        decision_tree_classifer_max_leaf_nodes_textbox = gr.Textbox.update(
-            label="Max Leaf Nodes", 
-            value="None", 
-            interactive=True, 
-            visible=True,
-        )
-
-        k_neighbors_classifier_title = gr.Markdown.update(
-            "### K Neighbors Classifier", 
-            visible=False,
-        )
-        k_neighbors_classifier_slider = gr.Slider.update(
-            label="N Neighbors", 
-            value=5, 
-            interactive=True, 
-            minimum=1, 
-            maximum=20, 
-            step=1, 
-            visible=False,
-        )
-        k_neighbors_classifier_weights_dropdown = gr.Dropdown.update(
-            label="Weights", 
-            choices=[
-                "uniform", 
-                "distance"
-            ], 
-            value="uniform", 
-            interactive=True, 
-            visible=False,
-        )
-        k_neighbors_classifier_algorithm_dropdown = gr.Dropdown.update(
-            label="Algorithm", 
-            choices=[
-                "auto", 
-                "ball_tree", 
-                "kd_tree", 
-                "brute"
-            ], 
-            value="auto", 
-            interactive=True, 
-            visible=False,
-        )
-    else:
-        output_components = []
-        decision_tree_classifer_title = gr.Markdown.update(
-            "### Decision Tree Classifier", 
-            visible=False,
-        )
-        decision_tree_classifer_criterion_dropdown = gr.Dropdown.update(
-            label="Criterion", 
-            choices=[
-                "gini", 
-                "entropy", 
-                "log_loss"
-            ], 
-            value="gini", 
-            interactive=True, 
-            visible=False,
-        )
-        decision_tree_classifer_max_depth_textbox = gr.Textbox.update(
-            label="Max Depth", 
-            value="None", 
-            interactive=True, 
-            visible=False,
-        )
-        decision_tree_classifer_min_samples_split_slider = gr.Slider.update(
-            label="Minimum Samples Split", 
-            minimum=2, 
-            maximum=20, 
-            step=1, 
-            value=2, 
-            interactive=True, 
-            visible=False,
-        )
-        decision_tree_classifer_min_samples_leaf_slider = gr.Slider.update(
-            label="Minimum Samples Leaf", 
-            minimum=1, 
-            maximum=20, 
-            step=1, 
-            value=1, 
-            interactive=True, 
-            visible=False,
-        )
-        decision_tree_classifer_max_features_dropdown = gr.Dropdown.update(
-            label="Max Features", 
-            choices=[
-                "None", 
-                "sqrt", 
-                "log2"
-            ], 
-            value="None", 
-            interactive=True, 
-            visible=False,
-        )
-        decision_tree_classifer_max_leaf_nodes_textbox = gr.Textbox.update(
-            label="Max Leaf Nodes", 
-            value="None", 
-            interactive=True, 
-            visible=False,
-        )
-
-        k_neighbors_classifier_title = gr.Markdown.update(
-            "### K Neighbors Classifier", 
-            visible=True,
-        )
-        k_neighbors_classifier_slider = gr.Slider.update(
-            label="N Neighbors", 
-            value=5, 
-            interactive=True, 
-            minimum=1, 
-            maximum=20, 
-            step=1, 
-            visible=True,
-        )
-        k_neighbors_classifier_weights_dropdown = gr.Dropdown.update(
-            label="Weights", 
-            choices=[
-                "uniform", 
-                "distance"
-            ], 
-            value="uniform", 
-            interactive=True, 
-            visible=True,
-        )
-        k_neighbors_classifier_algorithm_dropdown = gr.Dropdown.update(
-            label="Algorithm", 
-            choices=[
-                "auto", 
-                "ball_tree", 
-                "kd_tree", 
-                "brute"
-            ], 
-            value="auto", 
-            interactive=True, 
-            visible=True,
-        )
-
-
-    output_components.append(decision_tree_classifer_title)
-    output_components.append(decision_tree_classifer_criterion_dropdown)
-    output_components.append(decision_tree_classifer_max_depth_textbox)
-    output_components.append(decision_tree_classifer_min_samples_split_slider)
-    output_components.append(decision_tree_classifer_min_samples_leaf_slider)
-    output_components.append(decision_tree_classifer_max_features_dropdown)
-    output_components.append(decision_tree_classifer_max_leaf_nodes_textbox)
-    output_components.append(k_neighbors_classifier_title)
-    output_components.append(k_neighbors_classifier_slider)
-    output_components.append(k_neighbors_classifier_weights_dropdown)
-    output_components.append(k_neighbors_classifier_algorithm_dropdown)
-
-    return *output_components,
 
 dataset_choices = [
     "Titanic", 
@@ -254,26 +22,52 @@ dataset_choices = [
     "House Prices",
 ]
 
-def store_preprocessing_data(
-        dataset:str, parameters:list, 
-        miss_value:bool, data_scaling:str, 
-        training:int, validation:int, testing:int):
-    
-    model_mapping = {
-        "Decision Tree Classifier": "decision_tree_classifier",
-        "K Neighbor Classifier": "k_neighbors_classifier",
-        "Standard": "standard",
-        "Min-Max": "min-max",
-        "By Columns": "by_columns",
-        "None": None,
-        "Drop Nan": None,        
-    }
-
-    data_summary_dict = get_data_setting(
-        dataset, parameters, miss_value, 
-        data_scaling, training, validation, testing
+def _background_listener() -> None:
+    dataset_dropdown.change(
+        fn=update_parameters,
+        inputs=dataset_dropdown,
+        outputs=parameters_dropdown,
     )
-    dataset_config = DatasetConfig(dataset, parameters, model_mapping[miss_value], model_mapping[data_scaling], [training/100, validation/100, testing/100])
+
+    dataset_dropdown.change(
+        fn=update_plot_x_parameters,
+        inputs=dataset_dropdown,
+        outputs=x_axis_dropdown,
+    )
+
+    dataset_dropdown.change(
+        fn=update_plot_y_parameters,
+        inputs=dataset_dropdown,
+        outputs=y_axis_dropdown,
+    )
+
+    model_dropdown.change(
+        fn=update_model_parameters,
+        inputs=model_dropdown,
+        outputs=[
+            decision_tree_classifer_title,
+            decision_tree_classifer_criterion_dropdown,
+            decision_tree_classifer_max_depth_textbox,
+            decision_tree_classifer_min_samples_split_slider,
+            decision_tree_classifer_min_samples_leaf_slider,
+            decision_tree_classifer_max_features_dropdown,
+            decision_tree_classifer_max_leaf_nodes_textbox, 
+            k_neighbors_classifier_title,
+            k_neighbors_classifier_slider,
+            k_neighbors_classifier_weights_dropdown,
+            k_neighbors_classifier_algorithm_dropdown,
+        ]
+    )
+
+    submit_dataset_setting_btn.click(
+        fn=update_preprocessing_data, 
+        inputs=[
+            dataset_dropdown, parameters_dropdown, 
+            miss_value_checkbox, data_scale_dropdown, 
+            training_slider, validation_slider, testing_slider], 
+        outputs=[preprocessing_data_result]
+    )
+
 
 with demo:
     our_heading = gr.Markdown("# Simple AI - Bridging the Gap with AI For Everyone")
@@ -308,7 +102,7 @@ with demo:
                 )
 
                 gr.Markdown(f"### Data Split\nTotal value should be 100%")
-                data_scale_dd = gr.Radio(
+                data_scale_dropdown = gr.Radio(
                     choices=[
                         "None", 
                         "Standard", 
@@ -392,7 +186,7 @@ with demo:
                     dataset_dropdown,
                     parameters_dropdown,
                     miss_value_checkbox, 
-                    data_scale_dd, 
+                    data_scale_dropdown, 
                     training_slider, 
                     validation_slider, 
                     testing_slider,
@@ -404,7 +198,7 @@ with demo:
         with gr.Row():
             with gr.Column():
                 gr.Markdown("### Data You have picked!!!")
-                gr.DataFrame(
+                preprocessing_data_result = gr.DataFrame(
                     headers=[
                         "Parameters",
                         "Value"
@@ -551,41 +345,7 @@ with demo:
             gr.Textbox("hello")
             gr.Textbox("hello")
 
-    dataset_dropdown.change(
-        fn=update_parameters,
-        inputs=dataset_dropdown,
-        outputs=parameters_dropdown,
-    )
-
-    dataset_dropdown.change(
-        fn=update_plot_x_parameters,
-        inputs=dataset_dropdown,
-        outputs=x_axis_dropdown,
-    )
-
-    dataset_dropdown.change(
-        fn=update_plot_y_parameters,
-        inputs=dataset_dropdown,
-        outputs=y_axis_dropdown,
-    )
-
-    model_dropdown.change(
-        fn=update_model_parameters,
-        inputs=model_dropdown,
-        outputs=[
-            decision_tree_classifer_title,
-            decision_tree_classifer_criterion_dropdown,
-            decision_tree_classifer_max_depth_textbox,
-            decision_tree_classifer_min_samples_split_slider,
-            decision_tree_classifer_min_samples_leaf_slider,
-            decision_tree_classifer_max_features_dropdown,
-            decision_tree_classifer_max_leaf_nodes_textbox, 
-            k_neighbors_classifier_title,
-            k_neighbors_classifier_slider,
-            k_neighbors_classifier_weights_dropdown,
-            k_neighbors_classifier_algorithm_dropdown,
-        ]
-    )
+    _background_listener()
 
 demo.launch(
     # enable_queue=True,
