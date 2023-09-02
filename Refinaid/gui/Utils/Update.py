@@ -7,6 +7,8 @@ Version: v0.0.3
 import gradio as gr
 from Refinaid.Action.Load import get_dataset_x_columns
 from Refinaid.gui.Utils.Get import get_data_setting
+from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
+from Refinaid.Action.Model import training
 
 def update_parameters(dataset_name) -> gr.Dropdown:
     parameters = get_dataset_x_columns(dataset_name)
@@ -268,3 +270,84 @@ def update_preprocessing_data(
     return gr.DataFrame.update(
         value=data_summary_dict
         )
+
+def update_training_results(
+        preprocessing_data_result,
+        model_dropdown,
+        decision_tree_classifer_criterion_dropdown,
+        decision_tree_classifer_max_depth_textbox,
+        decision_tree_classifer_min_samples_split_slider,
+        decision_tree_classifer_min_samples_leaf_slider,
+        decision_tree_classifer_max_features_dropdown,
+        decision_tree_classifer_max_leaf_nodes_textbox, 
+        k_neighbors_classifier_slider,
+        k_neighbors_classifier_weights_dropdown,
+        k_neighbors_classifier_algorithm_dropdown,
+        ):
+    
+    model_config = None
+    
+    if model_dropdown == "Decision Tree Classifier":
+        decision_tree_classifer_max_features_dropdown = decision_tree_classifer_max_features_dropdown if decision_tree_classifer_max_features_dropdown != "None" else None
+        model_config = DecisionTreeModelConfig(
+            decision_tree_classifer_criterion_dropdown, 
+            decision_tree_classifer_min_samples_split_slider, 
+            decision_tree_classifer_min_samples_leaf_slider, 
+            decision_tree_classifer_max_features_dropdown, 
+            eval(decision_tree_classifer_max_depth_textbox), 
+            eval(decision_tree_classifer_max_leaf_nodes_textbox),
+        )
+    elif model_dropdown == "K Neighbor Classifier":
+        model_config = KNNModelConfig(
+            k_neighbors_classifier_slider, 
+            k_neighbors_classifier_weights_dropdown, 
+            k_neighbors_classifier_algorithm_dropdown,
+        )
+
+    preprocessing_data_value = preprocessing_data_result
+    dataset_config=DatasetConfig(
+        preprocessing_data_value.loc[0, "Value"],
+        preprocessing_data_value.loc[1, "Value"],
+        preprocessing_data_value.loc[2, "Value"],
+        eval(preprocessing_data_value.loc[3, "Value"]),
+        [
+            preprocessing_data_value.loc[4, "Value"] / 100,
+            preprocessing_data_value.loc[5, "Value"] / 100,
+            preprocessing_data_value.loc[6, "Value"] / 100,
+        ],
+    )
+
+    training_outputs = []
+    figures, evaluations = training(dataset_config, model_config)
+    evaluations = list(map(str,evaluations))
+
+    training_results = gr.DataFrame.update(
+        value=[evaluations],
+        interactive=True,
+    )
+
+    training_outputs.append(training_results)
+
+    train_img1 = gr.Plot(
+        interactive=True
+    )
+    train_img2 = gr.Plot(
+        interactive=True
+    )
+    train_img3 = gr.Plot(
+        interactive=True
+    )
+
+    img_components = [
+        train_img1, 
+        train_img2, 
+        train_img3
+    ]
+
+    for i, component in enumerate(img_components):
+        if figures[i] != None:
+            training_outputs.append(component.update(value=figures[i], visible=True))
+        else:
+            training_outputs.append(component.update(visible=False))
+
+    return *training_outputs,
