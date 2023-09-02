@@ -7,46 +7,126 @@ Version: v0.0.1
 
 import gradio as gr
 from Refinaid.gui.Information import PageContent
-from Refinaid.gui.Example import get_preprocessing_example
-from typing import Any
+from typing import Any, Tuple
 
 class PreprocessingComponent:
-
-    dataset_dd = None
-    inputs_dd = None
-    miss_value_chkbox = None
-    data_scale_dd = None
-    train_sldr = None
-    valid_sldr = None
-    test_sldr = None
-    submit_set_btn = None
     
     def __init__(self, page_content: PageContent) -> None:
         self.page_content = page_content
 
-    def get_preprocessing(self,):
-        gr.Markdown(f"{self.page_content.explanatory_text['preprocess']['title']}\n{self.page_content.explanatory_text['preprocess']['body']}")
-        with gr.Row():
-            with gr.Column():
-                gr.Markdown("### Dataset")
-                self.dataset_dd = gr.Dropdown(label="Select Dataset", choices=self.page_content.dropdown_options["datasets"], interactive=True)
-                gr.Markdown("### Inputs")
-                self.inputs_dd = gr.Dropdown(label="Select Mutiple Inputs", choices=self.page_content.dropdown_options["inputs"], multiselect=True)
-                # with gr.Accordion("Options"):
-                gr.Markdown(f"### Missing Values Handling")
-                self.miss_value_chkbox = gr.Radio(label="Select a Method", choices=self.page_content.dropdown_options["miss_value"], interactive=True)
-                gr.Markdown(f"### Data Scaling")
-                self.data_scale_dd = gr.Radio(choices=self.page_content.dropdown_options["data_scalings"], label="Please select a method", interactive=True)
-                gr.Markdown(f"### Data Split\nTotal value should be 100%")
-                self.train_sldr = gr.Slider(label="Training Set", minimum=0, maximum=100, step=5)
-                self.valid_sldr = gr.Slider(label="Validation Set", minimum=0, maximum=100, step=5)
-                self.test_sldr = gr.Slider(label="Testing Set", minimum=0, maximum=100, step=5)
-                self.submit_set_btn = gr.Button(value="Submit Setting")
-            with gr.Column():
-                gr.ScatterPlot(label="Data Visualization")
-                with gr.Row():
-                    gr.Dropdown(label="X Axis", choices=self.page_content.dropdown_options["datasets"])
-                    gr.Dropdown(label="Y Axis", choices=self.page_content.dropdown_options["datasets"])
-        with gr.Row():
-            get_preprocessing_example(self,)
-            
+    def get_dataset_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Dropdown]:
+
+        dataset_header = gr.Markdown("### Dataset")
+
+        dataset_choices = [
+            "Titanic", 
+            "Diabetes", 
+            "House Prices",
+        ]
+
+        dataset_dropdown = gr.Dropdown(
+            label="Select Dataset", 
+            value="Titanic",
+            choices=dataset_choices,
+            interactive=True,
+        )
+
+        return dataset_header, dataset_dropdown
+    
+    def get_select_mutiple_parameters_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Dropdown]:
+        select_mutiple_parameters_header = gr.Markdown(
+            "### Select Mutiple Parameters"
+        )
+        select_mutiple_parameters_dropdown = gr.Dropdown(
+            label="Select Mutiple Parameters", 
+            value=[
+                'PassengerId', 'Pclass', 'Sex', 
+                'Age', 'SibSp', 'Parch', 'Ticket', 
+                'Fare', 'Cabin', 'Embarked'
+            ],
+            choices=[], 
+            interactive=True,
+            multiselect=True,
+        )
+
+        return select_mutiple_parameters_header, select_mutiple_parameters_dropdown
+    
+    def get_missing_values_handling_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Radio]:
+
+        missing_values_handling_header = gr.Markdown(
+            "### Missing Values Handling"
+        )
+        missing_value_checkbox = gr.Radio(
+            label="Select a Method", 
+            value="Drop Nan",
+            choices=[
+                "Drop Nan", 
+                "By Columns"
+            ], 
+            interactive=True,
+        )
+        return missing_values_handling_header, missing_value_checkbox
+
+    def get_data_scale_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Markdown, gr.Radio]:
+        
+        data_scale_header = gr.Markdown(
+            "### Data Scaling"
+        )
+        data_scale_dropdown = gr.Radio(
+            value="None",
+            choices=[
+                "None",
+                "Standard",
+                "Min-Max"
+            ],
+            label="Please select a method",
+            interactive=True,
+        )
+
+        return data_scale_header, data_scale_dropdown
+    
+    def get_data_split_info(
+            self, *args: Any, **kwargs: Any) -> Tuple[
+                gr.Markdown, gr.Slider, gr.Slider, gr.Slider]:
+        data_split_header = gr.Markdown(f"### Data Split\nTotal value should be 100%")
+
+        training_slider = gr.Slider(
+            label="Training Set", 
+            value=70,
+            minimum=0, 
+            maximum=100, 
+            step=5,
+            interactive=True,
+        )
+        validation_slider = gr.Slider(
+            label="Validation Set", 
+            value=10,
+            minimum=0, 
+            maximum=100, 
+            step=5,
+            interactive=True,
+        )
+        testing_slider = gr.Slider(
+            label="Testing Set", 
+            value=20,
+            minimum=0, 
+            maximum=100, 
+            step=5,
+            interactive=True,
+        )
+
+        return data_split_header, training_slider, validation_slider, testing_slider
+
+    def get_submit_dataset_setting_btn(
+            self, *args: Any, **kwargs: Any) -> Tuple[gr.Button]:
+
+        submit_dataset_setting_btn = gr.Button(
+            value="Submit Setting",
+        )
+
+        return submit_dataset_setting_btn
+    

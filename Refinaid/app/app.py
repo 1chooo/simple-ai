@@ -6,8 +6,9 @@ Version: v0.0.1
 '''
 
 from Refinaid.gui.Launch import build_ui
+from typing import Any
 
-def start_simple_ai() -> None:
+def start_simple_ai(*args: Any, **kwargs: Any) -> None:
     '''
     Main function of the app.
     '''

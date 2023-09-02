@@ -14,7 +14,7 @@ from Refinaid.gui.Utils.Update import update_training_results
 
 def background_listener(
         dataset_dropdown,
-        parameters_dropdown,
+        select_mutiple_parameters_dropdown,
         x_axis_dropdown,
         y_axis_dropdown,
         model_dropdown,
@@ -30,7 +30,7 @@ def background_listener(
         k_neighbors_classifier_weights_dropdown,
         k_neighbors_classifier_algorithm_dropdown,
         submit_dataset_setting_btn,
-        miss_value_checkbox,
+        missing_value_checkbox,
         data_scale_dropdown,
         training_slider,
         validation_slider,
@@ -45,7 +45,7 @@ def background_listener(
         dataset_dropdown.change(
             fn=update_parameters,
             inputs=dataset_dropdown,
-            outputs=parameters_dropdown,
+            outputs=select_mutiple_parameters_dropdown,
         )
 
         dataset_dropdown.change(
@@ -81,8 +81,8 @@ def background_listener(
         submit_dataset_setting_btn.click(
             fn=update_preprocessing_data, 
             inputs=[
-                dataset_dropdown, parameters_dropdown, 
-                miss_value_checkbox, data_scale_dropdown, 
+                dataset_dropdown, select_mutiple_parameters_dropdown, 
+                missing_value_checkbox, data_scale_dropdown, 
                 training_slider, validation_slider, testing_slider], 
             outputs=[preprocessing_data_result]
         )
