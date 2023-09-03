@@ -11,6 +11,7 @@ from Refinaid.gui.Utils.Update import update_plot_y_parameters
 from Refinaid.gui.Utils.Update import update_model_parameters
 from Refinaid.gui.Utils.Update import update_preprocessing_data
 from Refinaid.gui.Utils.Update import update_training_results
+from Refinaid.gui.Utils.Update import update_training_history
 
 def background_listener(
         dataset_dropdown,
@@ -41,6 +42,7 @@ def background_listener(
         train_img1,
         train_img2,
         train_img3,
+        training_history,
         ) -> None:
         dataset_dropdown.change(
             fn=update_parameters,
@@ -107,5 +109,16 @@ def background_listener(
                 train_img1,
                 train_img2,
                 train_img3,
+            ],
+        )
+
+        training_results.change(
+            fn=update_training_history,
+            inputs=[
+                training_results,
+                training_history,
+            ],
+            outputs=[
+                training_history,
             ],
         )

@@ -12,7 +12,7 @@ from Refinaid.gui.Information import PageContent
 from Refinaid.gui.Dashborad.Header import PageHeader
 from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
 from Refinaid.gui.Dashborad.Training import TrainingComponent
-from Refinaid.gui.Dashborad.Results import ResultsComponent
+from Refinaid.gui.Dashborad.History import HistoryComponent
 from typing import Any, Tuple
 
 def build_ui(*args: Any, **kwargs: Any):
@@ -21,7 +21,7 @@ def build_ui(*args: Any, **kwargs: Any):
     page_header = PageHeader(page_content)
     preprocessing_component = PreprocessingComponent(page_content)
     training_component = TrainingComponent(page_content)
-    results_component = ResultsComponent(page_content)
+    history_component = HistoryComponent(page_content)
     
     demo = gr.Blocks(
         title='Refinaid',
@@ -126,14 +126,21 @@ def build_ui(*args: Any, **kwargs: Any):
                     train_img3,
                 ) = training_component.get_training_results_plot_info()
 
-        with gr.Tab("Results"):
-            results_heading = results_component.get_results_info()
-            with gr.Row():
-                gr.Textbox("hi")
-                gr.Textbox("hi")
-            with gr.Row():
-                gr.Textbox("hello")
-                gr.Textbox("hello")
+        with gr.Tab("History"):
+            history_heading = history_component.get_history_info()
+            training_history = gr.Dataframe(
+                headers=[
+                    "Times",
+                    "Accuracy", 
+                    "Recall", 
+                    "Precision", 
+                    "F1"
+                ], 
+                value=None,
+                # row_count=(20, "fixed"),
+                col_count=(5, "fixed"),
+                interactive=False,
+            )
 
         background_listener(
             dataset_dropdown,
@@ -164,6 +171,7 @@ def build_ui(*args: Any, **kwargs: Any):
             train_img1,
             train_img2,
             train_img3,
+            training_history,
         )
 
     demo.launch(

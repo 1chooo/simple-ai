@@ -9,17 +9,17 @@ import gradio as gr
 from Refinaid.gui.Information import PageContent
 from typing import Any, Tuple
 
-class ResultsComponent:
+class HistoryComponent:
 
     def __init__(self, page_content: PageContent) -> None:
         self.page_content = page_content
 
-    def get_results_info(
+    def get_history_info(
             self, *args: Any, **kwargs: Any) -> Tuple[
                 gr.Markdown
             ]:
-        results_heading = gr.Markdown("## Results")
+        history_heading = gr.Markdown("## History")
 
         return (
-            results_heading
+            history_heading
         )
