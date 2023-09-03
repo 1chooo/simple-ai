@@ -16,7 +16,7 @@ def update_parameters(dataset_name: str) -> gr.Dropdown:
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=None,
+            value=[],
             label="Select Mutiple Parameters",
             interactive=True,
         )
