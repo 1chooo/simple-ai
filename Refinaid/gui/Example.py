@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.4
+Version: v0.0.5
 '''
 
 import gradio as gr
@@ -38,6 +38,15 @@ def get_preprocessing_example(
             [
                 "Titanic", 
                 ["PassengerId", "Pclass", "Sex", "Age", "SibSp", "Parch", "Ticket", "Fare"], 
+                "By Columns", 
+                "Min-Max", 
+                70, 
+                10, 
+                20
+            ],
+            [
+                "Diabetes", 
+                ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age'], 
                 "By Columns", 
                 "Min-Max", 
                 70, 
