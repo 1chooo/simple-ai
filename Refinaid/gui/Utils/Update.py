@@ -1,6 +1,6 @@
 '''
 Create Date: 2023/09/02
-Author: @1chooo
+Author: @1chooo, @ReeveWu
 Version: v0.0.3
 '''
 
@@ -354,7 +354,6 @@ def update_training_results(
     return *training_outputs,
 
 def update_training_history(training_results, training_history):
-    print(training_history.loc[0])
     merged_training_history = pd.concat(
         [
             training_history, 
@@ -362,7 +361,7 @@ def update_training_history(training_results, training_history):
         ], 
         ignore_index=True
     )
-    print(merged_training_history)
+    merged_training_history = merged_training_history.replace('', pd.NA).dropna(how='all').replace(pd.NA, '')
 
     merged_training_history.rename_axis(
         "Times", 
