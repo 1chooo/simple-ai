@@ -1,6 +1,6 @@
 '''
 Create Date: 2023/09/02
-Author: @1chooo
+Author: @1chooo, @ReeveWu
 Version: v0.0.3
 '''
 
@@ -354,7 +354,6 @@ def update_training_results(
     return *training_outputs,
 
 def update_training_history(training_results, training_history):
-    print("Hi:", training_history.dtypes)
     merged_training_history = pd.concat(
         [
             training_history, 
