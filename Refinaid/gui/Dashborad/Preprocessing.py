@@ -199,21 +199,13 @@ class PreprocessingComponent:
         x_axis_dropdown = gr.Dropdown(
             label="X Axis", 
             value='Please Select the X Axis',
-            choices=[
-                'PassengerId', 'Pclass', 'Sex', 
-                'Age', 'SibSp', 'Parch', 'Ticket', 
-                'Fare', 'Cabin', 'Embarked'
-            ],
+            choices=['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Fare'],
             interactive=True,
         )
         y_axis_dropdown = gr.Dropdown(
             label="Y Axis", 
             value='Please Select the Y Axis',
-            choices=[
-                'PassengerId', 'Pclass', 'Sex', 
-                'Age', 'SibSp', 'Parch', 'Ticket', 
-                'Fare', 'Cabin', 'Embarked'
-            ],
+            choices=['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Fare'],
             interactive=True,
         )
 
