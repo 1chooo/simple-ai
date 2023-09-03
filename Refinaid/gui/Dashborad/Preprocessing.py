@@ -2,12 +2,13 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.1
+Version: v0.0.6
 '''
 
 import gradio as gr
 from Refinaid.gui.Information import PageContent
 from typing import Any, Tuple
+from Refinaid.Action.Load import get_dataframe
 
 class PreprocessingComponent:
     
@@ -55,7 +56,11 @@ class PreprocessingComponent:
                 'Age', 'SibSp', 'Parch', 'Ticket', 
                 'Fare', 'Cabin', 'Embarked'
             ],
-            choices=[], 
+            choices=[
+                'PassengerId', 'Pclass', 'Sex', 
+                'Age', 'SibSp', 'Parch', 'Ticket', 
+                'Fare', 'Cabin', 'Embarked'
+            ],
             interactive=True,
             multiselect=True,
         )
@@ -193,12 +198,22 @@ class PreprocessingComponent:
             ]:
         x_axis_dropdown = gr.Dropdown(
             label="X Axis", 
-            choices=[], 
+            value='Please Select the X Axis', 
+            choices=[
+                'PassengerId', 'Pclass', 'Sex', 
+                'Age', 'SibSp', 'Parch', 'Ticket', 
+                'Fare', 'Cabin', 'Embarked'
+            ],
             interactive=True,
         )
         y_axis_dropdown = gr.Dropdown(
             label="Y Axis", 
-            choices=[], 
+            value='PassengerId', 
+            choices=[
+                'PassengerId', 'Pclass', 'Sex', 
+                'Age', 'SibSp', 'Parch', 'Ticket', 
+                'Fare', 'Cabin', 'Embarked'
+            ],
             interactive=True,
         )
 

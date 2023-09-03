@@ -2,18 +2,19 @@
 '''
 Create Date: 2023/08/28
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.5
+Version: v0.0.6
 '''
 
 import gradio as gr
 from Refinaid.gui.Utils.Listener import background_listener
-from Refinaid.gui.Example import get_preprocessing_example
 from Refinaid.gui.Information import PageContent
 from Refinaid.gui.Dashborad.Header import PageHeader
 from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
 from Refinaid.gui.Dashborad.Training import TrainingComponent
 from Refinaid.gui.Dashborad.History import HistoryComponent
-from typing import Any, Tuple
+from Refinaid.gui.Example import PreprocessingExample
+from typing import Any
+from Refinaid.Action.Load import get_dataframe
 
 def build_ui(*args: Any, **kwargs: Any):
 
@@ -22,6 +23,7 @@ def build_ui(*args: Any, **kwargs: Any):
     preprocessing_component = PreprocessingComponent(page_content)
     training_component = TrainingComponent(page_content)
     history_component = HistoryComponent(page_content)
+    preprocessing_example = PreprocessingExample()
     
     demo = gr.Blocks(
         title='Refinaid',
@@ -74,7 +76,7 @@ def build_ui(*args: Any, **kwargs: Any):
                             y_axis_dropdown
                         ) = preprocessing_component.get_preprocessing_visualize_axis_info()    
             with gr.Row():
-                get_preprocessing_example(
+                picked_up_data_example = preprocessing_example.get_picked_up_data_example(
                     dataset_dropdown,
                     select_mutiple_parameters_dropdown,
                     missing_value_checkbox, 
@@ -88,9 +90,10 @@ def build_ui(*args: Any, **kwargs: Any):
             training_heading = training_component.get_training_info()
             with gr.Row():
                 with gr.Column():
-                    picked_dataset_header, preprocessing_data_result = (
-                        training_component.get_picked_dataset_info()    
-                    )
+                    (
+                        picked_dataset_header, 
+                        preprocessing_data_result
+                    ) = training_component.get_picked_dataset_info()    
                 with gr.Column():
                     model_dropdown = training_component.get_model_dropdown_info()
                     # Decision Tree Classifier
@@ -164,6 +167,26 @@ def build_ui(*args: Any, **kwargs: Any):
             training_history,
         )
 
+        x_axis_dropdown.change(
+            fn=test_plot,
+            inputs=[
+                dataset_dropdown, 
+                x_axis_dropdown, 
+                y_axis_dropdown,
+            ],
+            outputs=preprocessing_visulize_scatter_plot
+        )
+
+        y_axis_dropdown.change(
+            fn=test_plot,
+            inputs=[
+                dataset_dropdown, 
+                x_axis_dropdown, 
+                y_axis_dropdown,
+            ],
+            outputs=preprocessing_visulize_scatter_plot
+        )
+
     demo.launch(
         # enable_queue=True,
         # share=True, 
@@ -171,3 +194,13 @@ def build_ui(*args: Any, **kwargs: Any):
         server_port=6006,
         debug=True,
     ) 
+
+def test_plot(dataset_dropdown, x_axis_dropdown, y_axis_dropdown):
+    df = get_dataframe(dataset_dropdown)
+
+    return gr.ScatterPlot.update(
+        value=df,
+        x=x_axis_dropdown,
+        y=y_axis_dropdown,
+        title="Test",
+    )

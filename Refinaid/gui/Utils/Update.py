@@ -1,7 +1,7 @@
 '''
 Create Date: 2023/09/02
 Author: @1chooo, @ReeveWu
-Version: v0.0.3
+Version: v0.0.6
 '''
 
 import gradio as gr
@@ -11,27 +11,27 @@ from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelCo
 from Refinaid.Action.Model import training
 import pandas as pd
 
-def update_parameters(dataset_name) -> gr.Dropdown:
+def update_parameters(dataset_name: str) -> gr.Dropdown:
     parameters = get_dataset_x_columns(dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=[],
+            value=None,
             label="Select Mutiple Parameters",
             interactive=True,
         )
 
-def update_plot_x_parameters(dataset_name) -> gr.Dropdown:
+def update_plot_x_parameters(dataset_name: str) -> gr.Dropdown:
     parameters = get_dataset_x_columns(dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=[],
+            value=None,
             label="X Axis",
             interactive=True,
         )
 
-def update_plot_y_parameters(dataset_name) -> gr.Dropdown:
+def update_plot_y_parameters(dataset_name: str) -> gr.Dropdown:
     parameters = get_dataset_x_columns(dataset_name)
 
     return gr.Dropdown.update(
@@ -41,7 +41,7 @@ def update_plot_y_parameters(dataset_name) -> gr.Dropdown:
             interactive=True,
         )
 
-def update_model_parameters(model_name):
+def update_model_parameters(model_name: str):
     output_components = []
     if model_name == 'Decision Tree Classifier':
         decision_tree_classifer_title = gr.Markdown.update(
@@ -246,22 +246,32 @@ def update_model_parameters(model_name):
 
     return *output_components,
 
-def update_preprocessing_data(
-        dataset:str, parameters:list, 
-        miss_value:bool, data_scaling:str, 
-        training:int, validation:int, testing:int):
-
+def handle_invalid_data_input(
+        dataset: str, parameters: list, 
+        miss_value: bool, data_scaling: str, 
+        training: int, validation: int, testing: int):
     if dataset == None or dataset == "":
         raise gr.Error("Invalid Dataset")
     if parameters == None or parameters == []:
         raise gr.Error("Invalid Multiple Inputs")
     if data_scaling == None or data_scaling == "":
         raise gr.Error("Invalid Data Scaling")
-    try:
-        if training + validation + testing != 100:
-            raise gr.Error("Invalid Data Split")
-    except:
+    if training + validation + testing != 100:
         raise gr.Error("Invalid Data Split")
+
+def update_preprocessing_data(
+        dataset: str, parameters: list, 
+        miss_value: bool, data_scaling: str, 
+        training: int, validation: int, testing: int):
+
+    handle_invalid_data_input(
+        dataset, 
+        parameters, 
+        data_scaling, 
+        training, 
+        validation, 
+        testing,
+    )
 
     data_summary_dict = get_data_setting(
         dataset, parameters, miss_value, 
@@ -270,7 +280,7 @@ def update_preprocessing_data(
 
     return gr.Dataframe.update(
         value=data_summary_dict
-        )
+    )
 
 def update_training_results(
         preprocessing_data_result,
@@ -284,7 +294,7 @@ def update_training_results(
         k_neighbors_classifier_slider,
         k_neighbors_classifier_weights_dropdown,
         k_neighbors_classifier_algorithm_dropdown,
-        ):
+    ):
     
     model_config = None
     
@@ -353,7 +363,9 @@ def update_training_results(
 
     return *training_outputs,
 
-def update_training_history(training_results, training_history):
+def update_training_history(
+        training_results: pd.DataFrame, 
+        training_history: pd.DataFrame) -> gr.Dataframe:
     merged_training_history = pd.concat(
         [
             training_history, 
