@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/28
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.4
+Version: v0.0.5
 '''
 
 import gradio as gr
@@ -127,20 +127,10 @@ def build_ui(*args: Any, **kwargs: Any):
                 ) = training_component.get_training_results_plot_info()
 
         with gr.Tab("History"):
-            history_heading = history_component.get_history_info()
-            training_history = gr.Dataframe(
-                headers=[
-                    "Times",
-                    "Accuracy", 
-                    "Recall", 
-                    "Precision", 
-                    "F1"
-                ], 
-                value=None,
-                # row_count=(20, "fixed"),
-                col_count=(5, "fixed"),
-                interactive=False,
-            )
+            (
+                history_heading,
+                training_history,
+            ) = history_component.get_history_training_info()
 
         background_listener(
             dataset_dropdown,
