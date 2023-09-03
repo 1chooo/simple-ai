@@ -184,7 +184,10 @@ class PreprocessingComponent:
         )
 
         preprocessing_visulize_scatter_plot = gr.ScatterPlot(
+            value=get_dataframe("Titanic"),
             label="Data Visualization",
+            x="PassengerId",
+            y="Pclass",
         )
 
         return (
@@ -198,13 +201,13 @@ class PreprocessingComponent:
             ]:
         x_axis_dropdown = gr.Dropdown(
             label="X Axis", 
-            value='Please Select the X Axis',
+            value='PassengerId',
             choices=['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Fare'],
             interactive=True,
         )
         y_axis_dropdown = gr.Dropdown(
             label="Y Axis", 
-            value='Please Select the Y Axis',
+            value='Pclass',
             choices=['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Fare'],
             interactive=True,
         )
