@@ -15,17 +15,17 @@ from Refinaid.gui.Utils.Update import update_training_history
 
 def background_listener(
         dataset_dropdown,
-        select_mutiple_parameters_dropdown,
+        select_multiple_parameters_dropdown,
         x_axis_dropdown,
         y_axis_dropdown,
         model_dropdown,
-        decision_tree_classifer_title,
-        decision_tree_classifer_criterion_dropdown,
-        decision_tree_classifer_max_depth_textbox,
-        decision_tree_classifer_min_samples_split_slider,
-        decision_tree_classifer_min_samples_leaf_slider,
-        decision_tree_classifer_max_features_dropdown,
-        decision_tree_classifer_max_leaf_nodes_textbox,
+        decision_tree_classifier_title,
+        decision_tree_classifier_criterion_dropdown,
+        decision_tree_classifier_max_depth_textbox,
+        decision_tree_classifier_min_samples_split_slider,
+        decision_tree_classifier_min_samples_leaf_slider,
+        decision_tree_classifier_max_features_dropdown,
+        decision_tree_classifier_max_leaf_nodes_textbox,
         k_neighbors_classifier_title,
         k_neighbors_classifier_slider,
         k_neighbors_classifier_weights_dropdown,
@@ -47,7 +47,7 @@ def background_listener(
         dataset_dropdown.change(
             fn=update_parameters,
             inputs=dataset_dropdown,
-            outputs=select_mutiple_parameters_dropdown,
+            outputs=select_multiple_parameters_dropdown,
         )
 
         dataset_dropdown.change(
@@ -66,13 +66,13 @@ def background_listener(
             fn=update_model_parameters,
             inputs=model_dropdown,
             outputs=[
-                decision_tree_classifer_title,
-                decision_tree_classifer_criterion_dropdown,
-                decision_tree_classifer_max_depth_textbox,
-                decision_tree_classifer_min_samples_split_slider,
-                decision_tree_classifer_min_samples_leaf_slider,
-                decision_tree_classifer_max_features_dropdown,
-                decision_tree_classifer_max_leaf_nodes_textbox, 
+                decision_tree_classifier_title,
+                decision_tree_classifier_criterion_dropdown,
+                decision_tree_classifier_max_depth_textbox,
+                decision_tree_classifier_min_samples_split_slider,
+                decision_tree_classifier_min_samples_leaf_slider,
+                decision_tree_classifier_max_features_dropdown,
+                decision_tree_classifier_max_leaf_nodes_textbox, 
                 k_neighbors_classifier_title,
                 k_neighbors_classifier_slider,
                 k_neighbors_classifier_weights_dropdown,
@@ -83,7 +83,7 @@ def background_listener(
         submit_dataset_setting_btn.click(
             fn=update_preprocessing_data, 
             inputs=[
-                dataset_dropdown, select_mutiple_parameters_dropdown, 
+                dataset_dropdown, select_multiple_parameters_dropdown, 
                 missing_value_checkbox, data_scale_dropdown, 
                 training_slider, validation_slider, testing_slider], 
             outputs=[preprocessing_data_result]
@@ -94,12 +94,12 @@ def background_listener(
             inputs=[
                 preprocessing_data_result,
                 model_dropdown,
-                decision_tree_classifer_criterion_dropdown,
-                decision_tree_classifer_max_depth_textbox,
-                decision_tree_classifer_min_samples_split_slider,
-                decision_tree_classifer_min_samples_leaf_slider,
-                decision_tree_classifer_max_features_dropdown,
-                decision_tree_classifer_max_leaf_nodes_textbox,
+                decision_tree_classifier_criterion_dropdown,
+                decision_tree_classifier_max_depth_textbox,
+                decision_tree_classifier_min_samples_split_slider,
+                decision_tree_classifier_min_samples_leaf_slider,
+                decision_tree_classifier_max_features_dropdown,
+                decision_tree_classifier_max_leaf_nodes_textbox,
                 k_neighbors_classifier_slider,
                 k_neighbors_classifier_weights_dropdown,
                 k_neighbors_classifier_algorithm_dropdown,
