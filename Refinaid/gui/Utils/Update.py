@@ -26,7 +26,7 @@ def update_plot_x_parameters(dataset_name: str) -> gr.Dropdown:
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=None,
+            value=parameters[0],
             label="X Axis",
             interactive=True,
         )
@@ -36,7 +36,7 @@ def update_plot_y_parameters(dataset_name: str) -> gr.Dropdown:
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=[],
+            value=parameters[1],
             label="Y Axis",
             interactive=True,
         )
