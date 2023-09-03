@@ -368,7 +368,15 @@ def update_training_history(training_results, training_history):
         axis=1, 
         inplace=True,
     )
-    merged_training_history["Times"] = merged_training_history.index
+
+    index_num = None
+    if len(merged_training_history) == 1:
+        index_num = merged_training_history.index
+    else:
+        index_num = merged_training_history.index + 1
+
+    merged_training_history["Times"] = index_num
+    
     training_history = gr.Dataframe.update(
         value=merged_training_history,
         interactive=True,
