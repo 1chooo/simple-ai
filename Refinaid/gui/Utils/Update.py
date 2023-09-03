@@ -5,7 +5,7 @@ Version: v0.0.6
 '''
 
 import gradio as gr
-from Refinaid.Action.Load import get_dataset_x_columns
+from Refinaid.Action.Load import get_dataset_x_columns, get_dataset_numeric_columns
 from Refinaid.gui.Utils.Get import get_data_setting
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
@@ -22,21 +22,21 @@ def update_parameters(dataset_name: str) -> gr.Dropdown:
         )
 
 def update_plot_x_parameters(dataset_name: str) -> gr.Dropdown:
-    parameters = get_dataset_x_columns(dataset_name)
+    parameters = get_dataset_numeric_columns(dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=None,
+            value=parameters[0],
             label="X Axis",
             interactive=True,
         )
 
 def update_plot_y_parameters(dataset_name: str) -> gr.Dropdown:
-    parameters = get_dataset_x_columns(dataset_name)
+    parameters = get_dataset_numeric_columns(dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
-            value=[],
+            value=parameters[1],
             label="Y Axis",
             interactive=True,
         )
