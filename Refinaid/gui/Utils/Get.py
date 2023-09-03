@@ -2,27 +2,45 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.1
+Version: v0.0.6
 '''
 
 import pandas as pd
 import gradio as gr
-from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 
-def get_data_setting(dataset:str, inputs:list, miss_value:bool, data_scaling:str, training:int, validation:int, testing:int):
-    # print(dataset, inputs, miss_value, data_scaling, training, validation, testing)
-
+def handle_invalid_data_input(
+        dataset: str, 
+        inputs: list, 
+        data_scaling: str, 
+        training: int, 
+        validation: int, 
+        testing: int) -> gr.Error:
     if dataset == None or dataset == "":
         raise gr.Error("Invalid Dataset")
     if inputs == None or inputs == []:
         raise gr.Error("Invalid Multiple Inputs")
     if data_scaling == None or data_scaling == "":
         raise gr.Error("Invalid Data Scaling")
-    try:
-        if training + validation + testing != 100:
-            raise gr.Error("Invalid Data Split")
-    except:
+    if training + validation + testing != 100:
         raise gr.Error("Invalid Data Split")
+
+def get_data_setting(
+        dataset: str, 
+        inputs: list, 
+        miss_value: bool, 
+        data_scaling: str, 
+        training: int, 
+        validation: int, 
+        testing: int) -> pd.DataFrame:
+
+    handle_invalid_data_input(
+        dataset, 
+        inputs, 
+        data_scaling, 
+        training, 
+        validation, 
+        testing
+    )
 
     preprocessing_inputs = [
         "dataset", 
@@ -33,11 +51,13 @@ def get_data_setting(dataset:str, inputs:list, miss_value:bool, data_scaling:str
         "validation", 
         "testing"
     ]
-    data_summary_dict = {"Parameters": [], "Value": []}
+    data_summary_dict = {
+        "Parameters": [], 
+        "Value": []
+    }
+
     for parameter in preprocessing_inputs:
         variable_value = locals()[parameter]
-        #todo add output column
-        #todo change to dataframe
         data_summary_dict["Parameters"].append(parameter)
         data_summary_dict["Value"].append(variable_value)
         

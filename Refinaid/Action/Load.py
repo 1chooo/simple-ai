@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/24
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.1
+Version: v0.0.6
 '''
 
 from os.path import join

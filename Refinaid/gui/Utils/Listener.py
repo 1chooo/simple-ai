@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/09/02
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.4
+Version: v0.0.6
 '''
 
 from Refinaid.gui.Utils.Update import update_parameters
