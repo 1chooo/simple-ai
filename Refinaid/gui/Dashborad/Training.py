@@ -209,8 +209,13 @@ class TrainingComponent:
             ]:
         training_results_header = gr.Markdown("## Training Result")
         training_results = gr.Dataframe(
-            headers=["Accuracy", "Recall", "Precision", "F1"], 
-            interactive=True, 
+            headers=[
+                "Accuracy", 
+                "Recall", 
+                "Precision", 
+                "F1"
+            ], 
+            interactive=False, 
             row_count=(1, "fixed"), 
             col_count=(4, "fixed")
         )

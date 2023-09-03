@@ -9,6 +9,7 @@ from Refinaid.Action.Load import get_dataset_x_columns
 from Refinaid.gui.Utils.Get import get_data_setting
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
+import pandas as pd
 
 def update_parameters(dataset_name) -> gr.Dropdown:
     parameters = get_dataset_x_columns(dataset_name)
@@ -267,7 +268,7 @@ def update_preprocessing_data(
         data_scaling, training, validation, testing
     )
 
-    return gr.DataFrame.update(
+    return gr.Dataframe.update(
         value=data_summary_dict
         )
 
@@ -321,7 +322,7 @@ def update_training_results(
     figures, evaluations = training(dataset_config, model_config)
     evaluations = list(map(str,evaluations))
 
-    training_results = gr.DataFrame.update(
+    training_results = gr.Dataframe.update(
         value=[evaluations],
         interactive=True,
     )
@@ -351,3 +352,27 @@ def update_training_results(
             training_outputs.append(component.update(visible=False))
 
     return *training_outputs,
+
+def update_training_history(training_results, training_history):
+    print(training_history.loc[0])
+    merged_training_history = pd.concat(
+        [
+            training_history, 
+            training_results,
+        ], 
+        ignore_index=True
+    )
+    print(merged_training_history)
+
+    merged_training_history.rename_axis(
+        "Times", 
+        axis=1, 
+        inplace=True,
+    )
+    merged_training_history["Times"] = merged_training_history.index
+    training_history = gr.Dataframe.update(
+        value=merged_training_history,
+        interactive=True,
+    )
+
+    return training_history
