@@ -310,7 +310,7 @@ def update_training_results(
         k_neighbors_classifier_slider,
         k_neighbors_classifier_weights_dropdown,
         k_neighbors_classifier_algorithm_dropdown,
-    ):
+    ) -> list:
     
     model_config = None
     
@@ -380,8 +380,15 @@ def update_training_results(
     return *training_outputs,
 
 def update_training_history(
+        dataset_dropdown: str,
+        model_dropdown: str,
         training_results: pd.DataFrame, 
-        training_history: pd.DataFrame) -> gr.Dataframe:
+        training_history: pd.DataFrame
+    ) -> gr.Dataframe:
+
+    training_results['Dataset'] = dataset_dropdown
+    training_results['Model'] = model_dropdown
+
     merged_training_history = pd.concat(
         [
             training_history, 

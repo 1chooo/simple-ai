@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/09/02
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.6
+Version: v0.0.7
 '''
 
 from Refinaid.gui.Utils.Update import update_parameters
@@ -117,6 +117,8 @@ def background_listener(
         training_results.change(
             fn=update_training_history,
             inputs=[
+                dataset_dropdown,
+                model_dropdown,
                 training_results,
                 training_history,
             ],
