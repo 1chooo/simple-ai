@@ -8,9 +8,10 @@ Version: v0.0.6
 import pandas as pd
 import gradio as gr
 
-def handle_invalid_data_input(
+def _handle_invalid_data_input(
         dataset: str, 
         inputs: list, 
+        miss_value: bool,
         data_scaling: str, 
         training: int, 
         validation: int, 
@@ -33,9 +34,10 @@ def get_data_setting(
         validation: int, 
         testing: int) -> pd.DataFrame:
 
-    handle_invalid_data_input(
+    _handle_invalid_data_input(
         dataset, 
         inputs, 
+        miss_value,
         data_scaling, 
         training, 
         validation, 

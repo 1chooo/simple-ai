@@ -12,6 +12,7 @@ from Refinaid.gui.Utils.Update import update_model_parameters
 from Refinaid.gui.Utils.Update import update_preprocessing_data
 from Refinaid.gui.Utils.Update import update_training_results
 from Refinaid.gui.Utils.Update import update_training_history
+from Refinaid.gui.Utils.Update import update_preprocessing_visualization
 
 def background_listener(
         dataset_dropdown,
@@ -43,6 +44,7 @@ def background_listener(
         train_img2,
         train_img3,
         training_history,
+        preprocessing_visulize_scatter_plot,
         ) -> None:
         dataset_dropdown.change(
             fn=update_parameters,
@@ -122,3 +124,24 @@ def background_listener(
                 training_history,
             ],
         )
+
+        x_axis_dropdown.change(
+            fn=update_preprocessing_visualization,
+            inputs=[
+                dataset_dropdown, 
+                x_axis_dropdown, 
+                y_axis_dropdown,
+            ],
+            outputs=preprocessing_visulize_scatter_plot
+        )
+
+        y_axis_dropdown.change(
+            fn=update_preprocessing_visualization,
+            inputs=[
+                dataset_dropdown, 
+                x_axis_dropdown, 
+                y_axis_dropdown,
+            ],
+            outputs=preprocessing_visulize_scatter_plot
+        )
+        

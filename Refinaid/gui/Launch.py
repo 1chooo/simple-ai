@@ -14,7 +14,6 @@ from Refinaid.gui.Dashborad.Training import TrainingComponent
 from Refinaid.gui.Dashborad.History import HistoryComponent
 from Refinaid.gui.Example import PreprocessingExample
 from typing import Any
-from Refinaid.Action.Load import get_dataframe
 
 def build_ui(*args: Any, **kwargs: Any):
 
@@ -165,26 +164,7 @@ def build_ui(*args: Any, **kwargs: Any):
             train_img2,
             train_img3,
             training_history,
-        )
-
-        x_axis_dropdown.change(
-            fn=test_plot,
-            inputs=[
-                dataset_dropdown, 
-                x_axis_dropdown, 
-                y_axis_dropdown,
-            ],
-            outputs=preprocessing_visulize_scatter_plot
-        )
-
-        y_axis_dropdown.change(
-            fn=test_plot,
-            inputs=[
-                dataset_dropdown, 
-                x_axis_dropdown, 
-                y_axis_dropdown,
-            ],
-            outputs=preprocessing_visulize_scatter_plot
+            preprocessing_visulize_scatter_plot,
         )
 
     demo.launch(
@@ -194,13 +174,3 @@ def build_ui(*args: Any, **kwargs: Any):
         server_port=6006,
         debug=True,
     ) 
-
-def test_plot(dataset_dropdown, x_axis_dropdown, y_axis_dropdown):
-    df = get_dataframe(dataset_dropdown)
-
-    return gr.ScatterPlot.update(
-        value=df,
-        x=x_axis_dropdown,
-        y=y_axis_dropdown,
-        title="Test",
-    )

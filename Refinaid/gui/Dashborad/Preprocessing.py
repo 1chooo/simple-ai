@@ -188,6 +188,10 @@ class PreprocessingComponent:
             label="Data Visualization",
             x="PassengerId",
             y="Pclass",
+            title='Scatter Plot in Data Visualization',
+            height=400,
+            width=400,
+            caption='Observe the relationship between parameters',
         )
 
         return (
@@ -202,13 +206,19 @@ class PreprocessingComponent:
         x_axis_dropdown = gr.Dropdown(
             label="X Axis", 
             value='PassengerId',
-            choices=['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Fare'],
+            choices=[
+                'PassengerId', 'Pclass', 'Age', 
+                'SibSp', 'Parch', 'Fare'
+            ],
             interactive=True,
         )
         y_axis_dropdown = gr.Dropdown(
             label="Y Axis", 
             value='Pclass',
-            choices=['PassengerId', 'Pclass', 'Age', 'SibSp', 'Parch', 'Fare'],
+            choices=[
+                'PassengerId', 'Pclass', 'Age', 
+                'SibSp', 'Parch', 'Fare'
+            ],
             interactive=True,
         )
 
