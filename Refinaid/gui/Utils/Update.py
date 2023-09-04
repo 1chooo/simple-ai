@@ -9,6 +9,7 @@ from Refinaid.Action.Load import get_dataset_x_columns, get_dataset_numeric_colu
 from Refinaid.gui.Utils.Get import get_data_setting
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
+from Refinaid.Action.Load import get_dataframe
 import pandas as pd
 
 def update_parameters(dataset_name: str) -> gr.Dropdown:
@@ -40,6 +41,20 @@ def update_plot_y_parameters(dataset_name: str) -> gr.Dropdown:
             label="Y Axis",
             interactive=True,
         )
+
+def update_preprocessing_visualization(dataset_dropdown, x_axis_dropdown, y_axis_dropdown):
+    df = get_dataframe(dataset_dropdown)
+
+    return gr.ScatterPlot.update(
+        label="Data Visualization",
+        value=df,
+        x=x_axis_dropdown,
+        y=y_axis_dropdown,
+        title="Scatter Plot in Data Visualization",
+        height=400,
+        width=400,
+        caption='Observe the relationship between parameters',
+    )
 
 def update_model_parameters(model_name: str):
     output_components = []
@@ -246,7 +261,7 @@ def update_model_parameters(model_name: str):
 
     return *output_components,
 
-def handle_invalid_data_input(
+def _handle_invalid_data_input(
         dataset: str, parameters: list, 
         miss_value: bool, data_scaling: str, 
         training: int, validation: int, testing: int):
@@ -264,9 +279,10 @@ def update_preprocessing_data(
         miss_value: bool, data_scaling: str, 
         training: int, validation: int, testing: int):
 
-    handle_invalid_data_input(
+    _handle_invalid_data_input(
         dataset, 
         parameters, 
+        miss_value,
         data_scaling, 
         training, 
         validation, 
