@@ -18,7 +18,9 @@ class TrainingComponent:
             self, *args: Any, **kwargs: Any) -> Tuple[
                 gr.Markdown
             ]:
-        training_heading = gr.Markdown("## Training")
+        training_heading = gr.Markdown(
+            self.page_content.training_header    
+        )
 
         return (
             training_heading

@@ -5,14 +5,14 @@ Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
 Version: v0.0.7
 '''
 
-from Refinaid.gui.Utils.Update import update_parameters
-from Refinaid.gui.Utils.Update import update_plot_x_parameters
-from Refinaid.gui.Utils.Update import update_plot_y_parameters
-from Refinaid.gui.Utils.Update import update_model_parameters
-from Refinaid.gui.Utils.Update import update_preprocessing_data
-from Refinaid.gui.Utils.Update import update_training_results
-from Refinaid.gui.Utils.Update import update_training_history
-from Refinaid.gui.Utils.Update import update_preprocessing_visualization
+from Refinaid.Utils.Update import update_parameters
+from Refinaid.Utils.Update import update_plot_x_parameters
+from Refinaid.Utils.Update import update_plot_y_parameters
+from Refinaid.Utils.Update import update_model_parameters
+from Refinaid.Utils.Update import update_preprocessing_data
+from Refinaid.Utils.Update import update_training_results
+from Refinaid.Utils.Update import update_training_history
+from Refinaid.Utils.Update import update_preprocessing_visualization
 
 def background_listener(
         dataset_dropdown,

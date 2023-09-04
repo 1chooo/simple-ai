@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.6
+Version: v0.0.7
 '''
 
 from typing import Any, Tuple
@@ -20,5 +20,17 @@ class PageContent:
         """
 
         self.preprocessing_header = """\
-        ## Preprocessing
+        ## Data Preprocessing
+
+        Let's begin exploring the data preprocessing of machine learning!
         """
+
+        self.training_header = """\
+        ## Training
+        """
+
+        self.dataset_choices = [
+            "Titanic", 
+            "Diabetes", 
+            "House Prices",
+        ]

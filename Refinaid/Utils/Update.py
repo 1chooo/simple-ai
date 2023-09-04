@@ -1,12 +1,12 @@
 '''
 Create Date: 2023/09/02
 Author: @1chooo, @ReeveWu
-Version: v0.0.6
+Version: v0.0.7
 '''
 
 import gradio as gr
 from Refinaid.Action.Load import get_dataset_x_columns, get_dataset_numeric_columns
-from Refinaid.gui.Utils.Get import get_data_setting
+from Refinaid.Utils.Get import get_data_setting
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
 from Refinaid.Action.Load import get_dataframe
