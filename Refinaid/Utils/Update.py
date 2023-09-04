@@ -1,7 +1,7 @@
 '''
 Create Date: 2023/09/02
 Author: @1chooo, @ReeveWu
-Version: v0.0.7
+Version: v0.0.8
 '''
 
 import gradio as gr
@@ -10,6 +10,7 @@ from Refinaid.Utils.Get import get_data_setting
 from Refinaid.Action.ML_configurations import DatasetConfig, DecisionTreeModelConfig, KNNModelConfig
 from Refinaid.Action.Model import training
 from Refinaid.Action.Load import get_dataframe
+from Refinaid.Handler.DataInput import handle_invalid_data_input
 import pandas as pd
 
 def update_parameters(dataset_name: str) -> gr.Dropdown:
@@ -261,25 +262,12 @@ def update_model_parameters(model_name: str):
 
     return *output_components,
 
-def _handle_invalid_data_input(
-        dataset: str, parameters: list, 
-        miss_value: bool, data_scaling: str, 
-        training: int, validation: int, testing: int):
-    if dataset == None or dataset == "":
-        raise gr.Error("Invalid Dataset")
-    if parameters == None or parameters == []:
-        raise gr.Error("Invalid Multiple Inputs")
-    if data_scaling == None or data_scaling == "":
-        raise gr.Error("Invalid Data Scaling")
-    if training + validation + testing != 100:
-        raise gr.Error("Invalid Data Split")
-
 def update_preprocessing_data(
         dataset: str, parameters: list, 
         miss_value: bool, data_scaling: str, 
         training: int, validation: int, testing: int):
 
-    _handle_invalid_data_input(
+    handle_invalid_data_input(
         dataset, 
         parameters, 
         miss_value,

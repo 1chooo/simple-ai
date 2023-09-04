@@ -173,4 +173,6 @@ def build_ui(*args: Any, **kwargs: Any):
         server_name="127.0.0.1", 
         server_port=6006,
         debug=True,
+        # inbrowser=True,
+        favicon_path='',
     ) 

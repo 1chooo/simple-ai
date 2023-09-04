@@ -2,28 +2,11 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.7
+Version: v0.0.8
 '''
 
 import pandas as pd
-import gradio as gr
-
-def _handle_invalid_data_input(
-        dataset: str, 
-        inputs: list, 
-        miss_value: bool,
-        data_scaling: str, 
-        training: int, 
-        validation: int, 
-        testing: int) -> gr.Error:
-    if dataset == None or dataset == "":
-        raise gr.Error("Invalid Dataset")
-    if inputs == None or inputs == []:
-        raise gr.Error("Invalid Multiple Inputs")
-    if data_scaling == None or data_scaling == "":
-        raise gr.Error("Invalid Data Scaling")
-    if training + validation + testing != 100:
-        raise gr.Error("Invalid Data Split")
+from Refinaid.Handler.DataInput import handle_invalid_data_input
 
 def get_data_setting(
         dataset: str, 
@@ -34,7 +17,7 @@ def get_data_setting(
         validation: int, 
         testing: int) -> pd.DataFrame:
 
-    _handle_invalid_data_input(
+    handle_invalid_data_input(
         dataset, 
         inputs, 
         miss_value,
