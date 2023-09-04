@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.6
+Version: v0.0.7
 '''
 
 import gradio as gr
@@ -22,7 +22,7 @@ class PreprocessingExample:
             testing_slider,
         ) -> gr.Examples:
         picked_up_data_example = gr.Examples(
-            [
+            examples=[
                 [
                     "Titanic", 
                     [
@@ -65,7 +65,7 @@ class PreprocessingExample:
                     20,
                 ],
             ],
-            [
+            inputs=[
                 dataset_dropdown,
                 parameters_dropdown,
                 miss_value_checkbox, 
@@ -73,7 +73,8 @@ class PreprocessingExample:
                 training_slider, 
                 validation_slider, 
                 testing_slider,
-            ]
+            ],
+            label='Data Preprocessing Example',
         )
 
         return picked_up_data_example

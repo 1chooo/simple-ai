@@ -23,11 +23,7 @@ class PreprocessingComponent:
 
         dataset_header = gr.Markdown("### Dataset")
 
-        dataset_choices = [
-            "Titanic", 
-            "Diabetes", 
-            "House Prices",
-        ]
+        dataset_choices = self.page_content.dataset_choices
 
         dataset_dropdown = gr.Dropdown(
             label="Select Dataset", 

@@ -1,7 +1,7 @@
 '''
 Create Date: 2023/09/01
 Author: @1chooo
-Version: v0.0.3
+Version: v0.0.7
 '''
 
 import sys
@@ -17,12 +17,12 @@ project_root = join(
 sys.path.append(project_root)
 
 import gradio as gr
-from Refinaid.gui.Utils.Update import update_parameters
-from Refinaid.gui.Utils.Update import update_plot_x_parameters
-from Refinaid.gui.Utils.Update import update_plot_y_parameters
-from Refinaid.gui.Utils.Update import update_model_parameters
-from Refinaid.gui.Utils.Update import update_preprocessing_data
-from Refinaid.gui.Utils.Update import update_training_results
+from Refinaid.Utils.Update import update_parameters
+from Refinaid.Utils.Update import update_plot_x_parameters
+from Refinaid.Utils.Update import update_plot_y_parameters
+from Refinaid.Utils.Update import update_model_parameters
+from Refinaid.Utils.Update import update_preprocessing_data
+from Refinaid.Utils.Update import update_training_results
 
 demo = gr.Blocks(
     title='Refinaid',
