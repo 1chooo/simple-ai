@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.5
+Version: v0.0.7
 '''
 
 import gradio as gr
@@ -34,6 +34,8 @@ class HistoryComponent:
         training_history = gr.Dataframe(
             headers=[
                 "Times",
+                "Dataset",
+                "Model",
                 "Accuracy", 
                 "Recall", 
                 "Precision", 
@@ -41,7 +43,7 @@ class HistoryComponent:
             ], 
             value=None,
             # row_count=(20, "fixed"),
-            col_count=(5, "fixed"),
+            col_count=(7, "fixed"),
             interactive=False,
         )
 
@@ -49,3 +51,4 @@ class HistoryComponent:
             history_heading,
             training_history,
         )
+    
