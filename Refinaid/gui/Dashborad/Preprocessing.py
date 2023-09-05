@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/31
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.6
+Version: v0.0.8
 '''
 
 import gradio as gr
@@ -25,7 +25,7 @@ class PreprocessingComponent:
 
         dataset_choices = self.page_content.dataset_choices
 
-        dataset_dropdown = gr.Dropdown(
+        selected_dataset_name = gr.Dropdown(
             label="Select Dataset", 
             value="Titanic",
             choices=dataset_choices,
@@ -34,7 +34,7 @@ class PreprocessingComponent:
 
         return (
             dataset_header, 
-            dataset_dropdown
+            selected_dataset_name
         )
     
     def get_select_mutiple_parameters_info(

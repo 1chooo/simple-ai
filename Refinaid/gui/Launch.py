@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/28
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.7
+Version: v0.0.8
 '''
 
 import gradio as gr
@@ -15,7 +15,7 @@ from Refinaid.gui.Dashborad.History import HistoryComponent
 from Refinaid.gui.Example import PreprocessingExample
 from typing import Any
 
-def build_ui(*args: Any, **kwargs: Any):
+def build_ui(*args: Any, **kwargs: Any) -> None:
 
     page_content = PageContent()
     page_header = PageHeader(page_content)
@@ -37,7 +37,7 @@ def build_ui(*args: Any, **kwargs: Any):
                 with gr.Column():
                     (
                         dataset_header, 
-                        dataset_dropdown
+                        selected_dataset_name
                     ) = preprocessing_component.get_dataset_info()
 
                     (
@@ -76,7 +76,7 @@ def build_ui(*args: Any, **kwargs: Any):
                         ) = preprocessing_component.get_preprocessing_visualize_axis_info()    
             with gr.Row():
                 picked_up_data_example = preprocessing_example.get_picked_up_data_example(
-                    dataset_dropdown,
+                    selected_dataset_name,
                     select_mutiple_parameters_dropdown,
                     missing_value_checkbox, 
                     data_scale_dropdown, 
@@ -134,8 +134,18 @@ def build_ui(*args: Any, **kwargs: Any):
                 training_history,
             ) = history_component.get_history_training_info()
 
+        # with gr.Tab("Teaching"):
+        #     teaching_header = gr.Markdown(
+        #         "## Teaching"
+        #     )
+
+        # with gr.Tab("Demo"):
+        #     demo_header = gr.Markdown(
+        #         "## Demo"
+        #     )
+
         background_listener(
-            dataset_dropdown,
+            selected_dataset_name,
             select_mutiple_parameters_dropdown,
             x_axis_dropdown,
             y_axis_dropdown,

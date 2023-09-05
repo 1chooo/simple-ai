@@ -9,7 +9,7 @@ import pandas as pd
 from Refinaid.Handler.DataInput import handle_invalid_data_input
 
 def get_data_setting(
-        dataset: str, 
+        selected_dataset_name: str, 
         inputs: list, 
         miss_value: bool, 
         data_scaling: str, 
@@ -18,7 +18,7 @@ def get_data_setting(
         testing: int) -> pd.DataFrame:
 
     handle_invalid_data_input(
-        dataset, 
+        selected_dataset_name, 
         inputs, 
         miss_value,
         data_scaling, 
@@ -28,7 +28,7 @@ def get_data_setting(
     )
 
     preprocessing_inputs = [
-        "dataset", 
+        "selected_dataset_name", 
         "inputs", 
         "miss_value", 
         "data_scaling", 
@@ -36,6 +36,7 @@ def get_data_setting(
         "validation", 
         "testing"
     ]
+
     data_summary_dict = {
         "Parameters": [], 
         "Value": []

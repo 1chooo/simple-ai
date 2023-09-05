@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/09/02
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.7
+Version: v0.0.8
 '''
 
 from Refinaid.Utils.Update import update_parameters
@@ -15,7 +15,7 @@ from Refinaid.Utils.Update import update_training_history
 from Refinaid.Utils.Update import update_preprocessing_visualization
 
 def background_listener(
-        dataset_dropdown,
+        selected_dataset_name,
         select_multiple_parameters_dropdown,
         x_axis_dropdown,
         y_axis_dropdown,
@@ -46,21 +46,21 @@ def background_listener(
         training_history,
         preprocessing_visulize_scatter_plot,
         ) -> None:
-        dataset_dropdown.change(
+        selected_dataset_name.change(
             fn=update_parameters,
-            inputs=dataset_dropdown,
+            inputs=selected_dataset_name,
             outputs=select_multiple_parameters_dropdown,
         )
 
-        dataset_dropdown.change(
+        selected_dataset_name.change(
             fn=update_plot_x_parameters,
-            inputs=dataset_dropdown,
+            inputs=selected_dataset_name,
             outputs=x_axis_dropdown,
         )
 
-        dataset_dropdown.change(
+        selected_dataset_name.change(
             fn=update_plot_y_parameters,
-            inputs=dataset_dropdown,
+            inputs=selected_dataset_name,
             outputs=y_axis_dropdown,
         )
 
@@ -85,7 +85,7 @@ def background_listener(
         submit_dataset_setting_btn.click(
             fn=update_preprocessing_data, 
             inputs=[
-                dataset_dropdown, select_multiple_parameters_dropdown, 
+                selected_dataset_name, select_multiple_parameters_dropdown, 
                 missing_value_checkbox, data_scale_dropdown, 
                 training_slider, validation_slider, testing_slider], 
             outputs=[preprocessing_data_result]
@@ -117,7 +117,7 @@ def background_listener(
         training_results.change(
             fn=update_training_history,
             inputs=[
-                dataset_dropdown,
+                selected_dataset_name,
                 model_dropdown,
                 training_results,
                 training_history,
@@ -130,7 +130,7 @@ def background_listener(
         x_axis_dropdown.change(
             fn=update_preprocessing_visualization,
             inputs=[
-                dataset_dropdown, 
+                selected_dataset_name, 
                 x_axis_dropdown, 
                 y_axis_dropdown,
             ],
@@ -140,7 +140,7 @@ def background_listener(
         y_axis_dropdown.change(
             fn=update_preprocessing_visualization,
             inputs=[
-                dataset_dropdown, 
+                selected_dataset_name, 
                 x_axis_dropdown, 
                 y_axis_dropdown,
             ],
