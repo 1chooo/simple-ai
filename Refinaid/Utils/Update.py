@@ -13,8 +13,8 @@ from Refinaid.Action.Load import get_dataframe
 from Refinaid.Handler.DataInput import handle_invalid_data_input
 import pandas as pd
 
-def update_parameters(dataset_name: str) -> gr.Dropdown:
-    parameters = get_dataset_x_columns(dataset_name)
+def update_parameters(choiced_dataset_name: str) -> gr.Dropdown:
+    parameters = get_dataset_x_columns(choiced_dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
@@ -23,8 +23,8 @@ def update_parameters(dataset_name: str) -> gr.Dropdown:
             interactive=True,
         )
 
-def update_plot_x_parameters(dataset_name: str) -> gr.Dropdown:
-    parameters = get_dataset_numeric_columns(dataset_name)
+def update_plot_x_parameters(choiced_dataset_name: str) -> gr.Dropdown:
+    parameters = get_dataset_numeric_columns(choiced_dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
@@ -33,8 +33,8 @@ def update_plot_x_parameters(dataset_name: str) -> gr.Dropdown:
             interactive=True,
         )
 
-def update_plot_y_parameters(dataset_name: str) -> gr.Dropdown:
-    parameters = get_dataset_numeric_columns(dataset_name)
+def update_plot_y_parameters(choiced_dataset_name: str) -> gr.Dropdown:
+    parameters = get_dataset_numeric_columns(choiced_dataset_name)
 
     return gr.Dropdown.update(
             choices=parameters,
