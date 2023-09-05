@@ -163,7 +163,7 @@ class PreprocessingComponent:
             ]:
 
         submit_dataset_setting_btn = gr.Button(
-            value="Submit Setting",
+            value="Submit Data Preprocessing Results",
         )
 
         return (
