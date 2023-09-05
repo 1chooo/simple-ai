@@ -9,7 +9,7 @@ import gradio as gr
 from Refinaid.gui.Information import PageContent
 from typing import Any, Tuple
 
-class HistoryComponent:
+class TrainingHistoryComponent:
 
     def __init__(self, page_content: PageContent) -> None:
         self.page_content = page_content

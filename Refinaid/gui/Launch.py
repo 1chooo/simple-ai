@@ -11,7 +11,7 @@ from Refinaid.gui.Information import PageContent
 from Refinaid.gui.Dashborad.Header import PageHeader
 from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
 from Refinaid.gui.Dashborad.Training import TrainingComponent
-from Refinaid.gui.Dashborad.History import HistoryComponent
+from Refinaid.gui.Dashborad.TrainingHistory import TrainingHistoryComponent
 from Refinaid.gui.Example import PreprocessingExample
 from typing import Any
 
@@ -21,7 +21,7 @@ def build_ui(*args: Any, **kwargs: Any) -> None:
     page_header = PageHeader(page_content)
     preprocessing_component = PreprocessingComponent(page_content)
     training_component = TrainingComponent(page_content)
-    history_component = HistoryComponent(page_content)
+    training_history_component = TrainingHistoryComponent(page_content)
     preprocessing_example = PreprocessingExample()
     
     demo = gr.Blocks(
@@ -31,7 +31,7 @@ def build_ui(*args: Any, **kwargs: Any) -> None:
     with demo:
         our_heading = page_header.get_home_header()
 
-        with gr.Tab("Preprocessing"):
+        with gr.Tab("Data Preprocessing"):
             preprocessing_heading = page_header.get_preprocessing_header()
             with gr.Row():
                 with gr.Column():
@@ -85,7 +85,7 @@ def build_ui(*args: Any, **kwargs: Any) -> None:
                     testing_slider,
                 )
 
-        with gr.Tab("Training"):
+        with gr.Tab("Training Model"):
             training_heading = training_component.get_training_info()
             with gr.Row():
                 with gr.Column():
@@ -128,11 +128,11 @@ def build_ui(*args: Any, **kwargs: Any) -> None:
                     train_img3,
                 ) = training_component.get_training_results_plot_info()
 
-        with gr.Tab("History"):
+        with gr.Tab("Training History"):
             (
                 history_heading,
                 training_history,
-            ) = history_component.get_history_training_info()
+            ) = training_history_component.get_history_training_info()
 
         # with gr.Tab("Teaching"):
         #     teaching_header = gr.Markdown(
@@ -184,5 +184,5 @@ def build_ui(*args: Any, **kwargs: Any) -> None:
         server_port=6006,
         debug=True,
         # inbrowser=True,
-        favicon_path='',
+        # favicon_path='add_our_favicon_path',
     ) 
