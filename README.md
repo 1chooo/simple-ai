@@ -38,6 +38,14 @@ $ pip install mkdocs-git-revision-date-plugin
 $ pip install mkdocs-jupyter
 ```
 
+### Run web app
+```shell
+$ ./build.sh
+
+# or
+$ uvicorn main:app --host 127.0.0.1 --port 5002
+```
+
 ## Collaboration Guidelines
 ### Forking this Repository:
 

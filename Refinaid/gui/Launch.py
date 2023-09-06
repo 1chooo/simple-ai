@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/28
 Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.0.8
+Version: v0.1.0
 '''
 
 import gradio as gr
@@ -15,7 +15,7 @@ from Refinaid.gui.Dashborad.TrainingHistory import TrainingHistoryComponent
 from Refinaid.gui.Example import PreprocessingExample
 from typing import Any
 
-def build_ui(*args: Any, **kwargs: Any) -> None:
+def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
 
     page_content = PageContent()
     page_header = PageHeader(page_content)
@@ -176,6 +176,8 @@ def build_ui(*args: Any, **kwargs: Any) -> None:
             training_history,
             preprocessing_visulize_scatter_plot,
         )
+
+    return demo
 
     demo.launch(
         # enable_queue=True,
