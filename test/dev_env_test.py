@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/08/26
 Author: @1chooo(Hugo ChunHo Lin)
-Version: v0.0.1
+Version: v0.1.0
 '''
 
 import unittest
@@ -22,6 +22,7 @@ import threading
 import pytz
 import boto3
 import botocore
+from fastapi import FastAPI
 
 class TestPackages(unittest.TestCase):
     def test_os(self):
@@ -68,6 +69,9 @@ class TestPackages(unittest.TestCase):
 
     def test_botocore(self):
         self.assertIsNotNone(botocore)
+
+    def test_fastapi(self):
+        self.assertIsNotNone(FastAPI)
 
 if __name__ == '__main__':
     unittest.main()
