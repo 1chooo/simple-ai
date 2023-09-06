@@ -12,11 +12,12 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import gradio as gr
 from Refinaid.gui.Launch import build_ui
-from typing import Any
+
+PLAYGROUND_PATH = "/gradio"
 
 app = FastAPI()
-os.makedirs("static", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# os.makedirs("static", exist_ok=True)
+# app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
@@ -28,5 +29,5 @@ async def home(request: Request):
 
 demo = build_ui()
 app = gr.mount_gradio_app(
-    app, demo, path="/gradio"
+    app, demo, path=PLAYGROUND_PATH
 )
