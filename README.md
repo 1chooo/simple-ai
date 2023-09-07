@@ -30,12 +30,8 @@ $ rmdir /s venv     # remove the venv
 ```
 ### Build Docs
 ```shell
-$ pip install mkdocs
-$ pip install mkdocs-material
-$ pip install pymdown-extensions
-$ pip install mkdocstrings
-$ pip install mkdocs-git-revision-date-plugin
-$ pip install mkdocs-jupyter
+$ mkdocs server
+$ mkdocs build
 ```
 
 ### Run web app
