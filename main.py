@@ -68,3 +68,15 @@ async def page_settings(request: Request, ):
     return templates.TemplateResponse(
         f"settings.html", {"request": request}
     )
+
+@app.get("/orders", response_class=HTMLResponse)
+async def page_orders(request: Request, ):
+    return templates.TemplateResponse(
+        f"orders.html", {"request": request}
+    )
+
+@app.get("/playgrounds", response_class=HTMLResponse)
+async def page_orders(request: Request, ):
+    return templates.TemplateResponse(
+        f"playgrounds.html", {"request": request}
+    )

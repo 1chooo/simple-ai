@@ -12,7 +12,7 @@ class PageContent:
     def __init__(self, *args: Any, **kwargs: Any) -> None:
 
         self.home_header = """\
-        # Simple AI - Bridging the Gap with AI For Everyone
+        # SIMPLE AI - Bridging the Gap with AI For Everyone
 
         Enabling everyone unfamiliar with programming languages \
         to easily engage with AI and open the doors to the world \
