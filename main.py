@@ -56,3 +56,15 @@ async def page_signup(request: Request, ):
     return templates.TemplateResponse(
         f"signup.html", {"request": request}
     )
+
+@app.get("/help", response_class=HTMLResponse)
+async def page_help(request: Request, ):
+    return templates.TemplateResponse(
+        f"help.html", {"request": request}
+    )
+
+@app.get("/settings", response_class=HTMLResponse)
+async def page_settings(request: Request, ):
+    return templates.TemplateResponse(
+        f"settings.html", {"request": request}
+    )
