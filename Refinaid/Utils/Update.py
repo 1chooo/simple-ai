@@ -52,8 +52,8 @@ def update_preprocessing_visualization(dataset_dropdown, x_axis_dropdown, y_axis
         x=x_axis_dropdown,
         y=y_axis_dropdown,
         title="Scatter Plot in Data Visualization",
-        height=400,
-        width=400,
+        # height=400,
+        # width=400,
         caption='Observe the relationship between parameters',
     )
 

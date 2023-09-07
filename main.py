@@ -16,16 +16,11 @@ from Refinaid.gui.Launch import build_ui
 PLAYGROUND_PATH = "/gradio"
 
 app = FastAPI()
+
 os.makedirs("static", exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
-
-@app.get("/temp_home", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse(
-        "home.html", {"request": request}
-    )
 
 demo = build_ui()
 app = gr.mount_gradio_app(
@@ -33,13 +28,31 @@ app = gr.mount_gradio_app(
 )
 
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
+async def page_overview(request: Request):
     return templates.TemplateResponse(
         "index.html", {"request": request}
     )
 
 @app.get("/project_docs", response_class=HTMLResponse)
-async def custom_docs(request: Request):
+async def page_project_docs(request: Request):
     return templates.TemplateResponse(
         "docs.html", {"request": request}
+    )
+
+@app.get("/login", response_class=HTMLResponse)
+async def page_login(request: Request, ):
+    return templates.TemplateResponse(
+        f"login.html", {"request": request}
+    )
+
+@app.get("/setting", response_class=HTMLResponse)
+async def page_setting(request: Request, ):
+    return templates.TemplateResponse(
+        f"setting.html", {"request": request}
+    )
+
+@app.get("/signup", response_class=HTMLResponse)
+async def page_signup(request: Request, ):
+    return templates.TemplateResponse(
+        f"signup.html", {"request": request}
     )

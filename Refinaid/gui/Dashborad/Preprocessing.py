@@ -185,8 +185,8 @@ class PreprocessingComponent:
             x="PassengerId",
             y="Pclass",
             title='Scatter Plot in Data Visualization',
-            height=400,
-            width=400,
+            # height=400,
+            # width=400,
             caption='Observe the relationship between parameters',
         )
 
