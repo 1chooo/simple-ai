@@ -1,10 +1,27 @@
-# SIMPLE AI - Bridging the Gap with AI For Everyone
+<!-- ![Repo Banner](/static/icons/repo_banner.png) -->
 
-[![project badge](https://img.shields.io/badge/1chooo-simple__ai-informational)](https://github.com/1chooo/simple-ai)
-[![Made with Python](https://img.shields.io/badge/Python=3.10.1-blue?logo=python&logoColor=white)](https://python.org "Go to Python homepage")
-[![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
 
-Enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future.
+<div align="center">
+
+  [<img src="./static/icons/repo_banner.png" alt="SIMPLE AI" width=300>](https://gradio.app)<br>
+  <em>Bridging the Gap with AI For Everyone</em>
+
+  [![project badge](https://img.shields.io/badge/1chooo-simple__ai-informational)](https://github.com/1chooo/simple-ai)
+  [![Made with Python](https://img.shields.io/badge/Python=3.8+-blue?logo=python&logoColor=white)](https://python.org "Go to Python homepage")
+  [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
+
+[Documentation](1chooo.github.io/simple-ai/)
+| [中文](readme_files/zh-cn#readme)
+
+  <!-- [Website](https://gradio.app) -->
+  <!-- | [Guides](https://gradio.app/guides/) -->
+  <!-- | [Getting Started](https://gradio.app/getting_started/) -->
+  <!-- | [Examples](demo/) -->
+
+</div>
+
+# SIMPLE AI: Bridging the Gap with AI For Everyone
+Hi there 👋🏻 This is **SIMPLE AI**. **SIMPLE AI** is an open-source learning platform  enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future.
 
 ## Getting Started
 Python version `python3.10.1` with `gradio, scikit-learn, seaborn, pandas, numpy, matplotlib, joblib`
