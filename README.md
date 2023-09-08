@@ -7,8 +7,8 @@
   [![Made with Python](https://img.shields.io/pypi/pyversions/gradio.svg?color=blue)](https://python.org "Go to Python homepage")
   [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
 
-[Documentation](1chooo.github.io/simple-ai/)
-| [中文](readme_files/zh-cn#readme)
+[Documentation](https://github.com/1chooo/simple-ai)
+| [中文](readme_files/zh_cn#readme)
 
   <!-- [Website](https://gradio.app) -->
   <!-- | [Guides](https://gradio.app/guides/) -->
