@@ -5,7 +5,6 @@
 
   [![project badge](https://img.shields.io/badge/1chooo-simple__ai-informational)](https://github.com/1chooo/simple-ai)
   [![Made with Python](https://img.shields.io/pypi/pyversions/gradio.svg?color=blue)](https://python.org "Go to Python homepage")
-  
   [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
 
 [Documentation](1chooo.github.io/simple-ai/)
