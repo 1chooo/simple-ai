@@ -1,13 +1,11 @@
-<!-- ![Repo Banner](/static/icons/repo_banner.png) -->
-
-
 <div align="center">
 
-  [<img src="./static/icons/repo_banner.png" alt="SIMPLE AI" width=300>](https://gradio.app)<br>
-  <em>Bridging the Gap with AI For Everyone</em>
+  [<img src="./static/icons/repo_banner.png" alt="SIMPLE AI">](https://github.com/1chooo/simple-ai)<br>
+  <em>SIMPLE AI: Bridging the Gap with AI For Everyone</em>
 
   [![project badge](https://img.shields.io/badge/1chooo-simple__ai-informational)](https://github.com/1chooo/simple-ai)
-  [![Made with Python](https://img.shields.io/badge/Python=3.8+-blue?logo=python&logoColor=white)](https://python.org "Go to Python homepage")
+  [![Made with Python](https://img.shields.io/pypi/pyversions/gradio.svg?color=blue)](https://python.org "Go to Python homepage")
+  
   [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
 
 [Documentation](1chooo.github.io/simple-ai/)
