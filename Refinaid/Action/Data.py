@@ -90,7 +90,7 @@ def data_generating(df: pd.DataFrame, parameters: DatasetConfig):
 
     df = pd.concat([result_df, origin_df[parameters.col_remaining].reset_index(drop=True)], axis=1)
     X = df.drop(parameters.y_col, axis=1)
-    y = df[parameters.y_col].values.ravel()
+    y = df[parameters.y_col]
 
     return X, y
 

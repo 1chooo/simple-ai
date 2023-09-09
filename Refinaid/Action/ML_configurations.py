@@ -59,3 +59,13 @@ class KNNModelConfig:
         self.weights = weights
         self.algorithm = algorithm
 
+class SVMModelConfig:
+    def __init__(self, C: float, kernel: str, degree: int, gamma: str, coef0: float):
+        if C != 0.0:
+            self.C = C
+        self.kernel = kernel                    # ‘poly’, ‘rbf’, ‘sigmoid’  default=’rbf’
+        if self.kernel == 'poly':
+            self.degree = degree                # default=3
+        self.gamma = gamma                      # ‘scale’, ‘auto’   default=‘scale’
+        if self.kernel in ('poly', 'sigmoid'):
+            self.coef0 = coef0                  # default=0.0
