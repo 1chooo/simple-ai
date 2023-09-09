@@ -53,11 +53,13 @@ class DecisionTreeModelConfig:
         self.max_depth = max_depth
         self.max_leaf_nodes = max_leaf_nodes
 
+
 class KNNModelConfig:
     def __init__(self, n_neighbors: int, weights: str, algorithm: str):
         self.n_neighbors = n_neighbors
         self.weights = weights
         self.algorithm = algorithm
+
 
 class SVMModelConfig:
     def __init__(self, C: float, kernel: str, degree: int, gamma: str, coef0: float):
@@ -69,3 +71,9 @@ class SVMModelConfig:
         self.gamma = gamma                      # ‘scale’, ‘auto’   default=‘scale’
         if self.kernel in ('poly', 'sigmoid'):
             self.coef0 = coef0                  # default=0.0
+
+
+class LinearRegressionModelConfig:
+    def __init__(self, fit_intercept: bool, positive: bool):
+        self.fit_intercept = fit_intercept
+        self.positive = positive

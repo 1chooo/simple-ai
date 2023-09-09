@@ -11,9 +11,11 @@ from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import RocCurveDisplay
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 class ModelWrapper:
     def fit(self, X, y):
@@ -23,12 +25,19 @@ class ModelWrapper:
         return self.model.predict(X)
 
     @staticmethod
-    def _indicator_analyze(y_test, y_pred):
+    def _classifier_analyze(y_test, y_pred):
         accuracy = accuracy_score(y_test, y_pred)
         recall = recall_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
         return [accuracy, recall, precision, f1]
+
+    @staticmethod
+    def _regressor_analyze(y_test, y_pred):
+        mse = mean_squared_error(y_test, y_pred, squared=False)
+        mae = mean_absolute_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+        return [mse, mae, r2, None]
 
 class DecisionTreeWrapper(ModelWrapper):
     def __init__(self, **kwargs):
@@ -53,7 +62,7 @@ class DecisionTreeWrapper(ModelWrapper):
     def analyze(self, X_test, y_test):
         y_pred = super().predict(X_test)
 
-        return self._plot_analyze(X_test, y_test, y_pred), super()._indicator_analyze(y_test, y_pred)
+        return self._plot_analyze(X_test, y_test, y_pred), super()._classifier_analyze(y_test, y_pred)
 
 class KNNWrapper(ModelWrapper):
     def __init__(self, **kwargs):
@@ -77,7 +86,7 @@ class KNNWrapper(ModelWrapper):
     def analyze(self, X_test, y_test):
         X_test = np.ascontiguousarray(X_test)
         y_pred = super().predict(X_test)
-        return self._plot_analyze(X_test, y_test, y_pred), super()._indicator_analyze(y_test, y_pred)
+        return self._plot_analyze(X_test, y_test, y_pred), super()._classifier_analyze(y_test, y_pred)
 
 
 class SVMWrapper(ModelWrapper):
@@ -100,9 +109,23 @@ class SVMWrapper(ModelWrapper):
         return [figure_cm, figure_roc, None]
 
     def analyze(self, X_test, y_test):
-        X_test = np.ascontiguousarray(X_test)
         y_pred = super().predict(X_test)
-        return self._plot_analyze(X_test, y_test, y_pred), super()._indicator_analyze(y_test, y_pred)
+        return self._plot_analyze(X_test, y_test, y_pred), super()._classifier_analyze(y_test, y_pred)
+
+
+class LinearRegressionWrapper(ModelWrapper):
+    def __init__(self, **kwargs):
+        self.model = LinearRegression(**kwargs)
+
+    def fit(self, X, y):
+        super().fit(X, y)
+
+    def _plot_analyze(self, X_test, y_test, y_pred):
+        return [None, None, None]
+
+    def analyze(self, X_test, y_test):
+        y_pred = super().predict(X_test)
+        return self._plot_analyze(X_test, y_test, y_pred), super()._regressor_analyze(y_test, y_pred)
 
 
 
