@@ -10,6 +10,7 @@ import numpy as np
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import RocCurveDisplay
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
@@ -47,7 +48,6 @@ class DecisionTreeWrapper(ModelWrapper):
         svc_disp = RocCurveDisplay.from_estimator(self.model, X_test, y_test)
         svc_disp.plot()
         figure_roc = plt.gcf()
-        # print([id(figure_tree), id(figure_cm), id(figure_roc)])
         return [figure_tree, figure_cm, figure_roc]
 
     def analyze(self, X_test, y_test):
@@ -58,6 +58,31 @@ class DecisionTreeWrapper(ModelWrapper):
 class KNNWrapper(ModelWrapper):
     def __init__(self, **kwargs):
         self.model = KNeighborsClassifier(**kwargs)
+
+    def fit(self, X, y):
+        super().fit(X, y)
+
+    def _plot_analyze(self, X_test, y_test, y_pred):
+        cm = confusion_matrix(y_test, y_pred, labels=self.model.classes_)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=self.model.classes_)
+        disp.plot()
+        figure_cm = plt.gcf()
+
+        svc_disp = RocCurveDisplay.from_estimator(self.model, X_test, y_test)
+        svc_disp.plot()
+        figure_roc = plt.gcf()
+
+        return [figure_cm, figure_roc, None]
+
+    def analyze(self, X_test, y_test):
+        X_test = np.ascontiguousarray(X_test)
+        y_pred = super().predict(X_test)
+        return self._plot_analyze(X_test, y_test, y_pred), super()._indicator_analyze(y_test, y_pred)
+
+
+class SVMWrapper(ModelWrapper):
+    def __init__(self, **kwargs):
+        self.model = SVC(**kwargs)
 
     def fit(self, X, y):
         super().fit(X, y)
