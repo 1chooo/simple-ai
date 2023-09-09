@@ -62,6 +62,24 @@ async def page_signup(request: Request, ):
         f"signup.html", {"request": request}
     )
 
+@app.get("/about_us", response_class=HTMLResponse)
+async def page_teaching(request: Request, ):
+    return templates.TemplateResponse(
+        f"about_us.html", {"request": request}
+    )
+
+@app.get("/license", response_class=HTMLResponse)
+async def page_teaching(request: Request, ):
+    return templates.TemplateResponse(
+        f"license.html", {"request": request}
+    )
+
+@app.get("/teaching", response_class=HTMLResponse)
+async def page_teaching(request: Request, ):
+    return templates.TemplateResponse(
+        f"teaching.html", {"request": request}
+    )
+
 @app.get("/help", response_class=HTMLResponse)
 async def page_help(request: Request, ):
     return templates.TemplateResponse(
