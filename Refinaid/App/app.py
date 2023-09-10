@@ -7,7 +7,7 @@ Version: v0.1.1
 import os
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse ,FileResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import Form, Depends, HTTPException
 import gradio as gr
@@ -28,9 +28,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 demo = build_ui()
-demo.favicon_path = os.sep+"static"+os.sep+"favicon.png"
+demo.favicon_path = (
+    os.sep + 
+    "static" + 
+    os.sep + 
+    "favicon.png"
+)
 app = gr.mount_gradio_app(
-    app, demo, path=PLAYGROUND_PATH , 
+    app, demo, path=PLAYGROUND_PATH,
 )
 
 @app.get("/", response_class=HTMLResponse)
@@ -107,4 +112,6 @@ async def page_orders(request: Request, ):
 
 @app.get("/favicon.ico")
 async def favicon():
-    return FileResponse(os.getcwd()+demo.favicon_path)
+    return FileResponse(
+        os.getcwd() + demo.favicon_path
+    )

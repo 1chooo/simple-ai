@@ -25,11 +25,10 @@ def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
     training_history_component = TrainingHistoryComponent(page_content)
     preprocessing_example = PreprocessingExample()
     
-    demo = gr.Blocks(
+    demo: gr.Blocks = gr.Blocks(
         title='Refinaid',
-
     )
-    demo.favicon_path = os.sep+"static"+os.sep+"favicon.png"
+
     with demo:
         our_heading = page_header.get_home_header()
 
@@ -136,16 +135,6 @@ def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
                 training_history,
             ) = training_history_component.get_history_training_info()
 
-        # with gr.Tab("Teaching"):
-        #     teaching_header = gr.Markdown(
-        #         "## Teaching"
-        #     )
-
-        # with gr.Tab("Demo"):
-        #     demo_header = gr.Markdown(
-        #         "## Demo"
-        #     )
-
         background_listener(
             selected_dataset_name,
             select_mutiple_parameters_dropdown,
@@ -180,13 +169,3 @@ def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
         )
 
     return demo
-
-    demo.launch(
-        # enable_queue=True,
-        # share=True, 
-        server_name="127.0.0.1", 
-        server_port=6006,
-        debug=True,
-        # inbrowser=True,
-        # favicon_path='add_our_favicon_path',
-    ) 
