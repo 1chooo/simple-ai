@@ -5,6 +5,7 @@ Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
 Version: v0.1.0
 '''
 
+import os
 import gradio as gr
 from Refinaid.Utils.Listener import background_listener
 from Refinaid.gui.Information import PageContent
@@ -26,8 +27,9 @@ def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
     
     demo = gr.Blocks(
         title='Refinaid',
-    )
 
+    )
+    demo.favicon_path = os.sep+"static"+os.sep+"favicon.png"
     with demo:
         our_heading = page_header.get_home_header()
 
