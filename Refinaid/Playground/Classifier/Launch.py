@@ -2,18 +2,17 @@
 '''
 Create Date: 2023/09/11
 Author: @1chooo(Hugo ChunHo Lin)
-Version: v0.1.2
+Version: v0.1.4
 '''
 
-import os
 import gradio as gr
 from Refinaid.Utils.Listener import background_listener
-from Refinaid.gui.Information import PageContent
-from Refinaid.gui.Dashborad.Header import PageHeader
-from Refinaid.gui.Dashborad.Preprocessing import PreprocessingComponent
-from Refinaid.gui.Dashborad.Training import TrainingComponent
-from Refinaid.gui.Dashborad.TrainingHistory import TrainingHistoryComponent
-from Refinaid.gui.Example import PreprocessingExample
+from Refinaid.Playground.Classifier.Information import PageContent
+from Refinaid.Playground.Classifier.Dashborad.Header import PageHeader
+from Refinaid.Playground.Classifier.Dashborad.Preprocessing import PreprocessingComponent
+from Refinaid.Playground.Classifier.Dashborad.Training import TrainingComponent
+from Refinaid.Playground.Classifier.Dashborad.TrainingHistory import TrainingHistoryComponent
+from Refinaid.Playground.Classifier.Example import PreprocessingExample
 from typing import Any
 
 def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:

@@ -10,7 +10,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from Refinaid.Playground.Classifier.Launch import build_ui 
-from Refinaid.gui.Launch import build_ui
 from fastapi import Form, Depends, HTTPException
 import gradio as gr
 

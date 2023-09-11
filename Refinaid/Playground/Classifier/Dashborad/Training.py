@@ -2,11 +2,11 @@
 '''
 Create Date: 2023/09/11
 Author: @1chooo(Hugo ChunHo Lin)
-Version: v0.1.2
+Version: v0.1.4
 '''
 
 import gradio as gr
-from Refinaid.gui.Information import PageContent
+from Refinaid.Playground.Classifier.Information import PageContent
 from typing import Any, Tuple
 
 class TrainingComponent:
