@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/09/11
 Author: @1chooo(Hugo ChunHo Lin)
-Version: v0.1.2
+Version: v0.1.4
 '''
 
 from typing import Any, Tuple
@@ -12,11 +12,9 @@ class PageContent:
     def __init__(self, *args: Any, **kwargs: Any) -> None:
 
         self.home_header = """\
-        # SIMPLE AI - Bridging the Gap with AI For Everyone
+        # Playgrounds - Classifier
 
-        Enabling everyone unfamiliar with programming languages \
-        to easily engage with AI and open the doors to the world \
-        of the future.
+        Welcome the playground that we supply the classifier model.
         """
 
         self.preprocessing_header = """\
