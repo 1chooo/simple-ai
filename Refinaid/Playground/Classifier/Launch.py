@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 '''
-Create Date: 2023/08/28
-Author: @1chooo(Hugo ChunHo Lin), @ReeveWu
-Version: v0.1.0
+Create Date: 2023/09/11
+Author: @1chooo(Hugo ChunHo Lin)
+Version: v0.1.2
 '''
 
+import os
 import gradio as gr
 from Refinaid.Utils.Listener import background_listener
 from Refinaid.gui.Information import PageContent
