@@ -9,9 +9,10 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
+from Refinaid.Playground.Classifier.Launch import build_ui 
+from Refinaid.gui.Launch import build_ui
 from fastapi import Form, Depends, HTTPException
 import gradio as gr
-from Refinaid.gui.Launch import build_ui
 
 PLAYGROUND_PATH = "/gradio"
 
@@ -23,19 +24,23 @@ app = FastAPI(
 )
 
 os.makedirs("static", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount(
+    "/static", 
+    StaticFiles(directory="static"), 
+    name="static",
+)
 
 templates = Jinja2Templates(directory="templates")
 
-demo = build_ui()
-demo.favicon_path = (
+classifier_demo = build_ui()
+classifier_demo.favicon_path = (
     os.sep + 
     "static" + 
     os.sep + 
     "favicon.png"
 )
 app = gr.mount_gradio_app(
-    app, demo, path=PLAYGROUND_PATH,
+    app, classifier_demo, path=PLAYGROUND_PATH,
 )
 
 @app.get("/", response_class=HTMLResponse)
@@ -69,13 +74,13 @@ async def page_signup(request: Request, ):
     )
 
 @app.get("/about_us", response_class=HTMLResponse)
-async def page_teaching(request: Request, ):
+async def page_about_us(request: Request, ):
     return templates.TemplateResponse(
         f"about_us.html", {"request": request}
     )
 
 @app.get("/license", response_class=HTMLResponse)
-async def page_teaching(request: Request, ):
+async def page_license(request: Request, ):
     return templates.TemplateResponse(
         f"license.html", {"request": request}
     )
@@ -105,7 +110,7 @@ async def page_orders(request: Request, ):
     )
 
 @app.get("/playgrounds", response_class=HTMLResponse)
-async def page_orders(request: Request, ):
+async def page_playgrounds(request: Request, ):
     return templates.TemplateResponse(
         f"playgrounds.html", {"request": request}
     )
@@ -113,5 +118,5 @@ async def page_orders(request: Request, ):
 @app.get("/favicon.ico")
 async def favicon():
     return FileResponse(
-        os.getcwd() + demo.favicon_path
+        os.getcwd() + classifier_demo.favicon_path
     )
