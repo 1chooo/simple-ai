@@ -2,7 +2,7 @@
 '''
 Create Date: 2023/09/11
 Author: @1chooo(Hugo ChunHo Lin)
-Version: v0.1.2
+Version: v0.1.4
 '''
 
 import gradio as gr

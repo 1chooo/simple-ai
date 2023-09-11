@@ -45,7 +45,7 @@ def background_listener(
         train_img3,
         training_history,
         preprocessing_visulize_scatter_plot,
-        ) -> None:
+    ) -> None:
         selected_dataset_name.change(
             fn=update_parameters,
             inputs=selected_dataset_name,

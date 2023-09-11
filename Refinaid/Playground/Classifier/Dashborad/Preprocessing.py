@@ -2,11 +2,11 @@
 '''
 Create Date: 2023/09/11
 Author: @1chooo(Hugo ChunHo Lin)
-Version: v0.1.2
+Version: v0.1.4
 '''
 
 import gradio as gr
-from Refinaid.gui.Information import PageContent
+from Refinaid.Playground.Classifier.Information import PageContent
 from typing import Any, Tuple
 from Refinaid.Action.Load import get_dataframe
 
@@ -67,7 +67,10 @@ class PreprocessingComponent:
         )
     
     def get_missing_values_handling_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
                 gr.Markdown, 
                 gr.Radio
             ]:
@@ -90,7 +93,8 @@ class PreprocessingComponent:
         )
 
     def get_data_scale_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
+            self, *args: Any, **kwargs: Any
+        ) -> Tuple[
                 gr.Markdown, 
                 gr.Radio
             ]:
@@ -115,7 +119,8 @@ class PreprocessingComponent:
         )
     
     def get_data_split_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
+            self, *args: Any, **kwargs: Any
+        ) -> Tuple[
                 gr.Markdown, 
                 gr.Slider, 
                 gr.Slider, 
@@ -158,7 +163,8 @@ class PreprocessingComponent:
         )
 
     def get_submit_dataset_setting_btn(
-            self, *args: Any, **kwargs: Any) -> Tuple[
+            self, *args: Any, **kwargs: Any
+        ) -> Tuple[
                 gr.Button
             ]:
 
@@ -171,7 +177,8 @@ class PreprocessingComponent:
         )
     
     def get_preprocessing_visulize_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
+            self, *args: Any, **kwargs: Any
+        ) -> Tuple[
                 gr.Markdown, gr.ScatterPlot
             ]:
         
@@ -196,7 +203,8 @@ class PreprocessingComponent:
         )
     
     def get_preprocessing_visualize_axis_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
+            self, *args: Any, **kwargs: Any
+        ) -> Tuple[
                 gr.Dropdown, gr.Dropdown
             ]:
         x_axis_dropdown = gr.Dropdown(
