@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Create Date: 2023/09/08
 Author: @1chooo (Hugo ChunHo Lin)
@@ -13,7 +14,7 @@ from Refinaid.Playground.Classifier.Launch import build_ui
 from fastapi import Form, Depends, HTTPException
 import gradio as gr
 
-PLAYGROUND_PATH = "/gradio"
+CLASSIFIER_PLAYGROUND_PATH = "/classifier"
 
 app = FastAPI(
     title="SIMPLE AI",
@@ -39,7 +40,7 @@ classifier_demo.favicon_path = (
     "favicon.png"
 )
 app = gr.mount_gradio_app(
-    app, classifier_demo, path=PLAYGROUND_PATH,
+    app, classifier_demo, path=CLASSIFIER_PLAYGROUND_PATH,
 )
 
 @app.get("/", response_class=HTMLResponse)
@@ -108,10 +109,10 @@ async def page_orders(request: Request, ):
         f"orders.html", {"request": request}
     )
 
-@app.get("/playgrounds", response_class=HTMLResponse)
-async def page_playgrounds(request: Request, ):
+@app.get("/playgrounds_introduction", response_class=HTMLResponse)
+async def page_playgrounds_introduction(request: Request, ):
     return templates.TemplateResponse(
-        f"playgrounds.html", {"request": request}
+        f"playgrounds_introduction.html", {"request": request}
     )
 
 @app.get("/favicon.ico")

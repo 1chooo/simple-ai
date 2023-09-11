@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Create Date: 2023/08/25
 Author: @VincentLi1216, @1chooo
