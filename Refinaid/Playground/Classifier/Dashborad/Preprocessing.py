@@ -12,14 +12,20 @@ from Refinaid.Action.Load import get_dataframe
 
 class PreprocessingComponent:
     
-    def __init__(self, page_content: PageContent) -> None:
+    def __init__(
+            self, 
+            page_content: PageContent,
+        ) -> None:
         self.page_content = page_content
 
     def get_dataset_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, 
-                gr.Dropdown
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown, 
+            gr.Dropdown
+        ]:
 
         dataset_header = gr.Markdown("### Dataset")
 
@@ -38,10 +44,13 @@ class PreprocessingComponent:
         )
     
     def get_select_mutiple_parameters_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, 
-                gr.Dropdown
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown, 
+            gr.Dropdown
+        ]:
         select_mutiple_parameters_header = gr.Markdown(
             "### Select Mutiple Parameters"
         )
@@ -71,9 +80,9 @@ class PreprocessingComponent:
             *args: Any, 
             **kwargs: Any,
         ) -> Tuple[
-                gr.Markdown, 
-                gr.Radio
-            ]:
+            gr.Markdown, 
+            gr.Radio
+        ]:
 
         missing_values_handling_header = gr.Markdown(
             "### Missing Values Handling"
@@ -93,11 +102,13 @@ class PreprocessingComponent:
         )
 
     def get_data_scale_info(
-            self, *args: Any, **kwargs: Any
+            self, 
+            *args: Any, 
+            **kwargs: Any,
         ) -> Tuple[
-                gr.Markdown, 
-                gr.Radio
-            ]:
+            gr.Markdown, 
+            gr.Radio
+        ]:
         
         data_scale_header = gr.Markdown(
             "### Data Scaling"
@@ -119,13 +130,15 @@ class PreprocessingComponent:
         )
     
     def get_data_split_info(
-            self, *args: Any, **kwargs: Any
+            self, 
+            *args: Any, 
+            **kwargs: Any,
         ) -> Tuple[
-                gr.Markdown, 
-                gr.Slider, 
-                gr.Slider, 
-                gr.Slider
-            ]:
+            gr.Markdown, 
+            gr.Slider, 
+            gr.Slider, 
+            gr.Slider
+        ]:
         data_split_header = gr.Markdown(
             "### Data Split\nTotal value should be 100%"
         )
@@ -163,10 +176,12 @@ class PreprocessingComponent:
         )
 
     def get_submit_dataset_setting_btn(
-            self, *args: Any, **kwargs: Any
+            self, 
+            *args: Any, 
+            **kwargs: Any,
         ) -> Tuple[
-                gr.Button
-            ]:
+            gr.Button
+        ]:
 
         submit_dataset_setting_btn = gr.Button(
             value="Submit Data Preprocessing Results",
@@ -177,10 +192,13 @@ class PreprocessingComponent:
         )
     
     def get_preprocessing_visulize_info(
-            self, *args: Any, **kwargs: Any
+            self, 
+            *args: Any, 
+            **kwargs: Any,
         ) -> Tuple[
-                gr.Markdown, gr.ScatterPlot
-            ]:
+            gr.Markdown, 
+            gr.ScatterPlot,
+        ]:
         
         preprocessing_visulize_header = gr.Markdown(
             "### Data Visualization in Preprocessing"
@@ -203,10 +221,13 @@ class PreprocessingComponent:
         )
     
     def get_preprocessing_visualize_axis_info(
-            self, *args: Any, **kwargs: Any
+            self, 
+            *args: Any, 
+            **kwargs: Any,
         ) -> Tuple[
-                gr.Dropdown, gr.Dropdown
-            ]:
+            gr.Dropdown, 
+            gr.Dropdown
+        ]:
         x_axis_dropdown = gr.Dropdown(
             label="X Axis", 
             value='PassengerId',

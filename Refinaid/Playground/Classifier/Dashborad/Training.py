@@ -11,13 +11,19 @@ from typing import Any, Tuple
 
 class TrainingComponent:
 
-    def __init__(self, page_content: PageContent) -> None:
+    def __init__(
+            self, 
+            page_content: PageContent,
+        ) -> None:
         self.page_content = page_content
 
     def get_training_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown
+        ]:
         training_heading = gr.Markdown(
             self.page_content.training_header    
         )
@@ -27,10 +33,13 @@ class TrainingComponent:
         )
     
     def get_picked_dataset_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, 
-                gr.Dataframe,
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown, 
+            gr.Dataframe,
+        ]:
         picked_dataset_header = gr.Markdown(
             "### Data You have picked!!!"
         )
@@ -50,9 +59,12 @@ class TrainingComponent:
         )
     
     def get_model_dropdown_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Dropdown
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Dropdown
+        ]:
         choices =[
             "Decision Tree Classifier", 
             "K Neighbor Classifier",
@@ -69,15 +81,18 @@ class TrainingComponent:
         )
     
     def get_decision_tree_classifer_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown,
-                gr.Dropdown,
-                gr.Textbox,
-                gr.Slider,
-                gr.Slider,
-                gr.Dropdown,
-                gr.Textbox,
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown,
+            gr.Dropdown,
+            gr.Textbox,
+            gr.Slider,
+            gr.Slider,
+            gr.Dropdown,
+            gr.Textbox,
+        ]:
         decision_tree_classifer_title = gr.Markdown(
             "### Decision Tree Classifier", 
             visible=False,
@@ -146,9 +161,15 @@ class TrainingComponent:
         )
 
     def get_k_neighbors_classifier_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, gr.Slider, gr.Dropdown, gr.Dropdown
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown, 
+            gr.Slider, 
+            gr.Dropdown, 
+            gr.Dropdown,
+        ]:
         k_neighbors_classifier_title = gr.Markdown(
             "### K Neighbors Classifier", 
             visible=False,
@@ -193,9 +214,12 @@ class TrainingComponent:
         )
     
     def get_training_btn_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Button,
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Button,
+        ]:
         train_btn = gr.Button(
             value="Train"
         )
@@ -205,10 +229,13 @@ class TrainingComponent:
         )
     
     def get_training_results_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, 
-                gr.Dataframe,
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown, 
+            gr.Dataframe,
+        ]:
         training_results_header = gr.Markdown("## Training Result")
         training_results = gr.Dataframe(
             headers=[
@@ -228,11 +255,14 @@ class TrainingComponent:
         )
     
     def get_training_results_plot_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Plot, 
-                gr.Plot,
-                gr.Plot,
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Plot, 
+            gr.Plot,
+            gr.Plot,
+        ]:
         train_img1 = gr.Plot(
             interactive=True
         )
@@ -248,3 +278,4 @@ class TrainingComponent:
             train_img2,
             train_img3,
         )
+    
