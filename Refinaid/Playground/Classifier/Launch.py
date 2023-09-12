@@ -15,7 +15,10 @@ from Refinaid.Playground.Classifier.Dashborad.TrainingHistory import TrainingHis
 from Refinaid.Playground.Classifier.Example import PreprocessingExample
 from typing import Any
 
-def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
+def build_ui(
+        *args: Any, 
+        **kwargs: Any,
+    ) -> gr.Blocks:
 
     page_content = PageContent()
     page_header = PageHeader(page_content)
@@ -24,7 +27,7 @@ def build_ui(*args: Any, **kwargs: Any) -> gr.Blocks:
     training_history_component = TrainingHistoryComponent(page_content)
     preprocessing_example = PreprocessingExample()
     
-    demo: gr.Blocks = gr.Blocks(
+    demo = gr.Blocks(
         title='Refinaid',
     )
 

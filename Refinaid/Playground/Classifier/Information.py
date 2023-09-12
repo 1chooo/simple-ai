@@ -9,7 +9,11 @@ from typing import Any, Tuple
 
 class PageContent:
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> None:
 
         self.home_header = """\
         # Playgrounds - Classifier

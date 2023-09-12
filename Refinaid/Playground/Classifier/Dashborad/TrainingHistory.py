@@ -11,13 +11,19 @@ from typing import Any, Tuple
 
 class TrainingHistoryComponent:
 
-    def __init__(self, page_content: PageContent) -> None:
+    def __init__(
+            self, 
+            page_content: PageContent,
+        ) -> None:
         self.page_content = page_content
 
     def get_history_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown
+        ]:
         history_heading = gr.Markdown("## History")
 
         return (
@@ -25,10 +31,13 @@ class TrainingHistoryComponent:
         )
     
     def get_history_training_info(
-            self, *args: Any, **kwargs: Any) -> Tuple[
-                gr.Markdown, 
-                gr.Dataframe
-            ]:
+            self, 
+            *args: Any, 
+            **kwargs: Any,
+        ) -> Tuple[
+            gr.Markdown, 
+            gr.Dataframe
+        ]:
         
         history_heading = self.get_history_info()
         training_history = gr.Dataframe(
