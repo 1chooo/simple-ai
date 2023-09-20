@@ -109,10 +109,10 @@ async def page_orders(request: Request, ):
         f"orders.html", {"request": request}
     )
 
-@app.get("/playgrounds_introduction", response_class=HTMLResponse)
+@app.get("/playgrounds_guideline", response_class=HTMLResponse)
 async def page_playgrounds_introduction(request: Request, ):
     return templates.TemplateResponse(
-        f"playgrounds_introduction.html", {"request": request}
+        f"playgrounds_guideline.html", {"request": request}
     )
 
 @app.get("/favicon.ico")
