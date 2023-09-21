@@ -28,7 +28,7 @@ def build_ui(
     preprocessing_example = PreprocessingExample()
     
     demo = gr.Blocks(
-        title='Refinaid',
+        title='Playgrounds - Classifier',
     )
 
     with demo:
