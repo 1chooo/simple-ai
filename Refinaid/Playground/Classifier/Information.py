@@ -16,9 +16,17 @@ class PageContent:
         ) -> None:
 
         self.home_header = """\
-        # Playgrounds - Classifier
-
-        Welcome the playground that we supply the classifier model.
+        <body>
+            <div align="center">
+                <div id="playground_header">
+                    <h1>Welcome to the Playgrounds - Classifier</h1>
+                </div>
+                <br>
+                <div id="playground_body">
+                    Welcome the playground that we supply the classifier model.
+                </div>
+            </div>
+        </body>
         """
 
         self.preprocessing_header = """\

@@ -23,7 +23,7 @@ class PageHeader:
             **kwargs: Any,
         ) -> gr.Markdown:
         our_heading = gr.Markdown(
-            self.page_content.home_header
+            self.page_content.home_header,
         )
 
         return our_heading
