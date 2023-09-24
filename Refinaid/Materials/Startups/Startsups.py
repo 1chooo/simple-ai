@@ -14,7 +14,7 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.tree import export_graphviz
 from sklearn.model_selection import train_test_split
-import pandas_profiling
+import ydata_profiling
 import seaborn as sns
 
 # %% [markdown]
@@ -41,7 +41,7 @@ data
 # Let's look at the peculiarity of the data
 
 # %%
-pandas_profiling.ProfileReport(data)
+ydata_profiling.ProfileReport(data)
 
 # %% [markdown]
 # To prepare the data, I need to translate text values into numbers. To do this, I need to clean up the data. Let's get rid of extra commas in the data, reduce the text to lowercase in Country and Industry fields. Let's make a dictionary of unique values
