@@ -14,7 +14,7 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.tree import export_graphviz
 from sklearn.model_selection import train_test_split
-import pandas_profiling
+import ydata_profiling
 import seaborn as sns
 
 # https://www.kaggle.com/competitions/spaceship-titanic/data - dataset Spaceship Titanic.
@@ -39,7 +39,7 @@ data = pd.read_csv('train.csv')
 data.isnull().sum()
 
 #Let's learn our dataset more attentively
-pandas_profiling.ProfileReport(data)
+ydata_profiling.ProfileReport(data)
 
 #Let's replace NaN either with the average value if the variables are numeric, or with the most frequent value otherwise
 data['HomePlanet'] = data['HomePlanet'].fillna(value = 'Earth')
