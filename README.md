@@ -12,11 +12,6 @@
 | [LICENSE](#license)
 | [中文](readme_files/zh_cn#readme)
 
-  <!-- [Website](https://gradio.app) -->
-  <!-- | [Guides](https://gradio.app/guides/) -->
-  <!-- | [Getting Started](https://gradio.app/getting_started/) -->
-  <!-- | [Examples](demo/) -->
-
 </div>
 
 # SIMPLE AI: Bridging the Gap with AI For Everyone
