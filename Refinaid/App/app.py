@@ -10,11 +10,9 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
-from Refinaid.Playground.Classifier.Launch import build_ui 
+from Refinaid.Utils.BuildPlayground import build_and_mount_playground
 from fastapi import Form, Depends, HTTPException
 import gradio as gr
-
-CLASSIFIER_PLAYGROUND_PATH = "/classifier"
 
 app = FastAPI(
     title="SIMPLE AI",
@@ -30,17 +28,22 @@ app.mount(
     name="static",
 )
 
-templates = Jinja2Templates(directory="templates")
-
-classifier_demo = build_ui()
-classifier_demo.favicon_path = (
-    os.sep + 
-    "static" + 
-    os.sep + 
-    "favicon.png"
+templates = Jinja2Templates(
+    directory="templates",
 )
-app = gr.mount_gradio_app(
-    app, classifier_demo, path=CLASSIFIER_PLAYGROUND_PATH,
+
+app = build_and_mount_playground(
+    app,
+    "plum",
+    "favicon.ico",
+    "/plum",
+)
+
+app = build_and_mount_playground(
+    app,
+    "classifier",
+    "favicon.ico",
+    "/classifier",
 )
 
 @app.get("/", response_class=HTMLResponse)
@@ -115,8 +118,8 @@ async def page_playgrounds_introduction(request: Request, ):
         f"playgrounds_guideline.html", {"request": request}
     )
 
-@app.get("/favicon.ico")
-async def favicon():
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon() -> FileResponse:
     return FileResponse(
-        os.getcwd() + classifier_demo.favicon_path
+        './static/favicon_path',
     )
