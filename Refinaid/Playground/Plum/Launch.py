@@ -15,7 +15,7 @@ from Refinaid.Playground.Classifier.Dashborad.TrainingHistory import TrainingHis
 from Refinaid.Playground.Classifier.Example import PreprocessingExample
 from typing import Any
 
-def build_classifier_playground(
+def build_plum_playground(
         *args: Any, 
         **kwargs: Any,
     ) -> gr.Blocks:
