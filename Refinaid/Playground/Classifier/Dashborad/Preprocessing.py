@@ -251,4 +251,3 @@ class PreprocessingComponent:
             x_axis_dropdown, 
             y_axis_dropdown
         )
-    

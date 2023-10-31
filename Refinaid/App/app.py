@@ -132,5 +132,5 @@ async def page_playgrounds_introduction(request: Request, ):
 @app.get('/favicon.ico', include_in_schema=False)
 async def favicon() -> FileResponse:
     return FileResponse(
-        './static/favicon_path',
+        './static/favicon.ico',
     )
