@@ -23,7 +23,7 @@ Python version `python3.10.1` with `gradio, scikit-learn, seaborn, pandas, numpy
 ### Build `venv` for **MacOS**
 ```shell
 $ pip3 install virtualenv
-$ virtualenv venv --python=python3.10.1
+$ python3.10 -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
 $ deactivate
@@ -33,7 +33,7 @@ $ rm -rf venv     # remove the venv
 ### Build `venv` for Windows
 ```shell
 $ pip install virtualenv
-$ virtualenv venv
+$ python3.10 -m venv venv
 $ venv\Scripts\activate
 $ pip install -r requirements.txt
 $ deactivate
