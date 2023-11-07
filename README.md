@@ -65,7 +65,7 @@ $ git clone git@github.com:<your_workspace_name>/simple-ai.git
 ```
 
 ### Setting Upstream Remote:
-```shell=
+```shell
 $ git remote add upstream git@github.com:1chooo/simple-ai.git
 
 $ git remote -v
