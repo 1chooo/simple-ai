@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "simple-ai"
+version = "0.1.0"
+description = "Enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future. (AI4ALL)"
+authors = ["Hugo ChunHo Lin <hugo970217@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+gradio = "^4.37.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
