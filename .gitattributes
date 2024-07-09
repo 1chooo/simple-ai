@@ -1,5 +1,1 @@
-*.html linguist-vendored
-*.css linguist-vendored
-*.scss linguist-vendored
-*.js linguist-vendored
-*.ipynb linguist-vendored
+*.ipynb linguist-language=Python
