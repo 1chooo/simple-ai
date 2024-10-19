@@ -1,6 +1,6 @@
 <div align="center">
 
-  [<img src="./docs/cover.png" alt="SIMPLE AI">](https://github.com/1chooo/simple-ai)<br>
+  [<img src="./.github/cover.png" alt="SIMPLE AI">](https://github.com/1chooo/simple-ai)<br>
   <em>SIMPLE AI: Bridging the Gap with AI For Everyone</em>
 
   [![project badge](https://img.shields.io/badge/1chooo-simple__ai-informational)](https://github.com/1chooo/simple-ai)
