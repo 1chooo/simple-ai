@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    build: web/
+    ports:
+      - "5002:5002"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/db
+      - SANDBOX_URL=http://sandbox:1337
+    env_file:
+      - web/.env
+    depends_on:
+      - db
+      - sandbox
+  sandbox:
+    # ports:
+    #   - "1337:1337"
+    build: sandbox/
+    privileged: true
+    expose:
+      - 1337
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres # Don't use this password in production
+      - POSTGRES_DB=db
+    expose:
+      - 5432
