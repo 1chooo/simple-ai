@@ -1,0 +1,97 @@
+site_name: Chatter Judge
+
+site_description: Online Judge combined with ChatGPT, Gradio UI, FastAPI, Langchain.
+
+site_author: 1chooo(Hugo ChunHo Lin)
+
+site_url: https://1chooo.github.io/chatter-judge/
+
+repo_url: https://github.com/1chooo/chatter-judge
+
+copyright: Copyright &copy; 2023-2024 Hugo ChunHo Lin
+
+theme:
+    palette:
+        - scheme: default
+          primary: blue grey
+          accent: indigo
+          toggle:
+              icon: material/weather-sunny
+              name: Switch to dark mode
+        - scheme: slate
+          primary: grey
+          accent: indigo
+          toggle:
+              icon: material/weather-night
+              name: Switch to light mode
+    name: material
+    
+    icon:
+        repo: fontawesome/brands/github
+    features:
+        # - navigation.instant
+        # - navigation.top
+        # - navigation.tabs
+        - navigation.sections
+        - navigation.expand
+        - navigation.indexes
+        - search.highlight
+        - navigation.path
+        - navigation.footer
+
+    icon:
+        logo: material/library-outline
+
+plugins:
+    - search
+    - mkdocstrings
+    - git-revision-date
+    # - blog
+    - mkdocs-jupyter:
+        include_source: True
+        execute: False
+        # ignore: [""]
+        # validate_nb: True
+        #   ignore_h1_titles: True
+        #   execute_ignore: "*.ipynb"
+
+markdown_extensions:
+    - attr_list
+    - pymdownx.superfences
+    - pymdownx.highlight:
+        linenums: true
+    - toc:
+        permalink: true
+
+
+extra:
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/1chooo
+        - icon: fontawesome/brands/twitter
+          link: https://twitter.com/1chooo___
+        # - icon: fas fa-rss
+        #   link: https://sites.google.com/g.ncu.edu.tw/1chooo/portfolio?authuser=0
+        # - icon: fab fa-linkedin
+        #   link: https://www.linkedin.com/in/1chooo/
+        # conda_env: py38
+#     analytics:
+#         provider: google
+#         property: UA-XXXXXXXXX-X
+
+nav:
+    - Overview: index.md
+    - Getting Started: getting_started/index.md
+    - Developer's Guide: 
+        - developers_guide/index.md
+        - Chatter Structure:
+            - developers_guide/01_chatter_structure/index.md
+            - developers_guide/01_chatter_structure/01_app.md
+            - developers_guide/01_chatter_structure/02_chatbot.md
+            - developers_guide/01_chatter_structure/03_gui.md
+            - developers_guide/01_chatter_structure/04_judge.md
+            - developers_guide/01_chatter_structure/05_utils.md
+        - developers_guide/02_unit_test.md
+        - developers_guide/03_ci_cd_actions.md
+    - LICENSE: LICENSE/index.md
+    - Report Issues: https://github.com/1chooo/chatter-judge/issues
