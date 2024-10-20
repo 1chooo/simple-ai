@@ -1,0 +1,42 @@
+{
+  "name": "site-v3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "postbuild": "next-sitemap",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.16",
+    "@heroicons/react": "^2.0.18",
+    "@primer/octicons-react": "^19.5.0",
+    "@types/node": "20.4.8",
+    "@types/react": "18.2.18",
+    "@types/react-dom": "18.2.7",
+    "@vercel/analytics": "^1.0.1",
+    "autoprefixer": "10.4.14",
+    "daisyui": "^3.5.1",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.4.12",
+    "framer-motion": "^10.15.0",
+    "lucide": "^0.263.0",
+    "lucide-react": "^0.263.1",
+    "next": "13.4.12",
+    "next-sitemap": "^4.1.8",
+    "postcss": "8.4.27",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-feather": "^2.0.10",
+    "react-icons": "^4.10.1",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.10.0",
+    "prettier": "3.0.1",
+    "prettier-plugin-tailwindcss": "^0.4.1"
+  }
+}
