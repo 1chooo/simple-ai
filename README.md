@@ -1,21 +1,19 @@
-<div align="center">
+<a href="https://1chooo.com">
+  <img alt="Refinaid Source Code" src="./.github/banner-thin.png">
+</a>
 
-  [<img src="./.github/cover.png" alt="SIMPLE AI">](https://github.com/1chooo/simple-ai)<br>
-  <em>SIMPLE AI: Bridging the Gap with AI For Everyone</em>
+<br/>
 
-  [![project badge](https://img.shields.io/badge/1chooo-simple__ai-informational)](https://github.com/1chooo/simple-ai)
-  [![Made with Python](https://img.shields.io/pypi/pyversions/gradio.svg?color=blue)](https://python.org "Go to Python homepage")
-  [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE "Go to license section")
+<p align="center">
+  <img alt="" src="https://img.shields.io/badge/1chooo-refinaid-informational?style=for-the-badge&labelColor=000">
+  <img alt="" src="https://img.shields.io/pypi/pyversions/gradio.svg?style=for-the-badge&labelColor=000">
+  <img alt="" src="https://img.shields.io/github/license/1chooo/refinaid?style=for-the-badge&labelColor=000">
+  <img src="https://img.shields.io/github/stars/1chooo/refinaid?style=for-the-badge&labelColor=000" alt="Novel.sh's GitHub repo">
+</p>
 
-[Get Started](#getting-started)
-| [Collaboration Guidelines](#collaboration-guidelines)
-| [LICENSE](#license)
-| [中文](readme_files/zh_cn#readme)
 
-</div>
-
-# SIMPLE AI: Bridging the Gap with AI For Everyone
-Hi there 👋🏻 This is **SIMPLE AI**. **SIMPLE AI** is an open-source learning platform  enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future.
+# Refinaid: Bridging the Gap with AI For Everyone
+Hi there 👋🏻 This is **Refinaid**. **Refinaid** is an open-source learning platform enabling everyone unfamiliar with programming languages to easily engage with AI and open the doors to the world of the future.
 
 ## Getting Started
 Python version `python3.10.1` with `gradio, scikit-learn, seaborn, pandas, numpy, matplotlib, joblib`
@@ -56,29 +54,29 @@ $ uvicorn main:app --host 127.0.0.1 --port 5002
 ## Collaboration Guidelines
 ### Forking this Repository:
 
-Fork the `simple-ai` repository into your own workspace.
+Fork the `refinaid` repository into your own workspace.
 
 ### Cloning the Repository to Your Workspace:
 
 ```shell
-$ git clone git@github.com:<your_workspace_name>/simple-ai.git
+$ git clone git@github.com:<your_workspace_name>/refinaid.git
 ```
 
 ### Setting Upstream Remote:
 ```shell
-$ git remote add upstream git@github.com:1chooo/simple-ai.git
+$ git remote add upstream git@github.com:1chooo/refinaid.git
 
 $ git remote -v
-origin  git@github.com:<your_user_name>/simple-ai.git (fetch)
-origin  git@github.com:<your_user_name>/simple-ai.git (push)
-upstream        git@github.com:1chooo/simple-ai.git (fetch)
-upstream        git@github.com:1chooo/simple-ai.git (push)
+origin  git@github.com:<your_user_name>/refinaid.git (fetch)
+origin  git@github.com:<your_user_name>/refinaid.git (push)
+upstream        git@github.com:1chooo/refinaid.git (fetch)
+upstream        git@github.com:1chooo/refinaid.git (push)
 ```
 ### Pull Requests:
 If you have any valuable ideas to contribute, please create a pull request and provide details about the outstanding work you've done.
 
 ### Issue Reporting:
-If you encounter any problems while contributing to this project, please report the issues in the [simple-ai/issues](https://github.com/1chooo/simple-ai/issues) section.
+If you encounter any problems while contributing to this project, please report the issues in the [refinaid/issues](https://github.com/1chooo/refinaid/issues) section.
 
 ### Important Notes:
 > [!IMPORTANT]  
@@ -92,7 +90,7 @@ If you encounter any problems while contributing to this project, please report 
 
 
 ## License
-Released under [MIT](./LICENSE) by [Hugo ChunHo Lin](https://github.com/1chooo).
+Released under [Apache-2.0 license](./LICENSE) by [Hugo ChunHo Lin](https://github.com/1chooo).
 
 This software can be modified and reused without restriction.
 The original license must be included with any copies of this software.
