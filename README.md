@@ -5,7 +5,6 @@
 <br/>
 
 <p align="center">
-  <img alt="" src="https://img.shields.io/badge/1chooo-refinaid-informational?style=for-the-badge&labelColor=000">
   <img alt="" src="https://img.shields.io/pypi/pyversions/gradio.svg?style=for-the-badge&labelColor=000">
   <img alt="" src="https://img.shields.io/github/license/1chooo/refinaid?style=for-the-badge&labelColor=000">
   <img src="https://img.shields.io/github/stars/1chooo/refinaid?style=for-the-badge&labelColor=000" alt="Novel.sh's GitHub repo">
