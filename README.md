@@ -1,6 +1,8 @@
 <a href="https://1chooo.com">
-  <img alt="Refinaid Source Code" src="./.github/banner.png">
+  <img alt="Refinaid Source Code" src="./.github/banner-thin.png">
 </a>
+
+<br/>
 
 <p align="center">
   <img alt="" src="https://img.shields.io/badge/1chooo-refinaid-informational?style=for-the-badge&labelColor=000">
